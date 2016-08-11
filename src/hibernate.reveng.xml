@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="serviceshelp"/>
+  <table-filter match-name="telas_has_acoes"/>
+  <table-filter match-name="telas_has_acoes_has_usuarios"/>
+  <table-filter match-name="clientes"/>
+  <table-filter match-name="log_erros"/>
+  <table-filter match-name="prestadores"/>
+  <table-filter match-name="telas"/>
+  <table-filter match-name="cidades"/>
+  <table-filter match-name="usuarios"/>
+  <table-filter match-name="acoes"/>
+  <table-filter match-name="agendas"/>
+  <table-filter match-name="servicos"/>
+  <table-filter match-name="log_acoes"/>
+  <table-filter match-name="servicos_has_prestadores"/>
+</hibernate-reverse-engineering>
