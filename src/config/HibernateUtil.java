@@ -14,7 +14,7 @@ import org.hibernate.SessionFactory;
  *
  * @author asimon
  */
-public class NovoHibernateUtil {
+public class HibernateUtil {
 
     private static final SessionFactory sessionFactory;
     
