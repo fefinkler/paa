@@ -39,6 +39,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuCadastros = new javax.swing.JMenu();
@@ -90,22 +93,46 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGap(279, 279, 279))
         );
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Clients.png"))); // NOI18N
+        jButton1.setText("Clientes");
+        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Prestador de serviço.png"))); // NOI18N
+        jButton2.setText("Pres. Serviços");
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Agendamento.png"))); // NOI18N
+        jButton3.setText("Agendamentos");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 55, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("                                       ");
+        jMenu1.setText("                                                          ");
         jMenuBar1.add(jMenu1);
 
         jMenuCadastros.setText("Cadastros");
 
+        jMenuClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Clients.png"))); // NOI18N
         jMenuClientes.setText("Clientes");
         jMenuClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +141,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenuCadastros.add(jMenuClientes);
 
+        jMenuPrestadores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Prestador de serviço.png"))); // NOI18N
         jMenuPrestadores.setText("Prestadores Serviço");
         jMenuPrestadores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,9 +150,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenuCadastros.add(jMenuPrestadores);
 
+        jMenuServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Services.png"))); // NOI18N
         jMenuServicos.setText("Serviços");
         jMenuCadastros.add(jMenuServicos);
 
+        jMenuUsuariosSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/adduser.png"))); // NOI18N
         jMenuUsuariosSistema.setText("Usuário do Sistema");
         jMenuUsuariosSistema.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,6 +167,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jMenuAgendamentos.setText("Manutenção");
 
+        jMenuIncluirReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Agendamento.png"))); // NOI18N
         jMenuIncluirReserva.setText("Agendamentos");
         jMenuIncluirReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,6 +183,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jMenuUtilitarios.setText(" Utilitários");
 
+        jMenuGerarBackup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/backup-restore.png"))); // NOI18N
         jMenuGerarBackup.setText("Gerar Backup");
         jMenuGerarBackup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,6 +303,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;

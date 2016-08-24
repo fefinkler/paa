@@ -13,7 +13,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="                                       "/>
+            <Property name="text" type="java.lang.String" value="                                                          "/>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuCadastros">
@@ -23,6 +23,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuClientes">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/telas.apoio/Clients.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Clientes"/>
               </Properties>
               <Events>
@@ -31,6 +34,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuPrestadores">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/telas.apoio/Prestador de servi&#xe7;o.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Prestadores Servi&#xe7;o"/>
               </Properties>
               <Events>
@@ -39,11 +45,17 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuServicos">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/telas.apoio/Services.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Servi&#xe7;os"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuUsuariosSistema">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/telas.apoio/adduser.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Usu&#xe1;rio do Sistema"/>
               </Properties>
               <Events>
@@ -59,6 +71,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuIncluirReserva">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/telas.apoio/Agendamento.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Agendamentos"/>
               </Properties>
               <Events>
@@ -79,6 +94,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuGerarBackup">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/telas.apoio/backup-restore.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Gerar Backup"/>
               </Properties>
               <Events>
@@ -193,15 +211,58 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="55" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jButton2" alignment="1" max="32767" attributes="0"/>
+                      <Component id="jButton3" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/telas.apoio/Clients.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Clientes"/>
+            <Property name="horizontalAlignment" type="int" value="10"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton2">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/telas.apoio/Prestador de servi&#xe7;o.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Pres. Servi&#xe7;os"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton3">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/telas.apoio/Agendamento.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Agendamentos"/>
+          </Properties>
+        </Component>
+      </SubComponents>
     </Container>
   </SubComponents>
 </Form>
