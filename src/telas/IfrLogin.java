@@ -182,7 +182,7 @@ public class IfrLogin extends javax.swing.JFrame {
 //
 //                new FrmPrincipal().setVisible(true);
 //
-//                this.dispose();
+                this.dispose();
 //            } else {
 //                JOptionPane.showMessageDialog(this, "              Atenção: \n"
 //                        + "       Usuário/Senha inválida!");

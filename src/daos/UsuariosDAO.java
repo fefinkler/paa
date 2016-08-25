@@ -1,6 +1,7 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
+
  * and open the template in the editor.
  */
 package daos;
@@ -14,25 +15,29 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+
 /**
  *
  * @author Fernanda Finkler
  */
 public class UsuariosDAO implements IDAO {
-    
+
     @Override
     public boolean salvar(Object o) {
         boolean deucerto = false;
         Session sessao = null;
         try {
+            System.out.println("entrou no try");
             sessao = HibernateUtil.getSessionFactory().openSession();
+            System.out.println("criou sessao");
             Transaction t = sessao.beginTransaction();
-            
-            Usuarios u = (Usuarios) o;
-            
-            sessao.save(u);
+
+            System.out.println("passou do transajndgfij");
+            Usuarios up = (Usuarios) o;
+            System.out.println("vou commitar");
+            sessao.save(up);
             t.commit();
-            
+            System.out.println("Commitei");
             deucerto = true;
 
         } catch (HibernateException he) {
@@ -50,12 +55,12 @@ public class UsuariosDAO implements IDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-            
+
             Usuarios u = (Usuarios) o;
-            
+
             sessao.update(u);
             t.commit();
-            
+
             deucerto = true;
 
         } catch (HibernateException he) {
@@ -73,12 +78,12 @@ public class UsuariosDAO implements IDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-            
+
             Usuarios u = (Usuarios) o;
-            
+
             sessao.delete(u);
             t.commit();
-            
+
             deucerto = true;
 
         } catch (HibernateException he) {
@@ -103,20 +108,15 @@ public class UsuariosDAO implements IDAO {
             resultado = q.list();
 
             for (Object o : resultado) {
-                
+
                 users.add(o);
             }
 
         } catch (HibernateException he) {
             he.printStackTrace();
         }
-        
-        return users;
-    }
 
-    @Override
-    public ArrayList<Object> consultar(String criterio) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return users;
     }
 
     @Override
@@ -127,13 +127,45 @@ public class UsuariosDAO implements IDAO {
 
             // busca por código
             org.hibernate.Query q = sessao.createQuery("from Usuarios where id = " + id);
-            
-            return q.getClass();
+
+            return q.list().get(0);
 
         } catch (HibernateException he) {
             he.printStackTrace();
         }
         return null;
-        
+
+    }
+
+    @Override
+    public boolean registroUnico(Object o) {
+        Usuarios u = (Usuarios) o;
+        boolean ok = false;
+
+        try {
+            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            org.hibernate.Query q;
+
+            // busca por item cadastrado
+            if (1 > 0) {
+                q = sessao.createQuery("FROM Usuarios WHERE nome ilike '" + u.getNome() + "' "
+                        + "AND id != " + u.getId() + " "
+                        + "AND delete = f");
+            } else {
+                q = sessao.createQuery("FROM Usuarios WHERE nome ilike '" + u.getNome() + "' "
+                        + "AND delete = f");
+            }
+            System.out.println("sql: " + q);
+            
+            if (q.list().get(0) == null){
+                ok = true;
+            }
+            
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return true;
+
     }
 }

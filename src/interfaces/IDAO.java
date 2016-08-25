@@ -27,4 +27,6 @@ public interface IDAO {
     //public ArrayList<Object> consultar(String criterio);
 
     public Object consultarId(int id);
+    
+    public boolean registroUnico(Object o);
 }

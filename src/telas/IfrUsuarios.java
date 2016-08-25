@@ -6,12 +6,10 @@
 package telas;
 
 import Apoio.LimiteDigitos;
-import static com.oracle.webservices.internal.api.databinding.DatabindingModeFeature.ID;
+
 import Apoio.limpaCampos;
 import daos.UsuariosDAO;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import entidades.Usuarios;
 import javax.swing.JOptionPane;
 
 /**
@@ -57,9 +55,12 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         tfdLogin = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        tfdLogin1 = new javax.swing.JTextField();
+        tfdSenha = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        tfdLogin2 = new javax.swing.JTextField();
+        tfdConfirmaSenha = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        tfdGrupoAcesso = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
@@ -112,11 +113,48 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("Login");
 
+        tfdLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfdLoginKeyReleased(evt);
+            }
+        });
+
         jLabel5.setForeground(new java.awt.Color(255, 0, 0));
         jLabel5.setText("Senha");
 
+        tfdSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfdSenhaKeyReleased(evt);
+            }
+        });
+
         jLabel6.setForeground(new java.awt.Color(255, 0, 0));
         jLabel6.setText("Confirma Senha");
+
+        tfdConfirmaSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfdConfirmaSenhaKeyReleased(evt);
+            }
+        });
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/find.png"))); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        tfdGrupoAcesso.setEditable(false);
+        tfdGrupoAcesso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfdGrupoAcessoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfdGrupoAcessoKeyTyped(evt);
+            }
+        });
+
+        jLabel7.setText("Grupo de acesso");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,9 +164,6 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -136,11 +171,11 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(5, 5, 5)
-                                        .addComponent(tfdLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(tfdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tfdLogin2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(tfdConfirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel12))
@@ -148,13 +183,23 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tfdNome)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(tfdId, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(299, 299, 299)))))
-                        .addGap(13, 13, 13))))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGap(13, 13, 13))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfdGrupoAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,14 +217,24 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(tfdLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(tfdLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(tfdLogin2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
-                .addComponent(jLabel12))
+                        .addComponent(tfdConfirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(tfdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                        .addComponent(jLabel12))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfdGrupoAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
@@ -204,6 +259,7 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Nome");
 
+        btnProcurar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/find.png"))); // NOI18N
         btnProcurar.setText("Buscar");
         btnProcurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,11 +368,6 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
 
-    // ROTINA QUE SALVA NOVO REGISTRO OU ALTERA REGISTRO EXISTENTE.
-
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-    }//GEN-LAST:event_btnSalvarActionPerformed
-
     //BUSCAR DADOS DO FILTRO
     private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
 
@@ -348,13 +399,94 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tfdNomeKeyReleased
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+//        DlgSelecionarCidadeEmpresa dlgSelecCidade = new DlgSelecionarCidadeEmpresa(null, true, this);
+//        dlgSelecCidade.setLocationRelativeTo(null);
+//        dlgSelecCidade.setModal(true);
+//        dlgSelecCidade.setVisible(true);
+//        if (camposObrigatorios() == true) {
+//            btnSalvar.setEnabled(true);
+//        } else {
+//            btnSalvar.setEnabled(false);
+//        }
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tfdGrupoAcessoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdGrupoAcessoKeyReleased
+
+    }//GEN-LAST:event_tfdGrupoAcessoKeyReleased
+
+    private void tfdGrupoAcessoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdGrupoAcessoKeyTyped
+
+    }//GEN-LAST:event_tfdGrupoAcessoKeyTyped
+
+    private void tfdLoginKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdLoginKeyReleased
+        if (camposObrigatorios() == true) {
+            btnSalvar.setEnabled(true);
+        } else {
+            btnSalvar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tfdLoginKeyReleased
+
+    private void tfdSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdSenhaKeyReleased
+        if (camposObrigatorios() == true) {
+            btnSalvar.setEnabled(true);
+        } else {
+            btnSalvar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tfdSenhaKeyReleased
+
+    private void tfdConfirmaSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdConfirmaSenhaKeyReleased
+        if (camposObrigatorios() == true) {
+            btnSalvar.setEnabled(true);
+        } else {
+            btnSalvar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tfdConfirmaSenhaKeyReleased
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Usuarios usuarios = new Usuarios();
+        usuarios.setNome(tfdNome.getText());
+        usuarios.setLogin(tfdLogin.getText());
+        usuarios.setSenha(tfdSenha.getText());
+        if (usuariosDAO.registroUnico(usuarios)) {
+            System.out.println("registro ok");
+            if (tfdId.getText().trim().isEmpty()) { //SALVAR
+                System.out.println("entrou no vazio");
+                if (usuariosDAO.salvar(usuarios)) {
+                    JOptionPane.showMessageDialog(this, "Usuário salvo com Sucesso!");
+//                            usuariosDAO.popularTabela(tblUsuarios, "");
+                    btnSalvar.setEnabled(false);
+                    LimparCamposCadastro();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao salvar novo Usuário!\n");
+                }
+
+            } else {  // ATUALIZAR
+                usuarios.setId(Integer.parseInt(tfdId.getText()));
+                if (usuariosDAO.atualizar(usuarios)) {
+                    JOptionPane.showMessageDialog(this, "Usuário atualizado com Sucesso!");
+//                            usuariosDAO.popularTabela(tblUsuarios, "");
+                    btnSalvar.setEnabled(false);
+                    LimparCamposCadastro();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao atualizar Usuário!\n");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuário já existe!");
+            tfdNome.requestFocus();
+            tfdNome.setText(null);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanel1);
         tfdNome.requestFocus();
     }
 
     private boolean camposObrigatorios() {
-        if (tfdNome.getText().length() > 0) {
+        if (tfdNome.getText().length() > 0 && tfdLogin.getText().length() > 0 && tfdSenha.getText().length() > 0 && tfdConfirmaSenha.getText().length() > 0) {
             return true;
         } else {
             return false;
@@ -362,6 +494,7 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
@@ -374,17 +507,19 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblUsuarios;
+    private javax.swing.JTextField tfdConfirmaSenha;
     private javax.swing.JTextField tfdConsulta;
+    private javax.swing.JTextField tfdGrupoAcesso;
     private javax.swing.JTextField tfdId;
     private javax.swing.JTextField tfdLogin;
-    private javax.swing.JTextField tfdLogin1;
-    private javax.swing.JTextField tfdLogin2;
     private javax.swing.JTextField tfdNome;
+    private javax.swing.JTextField tfdSenha;
     // End of variables declaration//GEN-END:variables
 }

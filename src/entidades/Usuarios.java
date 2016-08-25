@@ -54,12 +54,12 @@ public class Usuarios implements Serializable {
     private String senha;
     @Column(name = "delete")
     private Character delete;
-    @ManyToMany(mappedBy = "usuariosList")
-    private List<TelasHasAcoes> telasHasAcoesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosId")
-    private List<LogAcoes> logAcoesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosId")
-    private List<LogErros> logErrosList;
+//    @ManyToMany(mappedBy = "usuariosList")
+//    private List<TelasHasAcoes> telasHasAcoesList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosId")
+//    private List<LogAcoes> logAcoesList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosId")
+//    private List<LogErros> logErrosList;
 
     public Usuarios() {
     }
@@ -112,33 +112,33 @@ public class Usuarios implements Serializable {
     public void setDelete(Character delete) {
         this.delete = delete;
     }
-
-    @XmlTransient
-    public List<TelasHasAcoes> getTelasHasAcoesList() {
-        return telasHasAcoesList;
-    }
-
-    public void setTelasHasAcoesList(List<TelasHasAcoes> telasHasAcoesList) {
-        this.telasHasAcoesList = telasHasAcoesList;
-    }
-
-    @XmlTransient
-    public List<LogAcoes> getLogAcoesList() {
-        return logAcoesList;
-    }
-
-    public void setLogAcoesList(List<LogAcoes> logAcoesList) {
-        this.logAcoesList = logAcoesList;
-    }
-
-    @XmlTransient
-    public List<LogErros> getLogErrosList() {
-        return logErrosList;
-    }
-
-    public void setLogErrosList(List<LogErros> logErrosList) {
-        this.logErrosList = logErrosList;
-    }
+//
+//    @XmlTransient
+//    public List<TelasHasAcoes> getTelasHasAcoesList() {
+//        return telasHasAcoesList;
+//    }
+//
+//    public void setTelasHasAcoesList(List<TelasHasAcoes> telasHasAcoesList) {
+//        this.telasHasAcoesList = telasHasAcoesList;
+//    }
+//
+//    @XmlTransient
+//    public List<LogAcoes> getLogAcoesList() {
+//        return logAcoesList;
+//    }
+//
+//    public void setLogAcoesList(List<LogAcoes> logAcoesList) {
+//        this.logAcoesList = logAcoesList;
+//    }
+//
+//    @XmlTransient
+//    public List<LogErros> getLogErrosList() {
+//        return logErrosList;
+//    }
+//
+//    public void setLogErrosList(List<LogErros> logErrosList) {
+//        this.logErrosList = logErrosList;
+//    }
 
     @Override
     public int hashCode() {
