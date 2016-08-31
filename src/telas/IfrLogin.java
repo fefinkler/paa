@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class IfrLogin extends javax.swing.JFrame {
 
-    UsuariosDAO usuarioDAO;
+    UsuariosDAO usuariosDAO;
 
     /**
      * Creates new form Principal
@@ -25,7 +25,7 @@ public class IfrLogin extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        usuarioDAO = new UsuariosDAO();
+        usuariosDAO = new UsuariosDAO();
     }
 
     /**
@@ -169,32 +169,19 @@ public class IfrLogin extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
 
-        
-        new FrmPrincipal().setVisible(true);
-        
-//        try {
-//
-//            Usuario user = (Usuario) usuarioDAO.consultarLogin(tfdUsuario.getText());
-//
-//            if (tfdUsuario.getText().equals(user.getNome()) || tfdSenha.getText().equals(user.getSenha())) {
-//
-//                FrmPrincipal.getWindows();
-//
-//                new FrmPrincipal().setVisible(true);
-//
+        try {
+            if (usuariosDAO.validarLogin(tfdUsuario.getText(), tfdSenha.getText())) {
+                new FrmPrincipal().setVisible(true);
+                FrmPrincipal.getWindows();
                 this.dispose();
-//            } else {
-//                JOptionPane.showMessageDialog(this, "              Atenção: \n"
-//                        + "       Usuário/Senha inválida!");
-//            }
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "              Atenção: \n"
-//                    + "       Usuário/Senha inválido!");
-//
-//        }
-
-
+            } else {
+                JOptionPane.showMessageDialog(this, "              Atenção: \n"
+                        + "       Usuário/Senha inválido(a)!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "              Atenção: \n"
+                    + "       Erro ao efetuar Login!");
+        }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnFechar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechar1ActionPerformed

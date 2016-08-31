@@ -9,12 +9,13 @@ package daos;
 import config.HibernateUtil;
 import entidades.Usuarios;
 import interfaces.IDAO;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 
 /**
  *
@@ -157,15 +158,36 @@ public class UsuariosDAO implements IDAO {
                         + "AND delete = f");
             }
             System.out.println("sql: " + q);
-            
-            if (q.list().get(0) == null){
+
+            if (q.list().get(0) == null) {
                 ok = true;
             }
-            
+
         } catch (HibernateException he) {
             he.printStackTrace();
         }
         return true;
 
+    }
+
+    public boolean validarLogin(String login, String senha) {
+        boolean OK = false;
+        try {
+            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+
+            // busca por código
+            org.hibernate.Query q = sessao.createQuery("FROM Usuarios WHERE login = '" + login + "' AND senha = '" + senha + "'");
+
+            if (q.list().get(0) != null) {
+
+                OK = true;
+
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return OK;
     }
 }
