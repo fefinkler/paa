@@ -31,6 +31,7 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         btnEditar.setEnabled(false);
         btnSalvar.setEnabled(false);
         tfdNome.setDocument(new LimiteDigitos(45));
+        usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
     }
 
     /**
@@ -251,6 +252,9 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
             }
         ));
         tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsuariosMouseClicked(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tblUsuariosMouseReleased(evt);
             }
@@ -370,15 +374,47 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
 
     //BUSCAR DADOS DO FILTRO
     private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
-
+        usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
     }//GEN-LAST:event_btnProcurarActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+    public void editar(){
+        if (tblUsuarios.getSelectedRow() > -1) {
+            int id = Integer.parseInt(String.valueOf(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0)));
+            Usuarios u = (Usuarios) usuariosDAO.consultarId(id);
 
+            tfdId.setText(String.valueOf(u.getId()));
+            tfdNome.setText(u.getNome());
+            tfdLogin.setText(u.getLogin());
+            tfdSenha.setText(u.getSenha());
+            tfdConfirmaSenha.setText(u.getSenha());
+            tblUsuarios.clearSelection();
+            jTabbedPane1.setSelectedIndex(0);
+            LimparCamposCadastro();
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um registro!");
+        }
+    }
+    
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        editar();
     }//GEN-LAST:event_btnEditarActionPerformed
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-
-
+        if (tblUsuarios.getSelectedRow() > -1) {
+            int id = Integer.parseInt(String.valueOf(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0)));
+            int resposta = JOptionPane.showConfirmDialog(null, "Realmente excluir usuário?", title, JOptionPane.YES_NO_OPTION);
+                if (resposta == JOptionPane.YES_OPTION) {
+                    Usuarios u = (Usuarios) usuariosDAO.consultarId(id);
+                    u.setDelete('d');
+                    if (usuariosDAO.atualizar(u)) {
+                        usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
+                        JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
+                    }
+                }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um registro!");
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void tblUsuariosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseReleased
@@ -473,12 +509,19 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this, "Erro ao atualizar Usuário!\n");
                 }
             }
+            usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
         } else {
             JOptionPane.showMessageDialog(this, "Usuário já existe!");
             tfdNome.requestFocus();
             tfdNome.setText(null);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
+        if (evt.getClickCount() >= 2) {
+            editar();
+        }
+    }//GEN-LAST:event_tblUsuariosMouseClicked
 
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanel1);
