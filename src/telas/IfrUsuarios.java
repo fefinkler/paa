@@ -389,7 +389,6 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
             tfdConfirmaSenha.setText(u.getSenha());
             tblUsuarios.clearSelection();
             jTabbedPane1.setSelectedIndex(0);
-            LimparCamposCadastro();
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um registro!");
         }
