@@ -31,6 +31,8 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         btnEditar.setEnabled(false);
         btnSalvar.setEnabled(false);
         tfdNome.setDocument(new LimiteDigitos(45));
+        tfdLogin.setDocument(new LimiteDigitos(15));
+        tfdSenha.setDocument(new LimiteDigitos(15));
     }
 
     /**
@@ -428,31 +430,13 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tfdLoginKeyReleased
 
-    private void tfdSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdSenhaKeyReleased
-        if (camposObrigatorios() == true) {
-            btnSalvar.setEnabled(true);
-        } else {
-            btnSalvar.setEnabled(false);
-        }
-    }//GEN-LAST:event_tfdSenhaKeyReleased
-
-    private void tfdConfirmaSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdConfirmaSenhaKeyReleased
-        if (camposObrigatorios() == true) {
-            btnSalvar.setEnabled(true);
-        } else {
-            btnSalvar.setEnabled(false);
-        }
-    }//GEN-LAST:event_tfdConfirmaSenhaKeyReleased
-
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Usuarios usuarios = new Usuarios();
         usuarios.setNome(tfdNome.getText());
         usuarios.setLogin(tfdLogin.getText());
         usuarios.setSenha(tfdSenha.getText());
         if (usuariosDAO.registroUnico(usuarios)) {
-            System.out.println("registro ok");
             if (tfdId.getText().trim().isEmpty()) { //SALVAR
-                System.out.println("entrou no vazio");
                 if (usuariosDAO.salvar(usuarios)) {
                     JOptionPane.showMessageDialog(this, "Usuário salvo com Sucesso!");
 //                            usuariosDAO.popularTabela(tblUsuarios, "");
@@ -479,6 +463,22 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
             tfdNome.setText(null);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void tfdConfirmaSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdConfirmaSenhaKeyReleased
+        if (camposObrigatorios() == true) {
+            btnSalvar.setEnabled(true);
+        } else {
+            btnSalvar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tfdConfirmaSenhaKeyReleased
+
+    private void tfdSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdSenhaKeyReleased
+        if (camposObrigatorios() == true) {
+            btnSalvar.setEnabled(true);
+        } else {
+            btnSalvar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tfdSenhaKeyReleased
 
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanel1);
