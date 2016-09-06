@@ -164,6 +164,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jMenuServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Services.png"))); // NOI18N
         jMenuServicos.setText("Serviços");
+        jMenuServicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuServicosActionPerformed(evt);
+            }
+        });
         jMenuCadastros.add(jMenuServicos);
 
         jMenuUsuariosSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/adduser.png"))); // NOI18N
@@ -277,8 +282,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuGerarBackupActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jMenuServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuServicosActionPerformed
+        IfrServiços IfrServiços = new IfrServiços();
+        jDesktopPane1.add(IfrServiços);
+        IfrServiços.setVisible(true);
+    }//GEN-LAST:event_jMenuServicosActionPerformed
 
     /**
      * @param args the command line arguments
