@@ -31,12 +31,9 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         btnEditar.setEnabled(false);
         btnSalvar.setEnabled(false);
         tfdNome.setDocument(new LimiteDigitos(45));
-<<<<<<< HEAD
         tfdLogin.setDocument(new LimiteDigitos(15));
         tfdSenha.setDocument(new LimiteDigitos(15));
-=======
         usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
->>>>>>> origin/master
     }
 
     /**
@@ -440,16 +437,15 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tfdNomeKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-//        DlgSelecionarCidadeEmpresa dlgSelecCidade = new DlgSelecionarCidadeEmpresa(null, true, this);
-//        dlgSelecCidade.setLocationRelativeTo(null);
-//        dlgSelecCidade.setModal(true);
-//        dlgSelecCidade.setVisible(true);
-//        if (camposObrigatorios() == true) {
-//            btnSalvar.setEnabled(true);
-//        } else {
-//            btnSalvar.setEnabled(false);
-//        }
-
+        DlgSelecionarCor dlgSelecCor = new DlgSelecionarCor(null, true, this);
+        dlgSelecCor.setLocationRelativeTo(null);
+        dlgSelecCor.setModal(true);
+        dlgSelecCor.setVisible(true);
+        if (camposObrigatorios() == true) {
+            btnSalvar.setEnabled(true);
+        } else {
+            btnSalvar.setEnabled(false);
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tfdGrupoAcessoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdGrupoAcessoKeyReleased
@@ -503,7 +499,6 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-<<<<<<< HEAD
     private void tfdConfirmaSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdConfirmaSenhaKeyReleased
         if (camposObrigatorios() == true) {
             btnSalvar.setEnabled(true);
@@ -519,13 +514,11 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
             btnSalvar.setEnabled(false);
         }
     }//GEN-LAST:event_tfdSenhaKeyReleased
-=======
     private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
         if (evt.getClickCount() >= 2) {
             editar();
         }
     }//GEN-LAST:event_tblUsuariosMouseClicked
->>>>>>> origin/master
 
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanel1);
