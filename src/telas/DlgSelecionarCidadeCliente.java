@@ -5,38 +5,39 @@
  */
 package telas;
 
-import daos.SelecionarCorDAO;
-import entidades.Cor;
+import daos.SelecionarCidadesDAO;
+import entidades.Cidades;
 
 /**
  *
  * @author asimon
  */
-public class DlgSelecionarGrupo extends javax.swing.JDialog {
+public class DlgSelecionarCidadeCliente extends javax.swing.JDialog {
 
     /**
-     * Creates new form DlgCor
+     * Creates new form DlgCidade
      */
-    IfrVeiculo ifrVeiClasse;
+    IfrClientes ifrCliClasse;
+    
 
-    public DlgSelecionarGrupo(java.awt.Frame parent, boolean modal) {
+    public DlgSelecionarCidadeCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        SelecionarCorDAO.popularTabela(tblGrupos, "");
+        SelecionarCidadesDAO.popularTabela(tblCidades, "");
     }
 
-    public DlgSelecionarGrupo(java.awt.Frame parent, boolean modal, IfrVeiculo ifrVei) {
+    public DlgSelecionarCidadeCliente(java.awt.Frame parent, boolean modal, IfrClientes ifrCli) {
         super(parent, modal);
         initComponents();
-        SelecionarCorDAO.popularTabela(tblGrupos, "");
-        ifrVeiClasse = ifrVei;
+        SelecionarCidadesDAO.popularTabela(tblCidades, "");
+        ifrCliClasse = ifrCli;
     }
 
-    DlgSelecionarGrupo() {
+    DlgSelecionarCidadeCliente() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    DlgSelecionarGrupo(boolean b) {
+    DlgSelecionarCidadeCliente(boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -52,7 +53,7 @@ public class DlgSelecionarGrupo extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         tfdConsulta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblGrupos = new javax.swing.JTable();
+        tblCidades = new javax.swing.JTable();
         btnProcurar = new javax.swing.JButton();
         btnFechar = new javax.swing.JButton();
         btnSelecionar = new javax.swing.JButton();
@@ -60,9 +61,9 @@ public class DlgSelecionarGrupo extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel3.setText("Grupo");
+        jLabel3.setText("Cidade");
 
-        tblGrupos.setModel(new javax.swing.table.DefaultTableModel(
+        tblCidades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -73,14 +74,14 @@ public class DlgSelecionarGrupo extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblGrupos.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblCidades.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tblGruposMouseReleased(evt);
+                tblCidadesMouseReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(tblGrupos);
+        jScrollPane1.setViewportView(tblCidades);
 
-        btnProcurar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/find.png"))); // NOI18N
+        btnProcurar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/fin2.png"))); // NOI18N
         btnProcurar.setText("Buscar");
         btnProcurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +106,7 @@ public class DlgSelecionarGrupo extends javax.swing.JDialog {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Consulta de Grupos de Acesso");
+        jLabel1.setText("Consulta de Cidades");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,8 +129,8 @@ public class DlgSelecionarGrupo extends javax.swing.JDialog {
                         .addComponent(btnFechar)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(126, 126, 126)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -154,12 +155,12 @@ public class DlgSelecionarGrupo extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblGruposMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGruposMouseReleased
+    private void tblCidadesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCidadesMouseReleased
         btnSelecionar.setEnabled(true);
-    }//GEN-LAST:event_tblGruposMouseReleased
+    }//GEN-LAST:event_tblCidadesMouseReleased
 
     private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
-        SelecionarCorDAO.popularTabela(tblGrupos, tfdConsulta.getText());
+        SelecionarCidadesDAO.popularTabela(tblCidades, tfdConsulta.getText());
         tfdConsulta.requestFocus();
     }//GEN-LAST:event_btnProcurarActionPerformed
 
@@ -168,10 +169,10 @@ public class DlgSelecionarGrupo extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-        int id = Integer.parseInt(String.valueOf(tblGrupos.getValueAt(tblGrupos.getSelectedRow(), 0)));
-        Cor cor = (Cor) SelecionarCorDAO.consultarId(id);
+        int id = Integer.parseInt(String.valueOf(tblCidades.getValueAt(tblCidades.getSelectedRow(), 0)));
+        Cidades cid = (Cidades) SelecionarCidadesDAO.consultarId(id);
         
-        ifrVeiClasse.pegaValorCor(cor);
+        ifrCliClasse.pegaValor(cid);
         this.dispose();
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
@@ -192,14 +193,30 @@ public class DlgSelecionarGrupo extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DlgSelecionarGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgSelecionarCidadeCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DlgSelecionarGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgSelecionarCidadeCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DlgSelecionarGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgSelecionarCidadeCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DlgSelecionarGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgSelecionarCidadeCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -221,7 +238,7 @@ public class DlgSelecionarGrupo extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DlgSelecionarGrupo dialog = new DlgSelecionarGrupo(new javax.swing.JFrame(), true);
+                DlgSelecionarCidadeCliente dialog = new DlgSelecionarCidadeCliente(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -240,7 +257,7 @@ public class DlgSelecionarGrupo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblGrupos;
+    private javax.swing.JTable tblCidades;
     private javax.swing.JTextField tfdConsulta;
     // End of variables declaration//GEN-END:variables
 }

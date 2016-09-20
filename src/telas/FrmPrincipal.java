@@ -97,6 +97,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Clients.png"))); // NOI18N
         jButton1.setText("Clientes");
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Prestador de serviço.png"))); // NOI18N
         jButton2.setText("Pres. Serviços");
@@ -236,7 +241,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuClientesActionPerformed
-
+        IfrClientes IfrClientes = new IfrClientes();
+        jDesktopPane1.add(IfrClientes);
+        IfrClientes.setVisible(true);
     }//GEN-LAST:event_jMenuClientesActionPerformed
 
     private void jMenuPrestadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPrestadoresActionPerformed
@@ -286,10 +293,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jMenuServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuServicosActionPerformed
-        IfrServiços IfrServiços = new IfrServiços();
+        IfrServicos IfrServiços = new IfrServicos();
         jDesktopPane1.add(IfrServiços);
         IfrServiços.setVisible(true);
     }//GEN-LAST:event_jMenuServicosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        IfrClientes IfrClientes = new IfrClientes();
+        jDesktopPane1.add(IfrClientes);
+        IfrClientes.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

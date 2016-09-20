@@ -6,27 +6,31 @@
 package telas;
 
 import Apoio.LimiteDigitos;
-
 import Apoio.limpaCampos;
-import entidades.Usuarios;
+import daos.ServicosDAO;
+import entidades.Servicos;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author adriano
  */
-public class IfrServiços extends javax.swing.JInternalFrame {
+public class IfrServicos extends javax.swing.JInternalFrame {
 
+    ServicosDAO servicosDAO;
+    char operacao = 'i';
 
     /**
      * Creates new form IfrUsuarios
      */
-    public IfrServiços() {
+    public IfrServicos() {
         initComponents();
+        servicosDAO = new ServicosDAO();
         btnExcluir.setEnabled(false);
         btnEditar.setEnabled(false);
         btnSalvar.setEnabled(false);
-        tfdDescrição.setDocument(new LimiteDigitos(60));
+        tfdDescricao.setDocument(new LimiteDigitos(60));
+        servicosDAO.popularTabela(tblServicos, tfdConsulta.getText());
     }
 
     /**
@@ -46,11 +50,11 @@ public class IfrServiços extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         tfdId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        tfdDescrição = new javax.swing.JTextField();
+        tfdDescricao = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblServiços = new javax.swing.JTable();
+        tblServicos = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         tfdConsulta = new javax.swing.JTextField();
         btnProcurar = new javax.swing.JButton();
@@ -69,6 +73,11 @@ public class IfrServiços extends javax.swing.JInternalFrame {
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Save.png"))); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -83,9 +92,9 @@ public class IfrServiços extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText("Descrição");
 
-        tfdDescrição.addKeyListener(new java.awt.event.KeyAdapter() {
+        tfdDescricao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfdDescriçãoKeyReleased(evt);
+                tfdDescricaoKeyReleased(evt);
             }
         });
 
@@ -108,7 +117,7 @@ public class IfrServiços extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfdDescrição)
+                            .addComponent(tfdDescricao)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(tfdId, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
@@ -124,14 +133,14 @@ public class IfrServiços extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(tfdDescrição, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
                 .addComponent(jLabel12))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
 
-        tblServiços.setModel(new javax.swing.table.DefaultTableModel(
+        tblServicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -142,20 +151,25 @@ public class IfrServiços extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblServiços.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblServicos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblServiçosMouseClicked(evt);
+                tblServicosMouseClicked(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tblServiçosMouseReleased(evt);
+                tblServicosMouseReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(tblServiços);
+        jScrollPane1.setViewportView(tblServicos);
 
-        jLabel3.setText("Nome");
+        jLabel3.setText("Serviço");
 
         btnProcurar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/find.png"))); // NOI18N
         btnProcurar.setText("Buscar");
+        btnProcurar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProcurarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -206,9 +220,19 @@ public class IfrServiços extends javax.swing.JInternalFrame {
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/edit.png"))); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/delete2.png"))); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -248,41 +272,83 @@ public class IfrServiços extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
 
-    public void editar(){
-      
+    public void editar() {
+        if (tblServicos.getSelectedRow() > -1) {
+            int id = Integer.parseInt(String.valueOf(tblServicos.getValueAt(tblServicos.getSelectedRow(), 0)));
+            Servicos s = (Servicos) servicosDAO.consultarId(id);
+
+            tfdId.setText(String.valueOf(s.getId()));
+            tfdDescricao.setText(s.getDescricao());
+            tblServicos.clearSelection();
+            jTabbedPane1.setSelectedIndex(0);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um registro!");
+        }
+
     }
-    
-    private void tblServiçosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServiçosMouseReleased
+
+    private void tblServicosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServicosMouseReleased
         btnExcluir.setEnabled(true);
         btnEditar.setEnabled(true);
-    }//GEN-LAST:event_tblServiçosMouseReleased
+    }//GEN-LAST:event_tblServicosMouseReleased
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
         btnEditar.setEnabled(false);
         btnExcluir.setEnabled(false);
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
-    private void tfdDescriçãoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdDescriçãoKeyReleased
+    private void tfdDescricaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdDescricaoKeyReleased
         if (camposObrigatorios() == true) {
             btnSalvar.setEnabled(true);
         } else {
             btnSalvar.setEnabled(false);
         }
-    }//GEN-LAST:event_tfdDescriçãoKeyReleased
+    }//GEN-LAST:event_tfdDescricaoKeyReleased
 
-    private void tblServiçosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServiçosMouseClicked
+    private void tblServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServicosMouseClicked
         if (evt.getClickCount() >= 2) {
             editar();
         }
-    }//GEN-LAST:event_tblServiçosMouseClicked
+    }//GEN-LAST:event_tblServicosMouseClicked
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
+        servicosDAO.popularTabela(tblServicos, tfdConsulta.getText());
+    }//GEN-LAST:event_btnProcurarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        editar();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+         if (tblServicos.getSelectedRow() > -1) {
+            int id = Integer.parseInt(String.valueOf(tblServicos.getValueAt(tblServicos.getSelectedRow(), 0)));
+            int resposta = JOptionPane.showConfirmDialog(null, "Realmente excluir serviço?", title, JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                Servicos s = (Servicos) servicosDAO.consultarId(id);
+                s.setDelete('d');
+                if (servicosDAO.atualizar(s)) {
+                    servicosDAO.popularTabela(tblServicos, tfdConsulta.getText());
+                    JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um registro!");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanel1);
-        tfdDescrição.requestFocus();
+        tfdDescricao.requestFocus();
     }
 
     private boolean camposObrigatorios() {
-        if (tfdDescrição.getText().length() > 0) {
+        if (tfdDescricao.getText().length() > 0) {
             return true;
         } else {
             return false;
@@ -304,9 +370,9 @@ public class IfrServiços extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable tblServiços;
+    private javax.swing.JTable tblServicos;
     private javax.swing.JTextField tfdConsulta;
-    private javax.swing.JTextField tfdDescrição;
+    private javax.swing.JTextField tfdDescricao;
     private javax.swing.JTextField tfdId;
     // End of variables declaration//GEN-END:variables
 }

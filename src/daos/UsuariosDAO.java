@@ -149,18 +149,19 @@ public class UsuariosDAO implements IDAO {
             org.hibernate.Query q;
 
             // busca por item cadastrado
-            if (1 > 0) {
+            if (u.getId() != null) {
                 q = sessao.createQuery("FROM Usuarios WHERE nome ilike '" + u.getNome() + "' "
                         + "AND id != " + u.getId() + " "
-                        + "AND delete = f");
+                        + "AND delete is null");
             } else {
                 q = sessao.createQuery("FROM Usuarios WHERE nome ilike '" + u.getNome() + "' "
-                        + "AND delete = f");
+                        + "AND delete is null");
             }
             System.out.println("sql: " + q);
-
-            if (q.list().get(0) == null) {
-                ok = true;
+            if (!q.list().isEmpty()) {
+                if (q.list().get(0) == null) {
+                    ok = true;
+                }
             }
 
         } catch (HibernateException he) {
@@ -175,17 +176,19 @@ public class UsuariosDAO implements IDAO {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             // busca por código
-            org.hibernate.Query q = sessao.createQuery("FROM Usuarios WHERE login = '" + login + "' AND senha = '" + senha + "'");
-
-            if (q.list().get(0) != null) {
-                ok = true;
+            org.hibernate.Query q = sessao.createQuery("FROM Usuarios WHERE login = '" + login + "' AND senha = '" + senha + "' AND delete is null ");
+            if (!q.list().isEmpty()) {
+                if (q.list().get(0) != null) {
+                    ok = true;
+                }
             }
+
         } catch (HibernateException he) {
             he.printStackTrace();
         }
         return ok;
     }
-    
+
     public void popularTabela(JTable tabela, String criterio) {
         // dados da tabela
         Object[][] dadosTabela = null;
@@ -201,12 +204,12 @@ public class UsuariosDAO implements IDAO {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             // busca por código
-            org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Usuarios WHERE retira_acentuacao(nome) ILIKE '%" + criterio + "%' AND delete is null");          
+            org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Usuarios WHERE retira_acentuacao(nome) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null");
             int c = Integer.parseInt(String.valueOf(q.uniqueResult()));
             //int count = (Integer) q.list().get(0);
-            
+
             dadosTabela = new Object[c][3]; //diz quantas linhas e colunas serão criadas: getInt(1) pega o resultado da primeira coluna do Select; e "3" pq serão duas colunas (Nome,Telefone,Cidade).
-            
+
         } catch (Exception e) {
             System.out.println("Erro ao consultar: " + e);
         }
@@ -217,10 +220,10 @@ public class UsuariosDAO implements IDAO {
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            
-            org.hibernate.Query q = sessao.createQuery("FROM Usuarios WHERE nome ILIKE '%" + criterio + "%' AND delete is null ORDER BY nome");
+
+            org.hibernate.Query q = sessao.createQuery("FROM Usuarios WHERE retira_acentuacao(nome) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null ORDER BY nome");
             List resultado = q.list();
-            
+
             for (Object o : resultado) {
                 Usuarios u = (Usuarios) resultado.get(lin);
                 dadosTabela[lin][0] = u.getId();
@@ -262,7 +265,7 @@ public class UsuariosDAO implements IDAO {
 
         // permite seleção de apenas uma linha da tabela
         tabela.setSelectionMode(0);
-        
+
         //alinhamento da conteúdo de uma coluna
         DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
         direita.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -291,8 +294,6 @@ public class UsuariosDAO implements IDAO {
             }
         }
     }
-    
-    
+
     //Usuarios u = (Usuarios) q.list().get(0);
-    
 }

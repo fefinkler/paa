@@ -33,6 +33,7 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         tfdNome.setDocument(new LimiteDigitos(45));
         tfdLogin.setDocument(new LimiteDigitos(15));
         tfdSenha.setDocument(new LimiteDigitos(15));
+        tfdConfirmaSenha.setDocument(new LimiteDigitos(15));
         usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
     }
 
@@ -379,7 +380,7 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
     }//GEN-LAST:event_btnProcurarActionPerformed
 
-    public void editar(){
+    public void editar() {
         if (tblUsuarios.getSelectedRow() > -1) {
             int id = Integer.parseInt(String.valueOf(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0)));
             Usuarios u = (Usuarios) usuariosDAO.consultarId(id);
@@ -395,7 +396,7 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Selecione um registro!");
         }
     }
-    
+
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         editar();
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -403,16 +404,16 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
         if (tblUsuarios.getSelectedRow() > -1) {
             int id = Integer.parseInt(String.valueOf(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0)));
             int resposta = JOptionPane.showConfirmDialog(null, "Realmente excluir usuário?", title, JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) {
-                    Usuarios u = (Usuarios) usuariosDAO.consultarId(id);
-                    u.setDelete('d');
-                    if (usuariosDAO.atualizar(u)) {
-                        usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
-                        JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
-                    }
+            if (resposta == JOptionPane.YES_OPTION) {
+                Usuarios u = (Usuarios) usuariosDAO.consultarId(id);
+                u.setDelete('d');
+                if (usuariosDAO.atualizar(u)) {
+                    usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
+                    JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
                 }
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um registro!");
         }
@@ -437,15 +438,15 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tfdNomeKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        DlgSelecionarCor dlgSelecCor = new DlgSelecionarCor(null, true, this);
-        dlgSelecCor.setLocationRelativeTo(null);
-        dlgSelecCor.setModal(true);
-        dlgSelecCor.setVisible(true);
-        if (camposObrigatorios() == true) {
-            btnSalvar.setEnabled(true);
-        } else {
-            btnSalvar.setEnabled(false);
-        }
+//        DlgSelecionarCor dlgSelecCor = new DlgSelecionarCor(null, true, this);
+//        dlgSelecCor.setLocationRelativeTo(null);
+//        dlgSelecCor.setModal(true);
+//        dlgSelecCor.setVisible(true);
+//        if (camposObrigatorios() == true) {
+//            btnSalvar.setEnabled(true);
+//        } else {
+//            btnSalvar.setEnabled(false);
+//        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tfdGrupoAcessoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdGrupoAcessoKeyReleased
@@ -466,37 +467,41 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Usuarios usuarios = new Usuarios();
-        usuarios.setNome(tfdNome.getText());
-        usuarios.setLogin(tfdLogin.getText());
-        usuarios.setSenha(tfdSenha.getText());
-        if (usuariosDAO.registroUnico(usuarios)) {
-            if (tfdId.getText().trim().isEmpty()) { //SALVAR
-                if (usuariosDAO.salvar(usuarios)) {
-                    JOptionPane.showMessageDialog(this, "Usuário salvo com Sucesso!");
-//                            usuariosDAO.popularTabela(tblUsuarios, "");
-                    btnSalvar.setEnabled(false);
-                    LimparCamposCadastro();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Erro ao salvar novo Usuário!\n");
-                }
-
-            } else {  // ATUALIZAR
-                usuarios.setId(Integer.parseInt(tfdId.getText()));
-                if (usuariosDAO.atualizar(usuarios)) {
-                    JOptionPane.showMessageDialog(this, "Usuário atualizado com Sucesso!");
-//                            usuariosDAO.popularTabela(tblUsuarios, "");
-                    btnSalvar.setEnabled(false);
-                    LimparCamposCadastro();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Erro ao atualizar Usuário!\n");
-                }
-            }
-            usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
-        } else {
-            JOptionPane.showMessageDialog(this, "Usuário já existe!");
-            tfdNome.requestFocus();
-            tfdNome.setText(null);
+        if (tfdId.getText().length() >= 1) {
+            usuarios.setId(Integer.parseInt(tfdId.getText()));
         }
+            usuarios.setNome(tfdNome.getText());
+            usuarios.setLogin(tfdLogin.getText());
+            usuarios.setSenha(tfdSenha.getText());
+            if (usuariosDAO.registroUnico(usuarios)) {
+                if (tfdId.getText().trim().isEmpty()) { //SALVAR
+                    if (usuariosDAO.salvar(usuarios)) {
+                        JOptionPane.showMessageDialog(this, "Usuário salvo com Sucesso!");
+//                            usuariosDAO.popularTabela(tblUsuarios, "");
+                        btnSalvar.setEnabled(false);
+                        LimparCamposCadastro();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Erro ao salvar novo Usuário!\n");
+                    }
+
+                } else {  // ATUALIZAR
+                    usuarios.setId(Integer.parseInt(tfdId.getText()));
+                    System.out.println("Entrou no atualziar, valor do ID " + usuarios.getId());
+                    if (usuariosDAO.atualizar(usuarios)) {
+                        JOptionPane.showMessageDialog(this, "Usuário atualizado com Sucesso!");
+//                            usuariosDAO.popularTabela(tblUsuarios, "");
+                        btnSalvar.setEnabled(false);
+                        LimparCamposCadastro();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Erro ao atualizar Usuário!\n");
+                    }
+                }
+                usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuário já existe!");
+                tfdNome.requestFocus();
+                tfdNome.setText(null);
+            }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void tfdConfirmaSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdConfirmaSenhaKeyReleased
@@ -526,7 +531,7 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
     }
 
     private boolean camposObrigatorios() {
-        if (tfdNome.getText().length() > 0 && tfdLogin.getText().length() > 0 && tfdSenha.getText().length() > 0 && tfdConfirmaSenha.getText().length() > 0) {
+        if (tfdNome.getText().length() > 0 && tfdLogin.getText().length() > 0 && tfdSenha.getText().length() > 0 && tfdConfirmaSenha.getText().equals(tfdSenha.getText())) {
             return true;
         } else {
             return false;

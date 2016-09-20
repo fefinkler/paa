@@ -170,15 +170,20 @@ public class IfrLogin extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
 
         try {
-            if (usuariosDAO.validarLogin(tfdUsuario.getText(), tfdSenha.getText())) {
+            if (usuariosDAO.validarLogin(tfdUsuario.getText(), String.valueOf(tfdSenha.getPassword()))) {
                 new FrmPrincipal().setVisible(true);
                 FrmPrincipal.getWindows();
                 this.dispose();
             } else {
+                tfdUsuario.setText("");
+                tfdSenha.setText("");
                 JOptionPane.showMessageDialog(this, "              Atenção: \n"
                         + "       Usuário/Senha inválido(a)!");
+
             }
         } catch (Exception e) {
+            tfdUsuario.setText("");
+            tfdSenha.setText("");
             JOptionPane.showMessageDialog(this, "              Atenção: \n"
                     + "       Erro ao efetuar Login!");
         }
