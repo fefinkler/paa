@@ -19,28 +19,22 @@ public class DlgSelecionarCidadeCliente extends javax.swing.JDialog {
      */
     IfrClientes ifrCliClasse;
     
+    SelecionarCidadesDAO scDAO;
 
     public DlgSelecionarCidadeCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        SelecionarCidadesDAO.popularTabela(tblCidades, "");
+        scDAO = new SelecionarCidadesDAO();
+        scDAO.popularTabela(tblCidades, "");
     }
 
     public DlgSelecionarCidadeCliente(java.awt.Frame parent, boolean modal, IfrClientes ifrCli) {
         super(parent, modal);
         initComponents();
-        SelecionarCidadesDAO.popularTabela(tblCidades, "");
+        scDAO = new SelecionarCidadesDAO();
+        scDAO.popularTabela(tblCidades, "");
         ifrCliClasse = ifrCli;
     }
-
-    DlgSelecionarCidadeCliente() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    DlgSelecionarCidadeCliente(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,7 +154,7 @@ public class DlgSelecionarCidadeCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_tblCidadesMouseReleased
 
     private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
-        SelecionarCidadesDAO.popularTabela(tblCidades, tfdConsulta.getText());
+        scDAO.popularTabela(tblCidades, tfdConsulta.getText());
         tfdConsulta.requestFocus();
     }//GEN-LAST:event_btnProcurarActionPerformed
 
@@ -170,7 +164,7 @@ public class DlgSelecionarCidadeCliente extends javax.swing.JDialog {
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         int id = Integer.parseInt(String.valueOf(tblCidades.getValueAt(tblCidades.getSelectedRow(), 0)));
-        Cidades cid = (Cidades) SelecionarCidadesDAO.consultarId(id);
+        Cidades cid = (Cidades) scDAO.consultarId(id);
         
         ifrCliClasse.pegaValor(cid);
         this.dispose();
@@ -201,40 +195,7 @@ public class DlgSelecionarCidadeCliente extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DlgSelecionarCidadeCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-
+        
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

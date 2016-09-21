@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -59,6 +59,11 @@ public class Cidades implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+    
+    public Cidades(Integer id, String cidade) {
+        this.id = id;
+        this.cidade = cidade;
     }
 
     public void setId(Integer id) {
