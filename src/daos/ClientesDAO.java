@@ -147,11 +147,11 @@ public class ClientesDAO implements IDAO {
 
             // busca por item cadastrado
             if (cli.getId() != null) {
-                q = sessao.createQuery("FROM Clientes WHERE nome ilike '" + cli.getNome()+ "' "
+                q = sessao.createQuery("FROM Clientes WHERE nome ilike '" + cli.getCpfCnpj()+ "' "
                         + "AND id != " + cli.getId() + " "
                         + "AND delete is null");
             } else {
-                q = sessao.createQuery("FROM Clientes WHERE nome ilike '" + cli.getNome() + "' "
+                q = sessao.createQuery("FROM Clientes WHERE nome ilike '" + cli.getCpfCnpj()+ "' "
                         + "AND delete is null");
             }
             System.out.println("sql: " + q);

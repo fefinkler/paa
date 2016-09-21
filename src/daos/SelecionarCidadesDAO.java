@@ -5,11 +5,8 @@
  */
 package daos;
 
-import Apoio.ConexaoBD;
 import config.HibernateUtil;
 import entidades.Cidades;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -59,7 +56,6 @@ public class SelecionarCidadesDAO {
             org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Cidades WHERE retira_acentuacao(cidade) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null");
             int c = Integer.parseInt(String.valueOf(q.uniqueResult()));
             System.out.println("resultado count = " + c);
-
 
             dadosTabela = new Object[c][3];
 

@@ -142,14 +142,14 @@
                                               <Component id="tfdNome" max="32767" attributes="0"/>
                                               <Group type="102" attributes="0">
                                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                      <Component id="tfdSenha" max="32767" attributes="0"/>
                                                       <Component id="tfdLogin" alignment="1" pref="114" max="32767" attributes="0"/>
                                                       <Component id="tfdId" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
+                                                      <Component id="tfdSenha" alignment="0" max="32767" attributes="0"/>
                                                   </Group>
-                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jLabel6" min="-2" pref="79" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                                  <Component id="tfdConfirmaSenha" min="-2" pref="134" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="tfdConfirmaSenha" min="-2" pref="113" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
