@@ -53,7 +53,7 @@ public class SelecionarCidadesDAO {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             // busca por código
-            org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Cidades WHERE retira_acentuacao(cidade) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null");
+            org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Cidades WHERE retira_acentuacao(cidade) ILIKE retira_acentuacao('%" + criterio + "%') ");
             int c = Integer.parseInt(String.valueOf(q.uniqueResult()));
             System.out.println("resultado count = " + c);
 
@@ -70,7 +70,7 @@ public class SelecionarCidadesDAO {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
 
-            org.hibernate.Query q = sessao.createQuery("FROM Cidades WHERE retira_acentuacao(cidade) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null ORDER BY cidade");
+            org.hibernate.Query q = sessao.createQuery("FROM Cidades WHERE retira_acentuacao(cidade) ILIKE retira_acentuacao('%" + criterio + "%') ORDER BY cidade");
             List resultado = q.list();
 
             for (Object o : resultado) {

@@ -146,7 +146,7 @@ public class ServicosDAO implements IDAO {
 
             // busca por item cadastrado
             if (s.getId() != null) {
-                q = sessao.createQuery("FROM servicos WHERE descricao ilike '" + s.getDescricao() + "' "
+                q = sessao.createQuery("FROM Servicos WHERE descricao ilike '" + s.getDescricao() + "' "
                         + "AND id != " + s.getId() + " "
                         + "AND delete is null");
             } else {
@@ -197,7 +197,7 @@ public class ServicosDAO implements IDAO {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             
-            org.hibernate.Query q = sessao.createQuery("FROM Servicos WHERE retira_acentuacao(descricao) ILIKE '%" + criterio + "%' AND delete is null ORDER BY nome");
+            org.hibernate.Query q = sessao.createQuery("FROM Servicos WHERE retira_acentuacao(descricao) ILIKE '%" + criterio + "%' AND delete is null ORDER BY descricao");
             List resultado = q.list();
             
             for (Object o : resultado) {

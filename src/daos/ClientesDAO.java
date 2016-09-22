@@ -175,7 +175,7 @@ public class ClientesDAO implements IDAO {
         Object[] cabecalho = new Object[4];
         cabecalho[0] = "Código";
         cabecalho[1] = "Nome";
-        cabecalho[2] = "CPF";
+        cabecalho[2] = "CPF/CNPJ";
         cabecalho[3] = "Cidade";
         
         // cria matriz de acordo com nº de registros da tabela

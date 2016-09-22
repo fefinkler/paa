@@ -9,18 +9,18 @@
     <property name="hibernate.connection.password">postgres</property>
     <property name="show_sql">true</property>
     <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
-    <!--    <mapping class="entidade.Acoes"/>
-    <mapping class="entidade.Agendas"/>
-    <mapping class="entidade.Cidades"/>
-    <mapping class="entidade.Clientes"/>
-    <mapping class="entidade.LogAcoes"/>
-    <mapping class="entidade.LogErros"/>
-    <mapping class="entidade.Prestadores"/>
-    <mapping class="entidade.Servicos"/>
-    <mapping class="entidade.ServicosHasPrestadores"/>
-    <mapping class="entidade.Telas"/>
-    <mapping class="entidade.TelasHasAcoes"/>
-    <mapping class="entidade.TelasHasAcoesPK"/>-->
+    <mapping class="entidades.Acoes"/>
+    <mapping class="entidades.Agendas"/>
+    <mapping class="entidades.Cidades"/>
+    <mapping class="entidades.Clientes"/>
+    <mapping class="entidades.LogAcoes"/>
+    <mapping class="entidades.LogErros"/>
+    <mapping class="entidades.Prestadores"/>
+    <mapping class="entidades.Servicos"/>
+    <mapping class="entidades.ServicosHasPrestadores"/>
+    <mapping class="entidades.Telas"/>
+    <mapping class="entidades.TelasHasAcoes"/>
+    <mapping class="entidades.TelasHasAcoesPK"/>
     <mapping class="entidades.Usuarios"/>
   </session-factory>
 </hibernate-configuration>
