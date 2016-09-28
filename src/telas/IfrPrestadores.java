@@ -360,7 +360,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblPrestadores);
 
-        jLabel3.setText("Nome");
+        jLabel3.setText("Nomee");
 
         btnProcurar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/fin2.png"))); // NOI18N
         btnProcurar.setText("Buscar");
