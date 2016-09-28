@@ -156,9 +156,7 @@ public class ClientesDAO implements IDAO {
             }
             System.out.println("sql: " + q);
             if (!q.list().isEmpty()) {
-                if (q.list().get(0) == null) {
-                    ok = true;
-                }
+                ok = true;
             }
 
         } catch (HibernateException he) {

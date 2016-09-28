@@ -15,8 +15,8 @@ DROP TABLE IF EXISTS cidades CASCADE ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS cidades (
   id SERIAL NOT NULL ,
-  cidade VARCHAR(50) ,
-  estado CHAR(2) ,
+  cidade VARCHAR(50) NOT NULL,
+  estado CHAR(2) NOT NULL,
   PRIMARY KEY (id) );
 
 
@@ -5596,7 +5596,7 @@ DROP TABLE IF EXISTS prestadores CASCADE ;
 CREATE  TABLE IF NOT EXISTS prestadores (
   id SERIAL NOT NULL ,
   nome VARCHAR(45) NOT NULL ,
-  cpf VARCHAR(11) ,
+  cpf VARCHAR(11) NOT NULL,
   rg VARCHAR(10) ,
   telefone VARCHAR(15) ,
   celular VARCHAR(15) ,
@@ -5620,8 +5620,8 @@ DROP TABLE IF EXISTS clientes CASCADE ;
 CREATE  TABLE IF NOT EXISTS clientes (
   id SERIAL NOT NULL ,
   nome VARCHAR(60) NOT NULL ,
-  tipo CHAR(2) ,
-  cpf_cnpj VARCHAR(14) ,
+  tipo CHAR(2) NOT NULL,
+  cpf_cnpj VARCHAR(14) NOT NULL,
   telefone VARCHAR(15) ,
   celular VARCHAR(15) ,
   email VARCHAR(45) ,
@@ -5645,7 +5645,7 @@ CREATE  TABLE IF NOT EXISTS servicos_has_prestadores (
   id SERIAL NOT NULL ,
   ref_servicos INT NOT NULL ,
   ref_prestadores INT NOT NULL ,
-  valor_hora NUMERIC ,
+  valor_hora NUMERIC NOT NULL,
   PRIMARY KEY (id) ,
   CONSTRAINT fk_servicos_has_prestadores_servicos
     FOREIGN KEY (ref_servicos )
@@ -5663,12 +5663,12 @@ DROP TABLE IF EXISTS agendas CASCADE ;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS agendas (
   id SERIAL NOT NULL ,
-  situacao CHAR ,
+  situacao CHAR NOT NULL,
   ref_clientes INT NOT NULL ,
   descricao VARCHAR(250) ,
   ref_servicos_has_prestadores INT NOT NULL ,
-  inicio_estimado TIMESTAMP ,
-  fim_estimado TIMESTAMP ,
+  inicio_estimado TIMESTAMP NOT NULL,
+  fim_estimado TIMESTAMP NOT NULL,
   tempo_realizado NUMERIC ,
   valor NUMERIC ,
   obs_prestador VARCHAR(250) ,
@@ -5749,7 +5749,7 @@ DROP TABLE IF EXISTS log_erros CASCADE ;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS log_erros (
   id SERIAL NOT NULL ,
-  data_hora TIMESTAMP ,
+  data_hora TIMESTAMP NOT NULL,
   usuarios_id INT NOT NULL ,
   descricao TEXT ,
   PRIMARY KEY (id) ,

@@ -707,6 +707,7 @@ public class IfrClientes extends javax.swing.JInternalFrame {
         clientes.setEmail(tfdEmail.getText());
         clientes.setEndereco(tfdEndereco.getText());
         clientes.setCep(tfdCEP.getText());
+        clientes.setRefCidades((Cidades) new SelecionarCidadesDAO().consultarId(idCid));
 
         if (clientesDAO.registroUnico(clientes)) {
             if (tfdId.getText().trim().isEmpty()) { //SALVAR

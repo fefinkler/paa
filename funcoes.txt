@@ -1,0 +1,155 @@
+﻿//Função que traz todos os dados da tabela CIDADES
+//EX de uso: select get_cidades()
+
+CREATE OR REPLACE FUNCTION get_cidades() RETURNS SETOF cidades AS $$
+BEGIN
+RETURN QUERY SELECT * FROM cidades
+RETURN;
+END;
+$$ LANGUAGE 'plpgsql'
+
+
+//Função que traz todos os dados da tabela AGENDAS
+//EX de uso: select get_agendas()
+
+CREATE OR REPLACE FUNCTION get_agendas() RETURNS SETOF agendas AS $$
+BEGIN
+RETURN QUERY SELECT * FROM agendas WHERE delete 
+RETURN;
+END;
+$$ LANGUAGE 'plpgsql'
+
+
+//Função que traz todos os dados da tabela Clientes
+//EX de uso: select get_Clientes()
+
+CREATE OR REPLACE FUNCTION get_clientes() RETURNS SETOF clientes AS $$
+BEGIN
+RETURN QUERY SELECT * FROM clientes
+RETURN;
+END;
+$$ LANGUAGE 'plpgsql'
+
+//Função que traz todos os dados da tabela Prestadores
+//EX de uso: select get_prestadores()
+
+CREATE OR REPLACE FUNCTION get_prestadores() RETURNS SETOF prestadores AS $$
+BEGIN
+RETURN QUERY SELECT * FROM prestadores
+RETURN;
+END;
+$$ LANGUAGE 'plpgsql'
+
+
+//Função que traz todos os dados da tabela Servicos
+//EX de uso: select get_servicos()
+
+CREATE OR REPLACE FUNCTION get_servicos() RETURNS SETOF servicos AS $$
+BEGIN
+RETURN QUERY SELECT * FROM servicos
+RETURN;
+END;
+$$ LANGUAGE 'plpgsql'
+
+
+//Função para facilitar as consultas de dados com acentuação, onde os mesmos serão ignorados. 
+//Exemplo e uso: SELECT * FROM cidades WHERE retira_acentuacao(cidade) ILIKE retira_acentuacao('%Agua%');
+
+CREATE OR REPLACE FUNCTION retira_acentuacao(p_texto text)  
+  RETURNS text AS  
+ $BODY$  
+ Select translate($1,  
+ 'áàâãäåaaaÁ ÃÄÅAAAÀéèêëeeeeeEEEÉEEÈìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
+ 'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
+  );  
+ $BODY$  
+ LANGUAGE sql VOLATILE  
+ COST 100; 
+ 
+ 
+ 
+ 
+ 
+ 
+//Função que valida se é dia útil, vai retornar T para dia útil e F para sábado e domingo.
+//Exemplo e uso: SELECT data_util('2016-08-28') 
+
+CREATE OR REPLACE FUNCTION data_util("p_data" timestamp with time zone)
+     Returns boolean As
+$Body$
+Begin
+     Return (date_part('dow', p_data) <> 0 And date_part('dow', p_data) <> 6);
+End;
+$Body$
+Language 'plpgsql'
+Volatile
+Called On Null Input
+Security Invoker
+Cost 100;
+
+
+//Log de auditoria, gravando ID, tabela, operacao, valores, usuario, data_hora) 
+
+CREATE OR REPLACE FUNCTION funcao_gera_log() RETURNS "trigger"
+AS
+$BODY$
+BEGIN
+	IF TG_OP = 'INSERT' THEN
+		INSERT INTO LOG_ACOES(tabela, operacao, valores) VALUES (TG_RELNAME, TG_OP, 'OLD:'||CHR(13)||CHR(10)||'NEW:'||NEW::TEXT );
+		RETURN NEW;
+	ELSIF TG_OP = 'UPDATE' THEN
+		INSERT INTO LOG_ACOES(tabela, operacao, valores) VALUES (TG_RELNAME, TG_OP, 'OLD:'||OLD::TEXT||CHR(13)||CHR(10)||'NEW:'||NEW::TEXT );
+		RETURN NEW;
+	ELSIF TG_OP = 'DELETE' THEN	
+		INSERT INTO LOG_ACOES(tabela, operacao, valores) VALUES (TG_RELNAME, TG_OP, 'OLD:'||OLD::TEXT||CHR(13)||CHR(10)||'NEW:' );
+		RETURN OLD;
+	END IF;
+	END;
+	$BODY$
+	LAnGUAGE plpgsql;
+		
+	
+	
+
+
+//CRIAÇÃO DE TRIGGER PARA GERAR O LOG PARA TODAS AS TABELAS (NÃO ESTÁ FUNCIONANDO)
+
+select 'CREATE TRIGGER tr_logs_gerais AFTER INSERT OR UPDATE OR DELETE ON '||tablename||
+	' FOR EACH ROW EXECUTE PROCEDURE funcao_gera_log();'
+	from pg_tables where schemaname = 'public'
+
+
+//CRIAÇÃO DE TRIGGER PARA GERAR O LOG
+
+
+create trigger tr_logs_gerais after insert or update or delete on servicos for each row execute procedure funcao_gera_log();
+create trigger tr_logs_gerais after insert or update or delete on cidades for each row execute procedure funcao_gera_log();
+create trigger tr_logs_gerais after insert or update or delete on prestadores for each row execute procedure funcao_gera_log();
+create trigger tr_logs_gerais after insert or update or delete on clientes for each row execute procedure funcao_gera_log();
+create trigger tr_logs_gerais after insert or update or delete on agendas for each row execute procedure funcao_gera_log();
+create trigger tr_logs_gerais after insert or update or delete on usuarios for each row execute procedure funcao_gera_log();
+create trigger tr_logs_gerais after insert or update or delete on telas for each row execute procedure funcao_gera_log();
+create trigger tr_logs_gerais after insert or update or delete on acoes for each row execute procedure funcao_gera_log();
+
+
+//Nova Tabela de LOGS_ACOES
+
+DROP TABLE log_acoes CASCADE
+
+CREATE TABLE log_acoes
+(
+  id integer NOT NULL,
+  tabela character varying(250),
+  operacao character varying(10),
+  valores text,
+  usuario character varying(200) DEFAULT "current_user"(),
+  data timestamp without time zone DEFAULT now(),
+  CONSTRAINT log_pk PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+
+
+
+ 

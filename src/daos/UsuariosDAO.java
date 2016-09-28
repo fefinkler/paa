@@ -159,9 +159,7 @@ public class UsuariosDAO implements IDAO {
             }
             System.out.println("sql: " + q);
             if (!q.list().isEmpty()) {
-                if (q.list().get(0) == null) {
-                    ok = true;
-                }
+                ok = true;
             }
 
         } catch (HibernateException he) {
@@ -203,12 +201,12 @@ public class UsuariosDAO implements IDAO {
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            // busca por código
+            
             org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Usuarios WHERE retira_acentuacao(nome) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null");
             int c = Integer.parseInt(String.valueOf(q.uniqueResult()));
             //int count = (Integer) q.list().get(0);
 
-            dadosTabela = new Object[c][3]; //diz quantas linhas e colunas serão criadas: getInt(1) pega o resultado da primeira coluna do Select; e "3" pq serão duas colunas (Nome,Telefone,Cidade).
+            dadosTabela = new Object[c][3];
 
         } catch (Exception e) {
             System.out.println("Erro ao consultar: " + e);
@@ -236,23 +234,6 @@ public class UsuariosDAO implements IDAO {
             System.out.println(e);
         }
 
-        // efetua consulta na tabela
-//        try {
-//            resultadoQ = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(""
-//                    + "SELECT atleta.*, cidade.nome as cidade FROM atleta, cidade"
-//                    + "WHERE atleta.ref_cidade = cidade.idcidade AND atleta.nome ILIKE '%" + criterio + "%' ORDER BY atleta.nome");
-//
-//            while (resultadoQ.next()) {
-//                
-//                dadosTabela[lin][0] = resultadoQ.getString("nome"); //poderia colocar o número da coluna (1)
-//                dadosTabela[lin][1] = resultadoQ.getString("telefone");
-//                dadosTabela[lin][2] = resultadoQ.getString(16);
-//                lin++;
-//            }
-//        } catch (Exception e) {
-//            System.out.println("problemas para popular tabela...");
-//            System.out.println(e);
-//        }
         // configuracoes adicionais no componente tabela
         tabela.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
 
@@ -284,12 +265,6 @@ public class UsuariosDAO implements IDAO {
                     break;
                 case 2:
                     column.setPreferredWidth(107);
-                    break;
-                case 3:
-                    column.setPreferredWidth(200);
-                    break;
-                case 4:
-                    column.setPreferredWidth(50);
                     break;
             }
         }

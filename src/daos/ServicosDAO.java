@@ -45,9 +45,10 @@ public class ServicosDAO implements IDAO {
         } finally {
             sessao.close();
         }
-        return deucerto;    
+        return deucerto;
     }
- @Override
+
+    @Override
     public boolean atualizar(Object o) {
         boolean deucerto = false;
         Session sessao = null;
@@ -123,7 +124,7 @@ public class ServicosDAO implements IDAO {
             sessao.beginTransaction();
 
             // busca por código
-            org.hibernate.Query q = sessao.createQuery("from servicos where id = " + id);
+            org.hibernate.Query q = sessao.createQuery("from Servicos where id = " + id);
 
             return q.list().get(0);
 
@@ -155,7 +156,7 @@ public class ServicosDAO implements IDAO {
             }
             System.out.println("sql: " + q);
 
-            if (q.list().get(0) == null) {
+            if (!q.list().isEmpty()) {
                 ok = true;
             }
 
@@ -164,8 +165,8 @@ public class ServicosDAO implements IDAO {
         }
         return true;
     }
-    
-     public void popularTabela(JTable tabela, String criterio) {
+
+    public void popularTabela(JTable tabela, String criterio) {
         // dados da tabela
         Object[][] dadosTabela = null;
 
@@ -179,16 +180,16 @@ public class ServicosDAO implements IDAO {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             // busca por código
-            org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Servicos WHERE retira_acentuacao(descricao) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null");          
+            org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Servicos WHERE retira_acentuacao(descricao) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null");
             System.out.println("SQL: " + q);
             int c = Integer.parseInt(String.valueOf(q.uniqueResult()));
             //int count = (Integer) q.list().get(0);
-            
-            dadosTabela = new Object[c][2]; //diz quantas linhas e colunas serão criadas: getInt(1) pega o resultado da primeira coluna do Select; e "3" pq serão duas colunas (Nome,Telefone,Cidade).
-            
+
+            dadosTabela = new Object[c][2];
+
         } catch (Exception e) {
             System.out.println("Erro ao contar/consultar: " + e);
-                    }
+        }
 
         int lin = 0;
 
@@ -196,10 +197,10 @@ public class ServicosDAO implements IDAO {
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            
-            org.hibernate.Query q = sessao.createQuery("FROM Servicos WHERE retira_acentuacao(descricao) ILIKE '%" + criterio + "%' AND delete is null ORDER BY descricao");
+
+            org.hibernate.Query q = sessao.createQuery("FROM Servicos WHERE retira_acentuacao(descricao) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null ORDER BY descricao");
             List resultado = q.list();
-            
+
             for (Object o : resultado) {
                 Servicos s = (Servicos) resultado.get(lin);
                 dadosTabela[lin][0] = s.getId();
@@ -210,7 +211,7 @@ public class ServicosDAO implements IDAO {
             System.out.println("problemas para popular tabela Serviços...");
             System.out.println(e);
         }
-         
+
         // configuracoes adicionais no componente tabela
         tabela.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
 
@@ -223,7 +224,7 @@ public class ServicosDAO implements IDAO {
 
         // permite seleção de apenas uma linha da tabela
         tabela.setSelectionMode(0);
-        
+
         //alinhamento da conteúdo de uma coluna
         DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
         direita.setHorizontalAlignment(SwingConstants.RIGHT);

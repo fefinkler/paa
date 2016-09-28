@@ -312,7 +312,37 @@ public class IfrServicos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblServicosMouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+        Servicos servico = new Servicos();
+        if (tfdId.getText().length() >= 1) {
+            servico.setId(Integer.parseInt(tfdId.getText()));
+        }
+        servico.setDescricao(tfdDescricao.getText());
+        if (servicosDAO.registroUnico(servico)) {
+            if (tfdId.getText().trim().isEmpty()) { //SALVAR
+                if (servicosDAO.salvar(servico)) {
+                    JOptionPane.showMessageDialog(this, "Serviço salvo com Sucesso!");
+                    btnSalvar.setEnabled(false);
+                    LimparCamposCadastro();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao salvar novo Serviço!");
+                }
+
+            } else {  // ATUALIZAR
+                servico.setId(Integer.parseInt(tfdId.getText()));
+                if (servicosDAO.atualizar(servico)) {
+                    JOptionPane.showMessageDialog(this, "Serviço atualizado com Sucesso!");
+                    btnSalvar.setEnabled(false);
+                    LimparCamposCadastro();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao atualizar Serviço!\n");
+                }
+            }
+            servicosDAO.popularTabela(tblServicos, tfdConsulta.getText());
+        } else {
+            JOptionPane.showMessageDialog(this, "Serviço já cadastrado!");
+            tfdDescricao.requestFocus();
+            tfdDescricao.setText(null);
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
@@ -324,21 +354,17 @@ public class IfrServicos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-         if (tblServicos.getSelectedRow() > -1) {
-            int id = Integer.parseInt(String.valueOf(tblServicos.getValueAt(tblServicos.getSelectedRow(), 0)));
-            int resposta = JOptionPane.showConfirmDialog(null, "Realmente excluir serviço?", title, JOptionPane.YES_NO_OPTION);
-            if (resposta == JOptionPane.YES_OPTION) {
-                Servicos s = (Servicos) servicosDAO.consultarId(id);
-                s.setDelete('d');
-                if (servicosDAO.atualizar(s)) {
-                    servicosDAO.popularTabela(tblServicos, tfdConsulta.getText());
-                    JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
-                }
+        int id = Integer.parseInt(String.valueOf(tblServicos.getValueAt(tblServicos.getSelectedRow(), 0)));
+        int resposta = JOptionPane.showConfirmDialog(null, "Realmente excluir serviço?", title, JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            Servicos s = (Servicos) servicosDAO.consultarId(id);
+            s.setDelete('d');
+            if (servicosDAO.atualizar(s)) {
+                servicosDAO.popularTabela(tblServicos, tfdConsulta.getText());
+                JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecione um registro!");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
