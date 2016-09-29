@@ -354,13 +354,16 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
             }
         ));
         tblPrestadores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPrestadoresMouseClicked(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tblPrestadoresMouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(tblPrestadores);
 
-        jLabel3.setText("Nomee");
+        jLabel3.setText("Nome");
 
         btnProcurar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/fin2.png"))); // NOI18N
         btnProcurar.setText("Buscar");
@@ -482,7 +485,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblPrestadoresMouseReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        DlgSelecionarCidadeCliente dlgSelecCidade = new DlgSelecionarCidadeCliente(null, true, this);
+        DlgSelecionarCidade dlgSelecCidade = new DlgSelecionarCidade(null, true, this);
         dlgSelecCidade.setLocationRelativeTo(null);
         dlgSelecCidade.setModal(true);
         dlgSelecCidade.setVisible(true);
@@ -491,8 +494,6 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         } else {
             btnSalvar.setEnabled(false);
         }
-
-
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private boolean camposObrigatorios() {
@@ -543,7 +544,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
                 Prestadores p = (Prestadores) prestadoresDAO.consultarId(id);
                 p.setDelete('d');
                 if (prestadoresDAO.atualizar(p)) {
-                    prestadorDAO.popularTabela(tblPrestadores, tfdConsulta.getText());
+                    prestadoresDAO.popularTabela(tblPrestadores, tfdConsulta.getText());
                     JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
                 } else {
                     JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
@@ -561,17 +562,20 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     public void editar() {
         if (tblPrestadores.getSelectedRow() > -1) {
             int id = Integer.parseInt(String.valueOf(tblPrestadores.getValueAt(tblPrestadores.getSelectedRow(), 0)));
-            Prestadores p = (Prestadores) prestadoresDAO.consultarId(id);
+            Prestadores pres = (Prestadores) prestadoresDAO.consultarId(id);
 
-            tfdId.setText(String.valueOf(p.getId()));
-            tfdNome.setText(p.getNome());
-            tfdTelefone.setText(p.getTelefone());
-            tfdCelular.setText(p.getCelular());
-            tfdEmail.setText(p.getEmail());
-            tfdEndereco.setText(p.getEndereco());
-            tfdCEP.setText(p.getCep());
-            tfdIdCidade.setText(String.valueOf(p.getId()));
+            tfdId.setText(String.valueOf(pres.getId()));
+            tfdNome.setText(pres.getNome());
+            tfdCPF.setText(pres.getCpf());
+            tfdRG.setText(pres.getRg());
+            tfdTelefone.setText(pres.getTelefone());
+            tfdCelular.setText(pres.getCelular());
+            tfdEmail.setText(pres.getEmail());
+            tfdEndereco.setText(pres.getEndereco());
+            tfdCEP.setText(pres.getCep());
+            tfdIdCidade.setText(String.valueOf(pres.getRefCidades().getId()));
             Cidades cid = (Cidades) scDAO.consultarId(Integer.parseInt(tfdIdCidade.getText()));
+            idCid = cid.getId();
             tfdCidade.setText(cid.getCidade());
             tfdSiglaEstado.setText(cid.getEstado());
             tblPrestadores.clearSelection();
@@ -582,22 +586,23 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     }
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        Prestadores prestadores = new Prestadores();
+        Prestadores prestador = new Prestadores();
         if (tfdId.getText().length() >= 1) {
-            prestadores.setId(Integer.parseInt(tfdId.getText()));
+            prestador.setId(Integer.parseInt(tfdId.getText()));
         }
-        prestadores.setNome(tfdNome.getText());
-        prestadores.setCpf(tfdCPF.getText());
-        prestadores.setRg(tfdRG.getText());
-        prestadores.setTelefone(tfdTelefone.getText());
-        prestadores.setCelular(tfdCelular.getText());
-        prestadores.setEmail(tfdEmail.getText());
-        prestadores.setEndereco(tfdEndereco.getText());
-        prestadores.setCep(tfdCEP.getText());
+        prestador.setNome(tfdNome.getText());
+        prestador.setCpf(tfdCPF.getText());
+        prestador.setRg(tfdRG.getText());
+        prestador.setTelefone(tfdTelefone.getText());
+        prestador.setCelular(tfdCelular.getText());
+        prestador.setEmail(tfdEmail.getText());
+        prestador.setEndereco(tfdEndereco.getText());
+        prestador.setCep(tfdCEP.getText());
+        prestador.setRefCidades((Cidades) new SelecionarCidadesDAO().consultarId(idCid));
 
-        if (prestadoresDAO.registroUnico(prestadores)) {
+        if (prestadoresDAO.registroUnico(prestador)) {
             if (tfdId.getText().trim().isEmpty()) { //SALVAR
-                if (prestadoresDAO.salvar(prestadores)) {
+                if (prestadoresDAO.salvar(prestador)) {
                     JOptionPane.showMessageDialog(this, "Prestador salvo com Sucesso!");
                     btnSalvar.setEnabled(false);
                     LimparCamposCadastro();
@@ -606,18 +611,18 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
                 }
 
             } else {  // ATUALIZAR
-                prestadores.setId(Integer.parseInt(tfdId.getText()));
-                if (prestadoresDAO.atualizar(prestadores)) {
-                    JOptionPane.showMessageDialog(this, "Prestadore atualizado com Sucesso!");
+                prestador.setId(Integer.parseInt(tfdId.getText()));
+                if (prestadoresDAO.atualizar(prestador)) {
+                    JOptionPane.showMessageDialog(this, "Prestador atualizado com Sucesso!");
                     btnSalvar.setEnabled(false);
                     LimparCamposCadastro();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Erro ao atualizar Prestadore!\n");
+                    JOptionPane.showMessageDialog(this, "Erro ao atualizar Prestador!\n");
                 }
             }
             prestadoresDAO.popularTabela(tblPrestadores, tfdConsulta.getText());
         } else {
-            JOptionPane.showMessageDialog(this, "Prestadore já existe!");
+            JOptionPane.showMessageDialog(this, "Prestador já cadastrado com este CPF!");
                 tfdCPF.requestFocus();
                 tfdCPF.setText(null);
         }
@@ -660,6 +665,12 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
             btnSalvar.setEnabled(false);
         }
     }//GEN-LAST:event_tfdCPFKeyReleased
+
+    private void tblPrestadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPrestadoresMouseClicked
+        if (evt.getClickCount() >= 2) {
+            editar();
+        }
+    }//GEN-LAST:event_tblPrestadoresMouseClicked
 
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanel1);

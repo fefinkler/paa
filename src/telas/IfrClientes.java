@@ -656,28 +656,28 @@ public class IfrClientes extends javax.swing.JInternalFrame {
     public void editar() {
         if (tblClientes.getSelectedRow() > -1) {
             int id = Integer.parseInt(String.valueOf(tblClientes.getValueAt(tblClientes.getSelectedRow(), 0)));
-            Clientes c = (Clientes) clientesDAO.consultarId(id);
+            Clientes cli = (Clientes) clientesDAO.consultarId(id);
 
-            tfdId.setText(String.valueOf(c.getId()));
-            tfdNome.setText(c.getNome());
-            if (c.getTipo().equals("J ")) {
+            tfdId.setText(String.valueOf(cli.getId()));
+            tfdNome.setText(cli.getNome());
+            if (cli.getTipo().equals("J ")) {
                 jbtJuridica.setSelected(true);
-                tfdCNPJ.setText(c.getCpfCnpj());
+                tfdCNPJ.setText(cli.getCpfCnpj());
                 tfdCNPJ.setVisible(true);
                 tfdCPF.setVisible(false); //013.315.720-29
             }
-            if (c.getTipo().equals("F ")) {
+            if (cli.getTipo().equals("F ")) {
                 jbtFisica.setSelected(true);
-                tfdCPF.setText(c.getCpfCnpj());
+                tfdCPF.setText(cli.getCpfCnpj());
                 tfdCPF.setVisible(true);
                 tfdCNPJ.setVisible(false);
             }
-            tfdTelefone.setText(c.getTelefone());
-            tfdCelular.setText(c.getCelular());
-            tfdEmail.setText(c.getEmail());
-            tfdEndereco.setText(c.getEndereco());
-            tfdCEP.setText(c.getCep());
-            tfdIdCidade.setText(String.valueOf(c.getRefCidades().getId()));
+            tfdTelefone.setText(cli.getTelefone());
+            tfdCelular.setText(cli.getCelular());
+            tfdEmail.setText(cli.getEmail());
+            tfdEndereco.setText(cli.getEndereco());
+            tfdCEP.setText(cli.getCep());
+            tfdIdCidade.setText(String.valueOf(cli.getRefCidades().getId()));
             Cidades cid = (Cidades) scDAO.consultarId(Integer.parseInt(tfdIdCidade.getText()));
             idCid = cid.getId();
             tfdCidade.setText(cid.getCidade());

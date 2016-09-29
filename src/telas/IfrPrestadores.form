@@ -504,6 +504,7 @@
                         </Property>
                       </Properties>
                       <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblPrestadoresMouseClicked"/>
                         <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblPrestadoresMouseReleased"/>
                       </Events>
                     </Component>
@@ -511,7 +512,7 @@
                 </Container>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Nomee"/>
+                    <Property name="text" type="java.lang.String" value="Nome"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="tfdConsulta">

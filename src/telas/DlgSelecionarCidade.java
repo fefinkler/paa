@@ -37,12 +37,12 @@ public class DlgSelecionarCidade extends javax.swing.JDialog {
         ifrCliClasse = ifrCli;
     }
 
-    public DlgSelecionarCidade(java.awt.Frame parent, boolean modal, IfrPrestadores ifrPres) {
+    public DlgSelecionarCidade(java.awt.Frame parent, boolean modal, IfrPrestadores ifrPrest) {
         super(parent, modal);
         initComponents();
         scDAO = new SelecionarCidadesDAO();
         scDAO.popularTabela(tblCidades, "");
-        ifrPresClasse = ifrPres;
+        ifrPresClasse = ifrPrest;
     }
 
     /**
