@@ -12,29 +12,39 @@ import entidades.Cidades;
  *
  * @author asimon
  */
-public class DlgSelecionarCidadeCliente extends javax.swing.JDialog {
+public class DlgSelecionarCidade extends javax.swing.JDialog {
 
     /**
      * Creates new form DlgCidade
      */
     IfrClientes ifrCliClasse;
-    
+    IfrPrestadores ifrPresClasse;
+
     SelecionarCidadesDAO scDAO;
 
-    public DlgSelecionarCidadeCliente(java.awt.Frame parent, boolean modal) {
+    public DlgSelecionarCidade(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         scDAO = new SelecionarCidadesDAO();
         scDAO.popularTabela(tblCidades, "");
     }
 
-    public DlgSelecionarCidadeCliente(java.awt.Frame parent, boolean modal, IfrClientes ifrCli) {
+    public DlgSelecionarCidade(java.awt.Frame parent, boolean modal, IfrClientes ifrCli) {
         super(parent, modal);
         initComponents();
         scDAO = new SelecionarCidadesDAO();
         scDAO.popularTabela(tblCidades, "");
         ifrCliClasse = ifrCli;
     }
+
+    public DlgSelecionarCidade(java.awt.Frame parent, boolean modal, IfrPrestadores ifrPres) {
+        super(parent, modal);
+        initComponents();
+        scDAO = new SelecionarCidadesDAO();
+        scDAO.popularTabela(tblCidades, "");
+        ifrPresClasse = ifrPres;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -165,9 +175,13 @@ public class DlgSelecionarCidadeCliente extends javax.swing.JDialog {
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         int id = Integer.parseInt(String.valueOf(tblCidades.getValueAt(tblCidades.getSelectedRow(), 0)));
         Cidades cid = (Cidades) scDAO.consultarId(id);
-        
-        ifrCliClasse.pegaValor(cid);
-        this.dispose();
+        if (ifrCliClasse != null) {
+            ifrCliClasse.pegaValor(cid);
+            this.dispose();
+        } else if (ifrPresClasse != null){
+            ifrPresClasse.pegaValor(cid);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     /**
@@ -187,19 +201,19 @@ public class DlgSelecionarCidadeCliente extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DlgSelecionarCidadeCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgSelecionarCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DlgSelecionarCidadeCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgSelecionarCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DlgSelecionarCidadeCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgSelecionarCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DlgSelecionarCidadeCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgSelecionarCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DlgSelecionarCidadeCliente dialog = new DlgSelecionarCidadeCliente(new javax.swing.JFrame(), true);
+                DlgSelecionarCidade dialog = new DlgSelecionarCidade(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

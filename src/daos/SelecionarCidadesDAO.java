@@ -30,7 +30,7 @@ public class SelecionarCidadesDAO {
             // busca por código
             org.hibernate.Query q = sessao.createQuery("from Cidades where id = " + id);
 
-            return q.list().get(0);
+            return q.uniqueResult();
 
         } catch (HibernateException he) {
             he.printStackTrace();

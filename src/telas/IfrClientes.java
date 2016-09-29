@@ -247,7 +247,6 @@ public class IfrClientes extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        tfdCPF.setText("   .   .   -  ");
         tfdCPF.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tfdCPFFocusLost(evt);
@@ -409,6 +408,9 @@ public class IfrClientes extends javax.swing.JInternalFrame {
             }
         ));
         tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientesMouseClicked(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tblClientesMouseReleased(evt);
             }
@@ -538,7 +540,7 @@ public class IfrClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblClientesMouseReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        DlgSelecionarCidadeCliente dlgSelecCidade = new DlgSelecionarCidadeCliente(null, true, this);
+        DlgSelecionarCidade dlgSelecCidade = new DlgSelecionarCidade(null, true, this);
         dlgSelecCidade.setLocationRelativeTo(null);
         dlgSelecCidade.setModal(true);
         dlgSelecCidade.setVisible(true);
@@ -547,8 +549,6 @@ public class IfrClientes extends javax.swing.JInternalFrame {
         } else {
             btnSalvar.setEnabled(false);
         }
-
-
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private boolean camposObrigatorios() {
@@ -660,13 +660,13 @@ public class IfrClientes extends javax.swing.JInternalFrame {
 
             tfdId.setText(String.valueOf(c.getId()));
             tfdNome.setText(c.getNome());
-            if (c.getTipo() == "J") {
+            if (c.getTipo().equals("J ")) {
                 jbtJuridica.setSelected(true);
                 tfdCNPJ.setText(c.getCpfCnpj());
                 tfdCNPJ.setVisible(true);
-                tfdCPF.setVisible(false);
+                tfdCPF.setVisible(false); //013.315.720-29
             }
-            if (c.getTipo() == "F") {
+            if (c.getTipo().equals("F ")) {
                 jbtFisica.setSelected(true);
                 tfdCPF.setText(c.getCpfCnpj());
                 tfdCPF.setVisible(true);
@@ -677,8 +677,9 @@ public class IfrClientes extends javax.swing.JInternalFrame {
             tfdEmail.setText(c.getEmail());
             tfdEndereco.setText(c.getEndereco());
             tfdCEP.setText(c.getCep());
-            tfdIdCidade.setText(String.valueOf(c.getId()));
+            tfdIdCidade.setText(String.valueOf(c.getRefCidades().getId()));
             Cidades cid = (Cidades) scDAO.consultarId(Integer.parseInt(tfdIdCidade.getText()));
+            idCid = cid.getId();
             tfdCidade.setText(cid.getCidade());
             tfdSiglaEstado.setText(cid.getEstado());
             tblClientes.clearSelection();
@@ -796,6 +797,12 @@ public class IfrClientes extends javax.swing.JInternalFrame {
             btnSalvar.setEnabled(false);
         }
     }//GEN-LAST:event_tfdCPFKeyReleased
+
+    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
+        if (evt.getClickCount() >= 2) {
+            editar();
+        }
+    }//GEN-LAST:event_tblClientesMouseClicked
 
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanel1);

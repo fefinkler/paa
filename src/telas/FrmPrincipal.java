@@ -247,7 +247,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuClientesActionPerformed
 
     private void jMenuPrestadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPrestadoresActionPerformed
-        // TODO add your handling code here:
+        IfrPrestadores IfrPrestadores = new IfrPrestadores();
+        jDesktopPane1.add(IfrPrestadores);
+        IfrPrestadores.setVisible(true);
     }//GEN-LAST:event_jMenuPrestadoresActionPerformed
 
     private void jMenuUsuariosSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuariosSistemaActionPerformed
