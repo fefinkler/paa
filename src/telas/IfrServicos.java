@@ -9,6 +9,7 @@ import Apoio.LimiteDigitos;
 import Apoio.limpaCampos;
 import daos.ServicosDAO;
 import entidades.Servicos;
+import entidades.Usuarios;
 import javax.swing.JOptionPane;
 
 /**
@@ -354,17 +355,21 @@ public class IfrServicos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int id = Integer.parseInt(String.valueOf(tblServicos.getValueAt(tblServicos.getSelectedRow(), 0)));
-        int resposta = JOptionPane.showConfirmDialog(null, "Realmente excluir serviço?", title, JOptionPane.YES_NO_OPTION);
-        if (resposta == JOptionPane.YES_OPTION) {
-            Servicos s = (Servicos) servicosDAO.consultarId(id);
-            s.setDelete('d');
-            if (servicosDAO.atualizar(s)) {
-                servicosDAO.popularTabela(tblServicos, tfdConsulta.getText());
-                JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
+if (tblServicos.getSelectedRow() > -1) {
+            int id = Integer.parseInt(String.valueOf(tblServicos.getValueAt(tblServicos.getSelectedRow(), 0)));
+            int resposta = JOptionPane.showConfirmDialog(null, "Realmente excluir Serviço?", title, JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                Servicos s = (Servicos) servicosDAO.consultarId(id);
+                s.setDelete('d');
+                if (servicosDAO.atualizar(s)) {
+                    servicosDAO.popularTabela(tblServicos, tfdConsulta.getText());
+                    JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um registro!");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 

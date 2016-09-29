@@ -55,6 +55,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuRelatorios = new javax.swing.JMenu();
         jMenuUtilitarios = new javax.swing.JMenu();
         jMenuGerarBackup = new javax.swing.JMenuItem();
+        jMenuStatusLogs = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -214,6 +215,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenuUtilitarios.add(jMenuGerarBackup);
 
+        jMenuStatusLogs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/finder.png"))); // NOI18N
+        jMenuStatusLogs.setText("Status Gravar Logs");
+        jMenuStatusLogs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuStatusLogsActionPerformed(evt);
+            }
+        });
+        jMenuUtilitarios.add(jMenuStatusLogs);
+
         jMenuBar1.add(jMenuUtilitarios);
 
         setJMenuBar(jMenuBar1);
@@ -304,6 +314,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         IfrClientes.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jMenuStatusLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuStatusLogsActionPerformed
+DlgAtivaDesativaLogs dlgLogs = new DlgAtivaDesativaLogs(null, true, this);
+        dlgLogs.setLocationRelativeTo(null);
+        dlgLogs.setModal(true);
+        dlgLogs.setVisible(true);
+    }//GEN-LAST:event_jMenuStatusLogsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -362,6 +379,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuPrestadores;
     private javax.swing.JMenu jMenuRelatorios;
     private javax.swing.JMenuItem jMenuServicos;
+    private javax.swing.JMenuItem jMenuStatusLogs;
     private javax.swing.JMenuItem jMenuUsuariosSistema;
     private javax.swing.JMenu jMenuUtilitarios;
     private javax.swing.JPanel jPanel1;
