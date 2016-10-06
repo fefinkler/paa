@@ -10,6 +10,7 @@ import daos.SelecionarCidadesDAO;
 import entidades.Cidades;
 import entidades.Servicos;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -153,8 +154,10 @@ public class DlgAtivaDesativaLogs extends javax.swing.JDialog {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = sessao.beginTransaction();
 
-            sessao.createSQLQuery("ALTER TABLE servicos ENABLE TRIGGER tr_logs_gerais;").executeUpdate();
+            sessao.createSQLQuery("ALTER TABLE acoes ENABLE TRIGGER tr_logs_gerais; ALTER TABLE agendas ENABLE TRIGGER tr_logs_gerais; ALTER TABLE cidades ENABLE TRIGGER tr_logs_gerais; ALTER TABLE clientes ENABLE TRIGGER tr_logs_gerais; ALTER TABLE prestadores ENABLE TRIGGER tr_logs_gerais; ALTER TABLE servicos ENABLE TRIGGER tr_logs_gerais; ALTER TABLE usuarios ENABLE TRIGGER tr_logs_gerais;").executeUpdate();
             tx.commit();
+                        JOptionPane.showMessageDialog(this, "Logs habilitados com sucesso!");
+
         } catch (HibernateException he) {
             he.printStackTrace();
         }
@@ -166,8 +169,10 @@ public class DlgAtivaDesativaLogs extends javax.swing.JDialog {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = sessao.beginTransaction();
 
-            sessao.createSQLQuery("ALTER TABLE servicos DISABLE TRIGGER tr_logs_gerais;").executeUpdate();
+            sessao.createSQLQuery("ALTER TABLE acoes DISABLE TRIGGER tr_logs_gerais; ALTER TABLE agendas DISABLE TRIGGER tr_logs_gerais; ALTER TABLE cidades DISABLE TRIGGER tr_logs_gerais; ALTER TABLE clientes DISABLE TRIGGER tr_logs_gerais; ALTER TABLE prestadores DISABLE TRIGGER tr_logs_gerais; ALTER TABLE servicos DISABLE TRIGGER tr_logs_gerais; ALTER TABLE usuarios DISABLE TRIGGER tr_logs_gerais;").executeUpdate();
             tx.commit();
+            JOptionPane.showMessageDialog(this, "Logs desabilitados com sucesso!");
+
         } catch (HibernateException he) {
             he.printStackTrace();
         }
