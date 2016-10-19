@@ -355,12 +355,14 @@ public class IfrServicos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-if (tblServicos.getSelectedRow() > -1) {
+        if (tblServicos.getSelectedRow() > -1) {
             int id = Integer.parseInt(String.valueOf(tblServicos.getValueAt(tblServicos.getSelectedRow(), 0)));
             int resposta = JOptionPane.showConfirmDialog(null, "Realmente excluir Serviço?", title, JOptionPane.YES_NO_OPTION);
             if (resposta == JOptionPane.YES_OPTION) {
                 Servicos s = (Servicos) servicosDAO.consultarId(id);
                 s.setDelete('d');
+                System.out.println("ID: " + s.getId() + " Descricao: " + s.getDescricao() + " Delet: " + s.getDelete());
+
                 if (servicosDAO.atualizar(s)) {
                     servicosDAO.popularTabela(tblServicos, tfdConsulta.getText());
                     JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");

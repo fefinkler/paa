@@ -96,9 +96,9 @@ public class PrestadoresDAO implements IDAO {
     public ArrayList<Object> consultarTodos() {
         List resultado = null;
         ArrayList<Object> prestadores = new ArrayList<>();
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
 
             // busca todos os registros
             // observar: a classe Pessoa no from -> P maiúsculo
@@ -112,6 +112,8 @@ public class PrestadoresDAO implements IDAO {
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
 
         return prestadores;
@@ -119,9 +121,9 @@ public class PrestadoresDAO implements IDAO {
 
     @Override
     public Object consultarId(int id) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
 
             // busca por código
             org.hibernate.Query q = sessao.createQuery("from Prestadores where id = " + id);
@@ -130,6 +132,8 @@ public class PrestadoresDAO implements IDAO {
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
         return null;
     }
@@ -139,9 +143,9 @@ public class PrestadoresDAO implements IDAO {
         Prestadores p = (Prestadores) o;
         boolean ok = false;
 
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
             org.hibernate.Query q;
 
             // busca por item cadastrado
@@ -150,20 +154,22 @@ public class PrestadoresDAO implements IDAO {
                         + "AND id != " + p.getId() + " "
                         + "AND delete is null");
             } else {
-                q = sessao.createQuery("FROM Prestadores WHERE nome ilike '" + p.getCpf()+ "' "
+                q = sessao.createQuery("FROM Prestadores WHERE nome ilike '" + p.getCpf() + "' "
                         + "AND delete is null");
             }
             System.out.println("sql: " + q);
-            if (!q.list().isEmpty()) {
+            if (q.list().isEmpty()) {
                 ok = true;
             }
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
-        return true;
+        return ok;
     }
-    
+
     public void popularTabela(JTable tabela, String criterio) {
         // dados da tabela
         Object[][] dadosTabela = null;
@@ -179,7 +185,7 @@ public class PrestadoresDAO implements IDAO {
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            
+
             org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Prestadores WHERE retira_acentuacao(nome) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null");
             int c = Integer.parseInt(String.valueOf(q.uniqueResult()));
             //int count = (Integer) q.list().get(0);
@@ -247,9 +253,8 @@ public class PrestadoresDAO implements IDAO {
                     break;
                 case 3:
                     column.setPreferredWidth(180);
-                    break;    
+                    break;
             }
         }
     }
 }
-

@@ -4,6 +4,8 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="buttonGroupTipo">
     </Component>
+    <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="title" type="java.lang.String" value="Cadastro de Prestadores"/>
@@ -47,8 +49,8 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jPanel3" min="-2" pref="570" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnFechar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -97,9 +99,10 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jTabbedPane1" min="-2" pref="389" max="-2" attributes="0"/>
+                  <Component id="jTabbedPane1" min="-2" pref="560" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -128,16 +131,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
-                                  <Component id="tfdIdCidade" min="-2" pref="29" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="1" attributes="0">
                                               <Component id="jLabel6" max="32767" attributes="0"/>
-                                              <Component id="jLabel7" alignment="0" pref="48" max="32767" attributes="0"/>
+                                              <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="jLabel10" min="-2" pref="28" max="-2" attributes="0"/>
                                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -145,7 +143,7 @@
                                           </Group>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
-                                                  <EmptySpace pref="6" max="32767" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Component id="tfdEndereco" min="-2" pref="345" max="-2" attributes="0"/>
                                                       <Component id="tfdCEP" min="-2" pref="127" max="-2" attributes="0"/>
@@ -158,6 +156,8 @@
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="btnBuscar" min="-2" pref="22" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="tfdIdCidade" min="-2" pref="29" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                                   <Component id="jLabel4" min="-2" pref="46" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="tfdSiglaEstado" min="-2" pref="39" max="-2" attributes="0"/>
@@ -212,6 +212,37 @@
                                       </Group>
                                   </Group>
                                   <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel11" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jSeparator1" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="jScrollPane2" min="-2" pref="305" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                                      <Group type="102" alignment="0" attributes="0">
+                                                          <Component id="tfdServico" min="-2" pref="79" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="tfdIdServico" min="-2" pref="29" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -268,14 +299,34 @@
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="tfdSiglaEstado" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfdIdCidade" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                               <Component id="tfdCidade" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="btnBuscar" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="tfdIdCidade" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="8" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="jButton2" min="-2" pref="21" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="tfdServico" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tfdIdServico" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jButton1" min="-2" pref="21" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane2" min="-2" pref="139" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="12" max="32767" attributes="0"/>
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -438,6 +489,76 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="tfdRG">
                 </Component>
+                <Component class="javax.swing.JLabel" name="jLabel11">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="text" type="java.lang.String" value="Servi&#xe7;os Prestados"/>
+                  </Properties>
+                </Component>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTable" name="tblServicos">
+                      <Properties>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                          <Table columnCount="4" rowCount="4">
+                            <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                          </Table>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblServicosMouseClicked"/>
+                        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblServicosMouseReleased"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JTextField" name="tfdServico">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfdServicoKeyReleased"/>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfdServicoKeyTyped"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="tfdIdServico">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator1">
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton1">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/telas.apoio/delete.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Remover &gt;&gt;"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton2">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/telas.apoio/fin2.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="&lt;&lt; Adicionar"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel2">
@@ -455,7 +576,7 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane1" alignment="0" pref="409" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" alignment="0" pref="432" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>

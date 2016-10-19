@@ -13,6 +13,7 @@ import daos.PrestadoresDAO;
 import daos.SelecionarCidadesDAO;
 import entidades.Cidades;
 import entidades.Prestadores;
+import entidades.Servicos;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +26,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     SelecionarCidadesDAO scDAO;
     char operacao = 'i';
     int idCid = 0;
+    int idSer = 0;
 
     /**
      * Creates new form IfrPrestadores
@@ -54,6 +56,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         buttonGroupTipo = new javax.swing.ButtonGroup();
+        jProgressBar1 = new javax.swing.JProgressBar();
         btnFechar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -84,6 +87,14 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         labelCPF = new javax.swing.JLabel();
         tfdCPF = new javax.swing.JFormattedTextField();
         tfdRG = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblServicos = new javax.swing.JTable();
+        tfdServico = new javax.swing.JTextField();
+        tfdIdServico = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPrestadores = new javax.swing.JTable();
@@ -215,6 +226,55 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel11.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Serviços Prestados");
+
+        tblServicos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblServicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblServicosMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tblServicosMouseReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblServicos);
+
+        tfdServico.setEditable(false);
+        tfdServico.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfdServicoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfdServicoKeyTyped(evt);
+            }
+        });
+
+        tfdIdServico.setEditable(false);
+        tfdIdServico.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/delete.png"))); // NOI18N
+        jButton1.setText("Remover >>");
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/fin2.png"))); // NOI18N
+        jButton2.setText("<< Adicionar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -223,21 +283,17 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(tfdIdCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(tfdEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(tfdCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -248,6 +304,8 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(tfdIdCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
                                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(tfdSiglaEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -287,7 +345,29 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(tfdEmail)))
                                 .addGap(2, 2, 2)))
-                        .addGap(18, 18, 18))))
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jButton1))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButton2)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(tfdServico, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tfdIdServico, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,13 +410,29 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(tfdSiglaEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4))
+                        .addComponent(jLabel4)
+                        .addComponent(tfdIdCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel6)
                     .addComponent(tfdCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tfdIdCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfdServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfdIdServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(jLabel12))
         );
 
@@ -380,7 +476,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -415,9 +511,10 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/edit.png"))); // NOI18N
@@ -457,8 +554,8 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFechar)
                     .addComponent(btnSalvar)
@@ -512,6 +609,15 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         tfdIdCidade.setText(String.valueOf(cid.getId()));
         tfdCidade.setText(cid.getCidade());
         tfdSiglaEstado.setText(cid.getEstado());
+    }
+    
+    public void pegaValorServico(Object s) {
+        Servicos ser = (Servicos) s;
+        System.out.println("id: " + ser.getId());
+        System.out.println("nome: " + ser.getDescricao());
+        idSer = ser.getId();
+        tfdIdServico.setText(String.valueOf(ser.getId()));
+        tfdServico.setText(ser.getDescricao());
     }
 
     private void tfdCidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdCidadeKeyReleased
@@ -672,6 +778,34 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tblPrestadoresMouseClicked
 
+    private void tblServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServicosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblServicosMouseClicked
+
+    private void tblServicosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServicosMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblServicosMouseReleased
+
+    private void tfdServicoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdServicoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfdServicoKeyReleased
+
+    private void tfdServicoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdServicoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfdServicoKeyTyped
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        DlgSelecionarServico dlgSelecServico = new DlgSelecionarServico(null, true, this);
+        dlgSelecServico.setLocationRelativeTo(null);
+        dlgSelecServico.setModal(true);
+        dlgSelecServico.setVisible(true);
+        if (camposObrigatorios() == true) {
+            btnSalvar.setEnabled(true);
+        } else {
+            btnSalvar.setEnabled(false);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanel1);
         tfdNome.requestFocus();
@@ -686,8 +820,11 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnProcurar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup buttonGroupTipo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
@@ -700,11 +837,15 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel labelCNPJ;
     private javax.swing.JLabel labelCPF;
     private javax.swing.JTable tblPrestadores;
+    private javax.swing.JTable tblServicos;
     private javax.swing.JFormattedTextField tfdCEP;
     private javax.swing.JFormattedTextField tfdCPF;
     private javax.swing.JFormattedTextField tfdCelular;
@@ -714,8 +855,10 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     private javax.swing.JTextField tfdEndereco;
     private javax.swing.JTextField tfdId;
     private javax.swing.JTextField tfdIdCidade;
+    private javax.swing.JTextField tfdIdServico;
     private javax.swing.JTextField tfdNome;
     private javax.swing.JTextField tfdRG;
+    private javax.swing.JTextField tfdServico;
     private javax.swing.JTextField tfdSiglaEstado;
     private javax.swing.JFormattedTextField tfdTelefone;
     // End of variables declaration//GEN-END:variables

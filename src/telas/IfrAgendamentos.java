@@ -25,12 +25,12 @@ import javax.swing.JOptionPane;
  *
  * @author adriano
  */
-public class IfrAgendamento extends javax.swing.JInternalFrame {
+public class IfrAgendamentos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form IfrCategoria
      */
-    public IfrAgendamento() {
+    public IfrAgendamentos() {
         initComponents();
         btnExcluir.setEnabled(false);
         btnEditar.setEnabled(false);
@@ -508,10 +508,15 @@ public class IfrAgendamento extends javax.swing.JInternalFrame {
                 .addComponent(jLabel21))
         );
 
-        jTabbedPane1.addTab("Incusão de Agendamentos", jPanelSaidaDeVeiculos);
+        jTabbedPane1.addTab("Inclusão de Agendamentos", jPanelSaidaDeVeiculos);
 
         btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/exit.png"))); // NOI18N
         btnFechar.setText("Fechar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Save.png"))); // NOI18N
         btnSalvar.setText("Salvar");
@@ -528,7 +533,6 @@ public class IfrAgendamento extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(btnExcluir)
                 .addGap(18, 18, 18)
                 .addComponent(btnEditar)
@@ -641,6 +645,10 @@ public class IfrAgendamento extends javax.swing.JInternalFrame {
     private void tfdValor1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdValor1KeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_tfdValor1KeyReleased
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnFecharActionPerformed
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanelSaidaDeVeiculos);
         tfdDescricao.requestFocus();

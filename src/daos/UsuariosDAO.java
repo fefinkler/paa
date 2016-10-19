@@ -99,10 +99,9 @@ public class UsuariosDAO implements IDAO {
     public ArrayList<Object> consultarTodos() {
         List resultado = null;
         ArrayList<Object> users = new ArrayList<>();
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
-
             // busca todos os registros
             // observar: a classe Pessoa no from -> P maiúsculo
             org.hibernate.Query q = sessao.createQuery("from Usuarios");
@@ -115,6 +114,8 @@ public class UsuariosDAO implements IDAO {
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
 
         return users;
@@ -122,9 +123,9 @@ public class UsuariosDAO implements IDAO {
 
     @Override
     public Object consultarId(int id) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
 
             // busca por código
             org.hibernate.Query q = sessao.createQuery("from Usuarios where id = " + id);
@@ -133,6 +134,8 @@ public class UsuariosDAO implements IDAO {
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
         return null;
 
@@ -142,10 +145,9 @@ public class UsuariosDAO implements IDAO {
     public boolean registroUnico(Object o) {
         Usuarios u = (Usuarios) o;
         boolean ok = false;
-
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
             org.hibernate.Query q;
 
             // busca por item cadastrado
@@ -158,21 +160,24 @@ public class UsuariosDAO implements IDAO {
                         + "AND delete is null");
             }
             System.out.println("sql: " + q);
-            if (!q.list().isEmpty()) {
+            if (q.list().isEmpty()) {
                 ok = true;
             }
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
-        return true;
+        return ok;
     }
 
     public boolean validarLogin(String login, String senha) {
         boolean ok = false;
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
+
             // busca por código
             org.hibernate.Query q = sessao.createQuery("FROM Usuarios WHERE login = '" + login + "' AND senha = '" + senha + "' AND delete is null ");
             if (!q.list().isEmpty()) {
@@ -183,6 +188,8 @@ public class UsuariosDAO implements IDAO {
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
         return ok;
     }
@@ -201,7 +208,7 @@ public class UsuariosDAO implements IDAO {
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            
+
             org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Usuarios WHERE retira_acentuacao(nome) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null");
             int c = Integer.parseInt(String.valueOf(q.uniqueResult()));
             //int count = (Integer) q.list().get(0);

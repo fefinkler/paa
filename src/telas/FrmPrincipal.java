@@ -106,9 +106,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Prestador de serviço.png"))); // NOI18N
         jButton2.setText("Pres. Serviços");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Agendamento.png"))); // NOI18N
         jButton3.setText("Agendamentos");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Desligar.png"))); // NOI18N
         jButton4.setText("Sair do Sistema");
@@ -269,7 +279,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuUsuariosSistemaActionPerformed
 
     private void jMenuIncluirReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuIncluirReservaActionPerformed
-
+        IfrAgendamentos IfrAgendamentos = new IfrAgendamentos();
+        jDesktopPane1.add(IfrAgendamentos);
+        IfrAgendamentos.setVisible(true);
     }//GEN-LAST:event_jMenuIncluirReservaActionPerformed
 
     private void jMenuGerarBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuGerarBackupActionPerformed
@@ -317,11 +329,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuStatusLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuStatusLogsActionPerformed
-DlgAtivaDesativaLogs dlgLogs = new DlgAtivaDesativaLogs(null, true, this);
+        DlgAtivaDesativaLogs dlgLogs = new DlgAtivaDesativaLogs(null, true, this);
         dlgLogs.setLocationRelativeTo(null);
         dlgLogs.setModal(true);
         dlgLogs.setVisible(true);
     }//GEN-LAST:event_jMenuStatusLogsActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        IfrAgendamentos IfrAgendamentos = new IfrAgendamentos();
+        jDesktopPane1.add(IfrAgendamentos);
+        IfrAgendamentos.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        IfrPrestadores IfrPrestadores = new IfrPrestadores();
+        jDesktopPane1.add(IfrPrestadores);
+        IfrPrestadores.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

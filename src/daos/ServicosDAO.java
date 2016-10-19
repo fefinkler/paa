@@ -98,9 +98,9 @@ public class ServicosDAO implements IDAO {
     public ArrayList<Object> consultarTodos() {
         List resultado = null;
         ArrayList<Object> servicos = new ArrayList<>();
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
 
             org.hibernate.Query q = sessao.createQuery("from servicos");
             resultado = q.list();
@@ -112,6 +112,8 @@ public class ServicosDAO implements IDAO {
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
 
         return servicos;
@@ -119,10 +121,9 @@ public class ServicosDAO implements IDAO {
 
     @Override
     public Object consultarId(int id) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
-
             // busca por código
             org.hibernate.Query q = sessao.createQuery("from Servicos where id = " + id);
 
@@ -130,6 +131,8 @@ public class ServicosDAO implements IDAO {
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
         return null;
 
@@ -139,10 +142,10 @@ public class ServicosDAO implements IDAO {
     public boolean registroUnico(Object o) {
         Servicos s = (Servicos) o;
         boolean ok = false;
-
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
+
             org.hibernate.Query q;
 
             // busca por item cadastrado
@@ -156,14 +159,16 @@ public class ServicosDAO implements IDAO {
             }
             System.out.println("sql: " + q);
 
-            if (!q.list().isEmpty()) {
+            if (q.list().isEmpty()) {
                 ok = true;
             }
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
-        return true;
+        return ok;
     }
 
     public void popularTabela(JTable tabela, String criterio) {

@@ -97,9 +97,9 @@ public class ClientesDAO implements IDAO {
     public ArrayList<Object> consultarTodos() {
         List resultado = null;
         ArrayList<Object> clientes = new ArrayList<>();
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
 
             // busca todos os registros
             // observar: a classe Pessoa no from -> P maiúsculo
@@ -113,6 +113,8 @@ public class ClientesDAO implements IDAO {
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
 
         return clientes;
@@ -120,9 +122,9 @@ public class ClientesDAO implements IDAO {
 
     @Override
     public Object consultarId(int id) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
 
             // busca por código
             org.hibernate.Query q = sessao.createQuery("from Clientes where id = " + id);
@@ -131,6 +133,8 @@ public class ClientesDAO implements IDAO {
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
         return null;
     }
@@ -138,31 +142,33 @@ public class ClientesDAO implements IDAO {
     @Override
     public boolean registroUnico(Object o) {
         Clientes cli = (Clientes) o;
-        boolean ok = false;
-
+        boolean ok = true;
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
             org.hibernate.Query q;
 
             // busca por item cadastrado
             if (cli.getId() != null) {
-                q = sessao.createQuery("FROM Clientes WHERE nome ilike '" + cli.getCpfCnpj()+ "' "
+                q = sessao.createQuery("FROM Clientes WHERE cpf_cnpj ilike '" + cli.getCpfCnpj() + "' "
                         + "AND id != " + cli.getId() + " "
                         + "AND delete is null");
             } else {
-                q = sessao.createQuery("FROM Clientes WHERE nome ilike '" + cli.getCpfCnpj()+ "' "
+                q = sessao.createQuery("FROM Clientes WHERE cpf_cnpj ilike '" + cli.getCpfCnpj() + "' "
                         + "AND delete is null");
             }
             System.out.println("sql: " + q);
             if (!q.list().isEmpty()) {
-                ok = true;
+                System.out.println("CPF/CNPJ já existe");
+                ok = false;
             }
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
-        return true;
+        return ok;
     }
 
     public void popularTabela(JTable tabela, String criterio) {
@@ -175,7 +181,7 @@ public class ClientesDAO implements IDAO {
         cabecalho[1] = "Nome";
         cabecalho[2] = "CPF/CNPJ";
         cabecalho[3] = "Cidade";
-        
+
         // cria matriz de acordo com nº de registros da tabela
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
