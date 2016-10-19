@@ -21,3 +21,6 @@ public class Serviceshelp {
     }
     
 }
+
+//ERROS PARA EXCLUIR REGISTROS, SÓ USUÁRIOS FUNCIONA
+//NÃO TEM MENSAGEM AO GERAR BKP, SUCESSO OU ERRO
