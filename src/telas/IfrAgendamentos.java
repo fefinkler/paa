@@ -10,6 +10,13 @@ import Apoio.Formatacao;
 import static Apoio.Formatacao.removerFormatacao;
 import Apoio.LimiteDigitos;
 import Apoio.limpaCampos;
+import daos.AgendasDAO;
+import daos.ClientesDAO;
+import daos.ServicosHasPrestadoresDAO;
+import entidades.Agendas;
+import entidades.Clientes;
+import entidades.ServicosHasPrestadores;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,16 +34,18 @@ import javax.swing.JOptionPane;
  */
 public class IfrAgendamentos extends javax.swing.JInternalFrame {
 
+    AgendasDAO agendasDAO;
     /**
      * Creates new form IfrCategoria
      */
     public IfrAgendamentos() {
         initComponents();
+        agendasDAO = new AgendasDAO();
         btnExcluir.setEnabled(false);
         btnEditar.setEnabled(false);
         btnSalvar.setEnabled(false);
         tfdIdCliente.setVisible(false);
-        tfdIdPrestador.setVisible(false);
+        tfdIdSP.setVisible(false);
         tfdDescricao.setDocument(new LimiteDigitos(250));
         tfdObsCliente.setDocument(new LimiteDigitos(250));
         tfdObsPrestador.setDocument(new LimiteDigitos(250));
@@ -97,13 +106,12 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         tfdMotorista = new javax.swing.JTextField();
         btnBuscarMot = new javax.swing.JButton();
-        tfdVeiculo = new javax.swing.JTextField();
+        tfdPrestador = new javax.swing.JTextField();
         btnBuscarVeiculo = new javax.swing.JButton();
         tfdIdCliente = new javax.swing.JTextField();
-        tfdIdPrestador = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        tfdIdReserva = new javax.swing.JTextField();
+        tfdIdAgenda = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         JxDataFim = new org.jdesktop.swingx.JXDatePicker();
@@ -119,10 +127,13 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         tfdObsPrestador = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         tfdValor1 = new javax.swing.JTextField();
+        tfdPrestador1 = new javax.swing.JTextField();
+        tfdIdSP = new javax.swing.JTextField();
         btnFechar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         btnProcurar.setText("Buscar");
 
@@ -146,7 +157,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblSaidas);
 
-        jLabel14.setText("Descricação");
+        jLabel14.setText("Descrição");
 
         jLabel15.setText("Cliente");
 
@@ -189,7 +200,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                             .addComponent(tfdConsultaMot)
                             .addComponent(tfdConsultaDesc)
                             .addComponent(tfdConsultaVei, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 345, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 360, Short.MAX_VALUE)
                 .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -233,6 +244,12 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(255, 51, 51));
         jLabel2.setText("Dt Início");
 
+        JxDataIni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JxDataIniActionPerformed(evt);
+            }
+        });
+
         tfdHoraIni.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         tfdHoraIni.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tfdHoraIni.setText("  :  ");
@@ -258,7 +275,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         jLabel5.setText("Cliente");
 
         jLabel6.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel6.setText("Prestador");
+        jLabel6.setText("Prestador/Serviço");
 
         jLabel9.setForeground(new java.awt.Color(255, 51, 51));
         jLabel9.setText("Tempo Exec.");
@@ -267,23 +284,20 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
 
         btnBuscarMot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/fin2.png"))); // NOI18N
 
-        tfdVeiculo.setEditable(false);
+        tfdPrestador.setEditable(false);
 
         btnBuscarVeiculo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/fin2.png"))); // NOI18N
 
         tfdIdCliente.setEditable(false);
         tfdIdCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        tfdIdPrestador.setEditable(false);
-        tfdIdPrestador.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
         jLabel11.setForeground(new java.awt.Color(255, 0, 0));
         jLabel11.setText("h");
 
         jLabel13.setText("Id");
 
-        tfdIdReserva.setEditable(false);
-        tfdIdReserva.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tfdIdAgenda.setEditable(false);
+        tfdIdAgenda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel21.setForeground(new java.awt.Color(255, 0, 0));
         jLabel21.setText("Campos em vermelho Obrigatórios");
@@ -357,6 +371,11 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
             }
         });
 
+        tfdPrestador1.setEditable(false);
+
+        tfdIdSP.setEditable(false);
+        tfdIdSP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         javax.swing.GroupLayout jPanelSaidaDeVeiculosLayout = new javax.swing.GroupLayout(jPanelSaidaDeVeiculos);
         jPanelSaidaDeVeiculos.setLayout(jPanelSaidaDeVeiculosLayout);
         jPanelSaidaDeVeiculosLayout.setHorizontalGroup(
@@ -398,27 +417,15 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                                                 .addComponent(tfdHoraIni, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel11))
-                                            .addComponent(tfdVeiculo, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                                            .addComponent(tfdPrestador, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                                             .addComponent(tfdMotorista)
                                             .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
                                                 .addComponent(tfdTempo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel18)))
-                                        .addGap(18, 18, 18)
                                         .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
-                                                .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
-                                                        .addComponent(btnBuscarVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addComponent(tfdIdPrestador, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
-                                                        .addComponent(btnBuscarMot, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addComponent(tfdIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(0, 0, Short.MAX_VALUE))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSaidaDeVeiculosLayout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
                                                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -432,9 +439,24 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                                                         .addComponent(tfdHoraFim, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                         .addComponent(jLabel12)))
-                                                .addGap(124, 124, 124))))
+                                                .addGap(124, 124, 124))
+                                            .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
+                                                .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                        .addComponent(btnBuscarMot, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                        .addComponent(tfdIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
+                                                        .addGap(8, 8, 8)
+                                                        .addComponent(tfdPrestador1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                        .addComponent(btnBuscarVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(tfdIdSP, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
-                                        .addComponent(tfdIdReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(tfdIdAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 682, Short.MAX_VALUE))
                                     .addComponent(tfdObsCliente)
                                     .addComponent(tfdObsPrestador, javax.swing.GroupLayout.Alignment.TRAILING))))))
@@ -450,7 +472,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                         .addGap(26, 26, 26)
                         .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
-                            .addComponent(tfdIdReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfdIdAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -466,28 +488,24 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                             .addComponent(tfdHoraFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12))
                         .addGap(18, 18, 18)
+                        .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfdMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnBuscarMot, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfdIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
-                                .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
-                                        .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(tfdMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel5))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(tfdVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel6)))
-                                    .addGroup(jPanelSaidaDeVeiculosLayout.createSequentialGroup()
-                                        .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnBuscarMot, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(tfdIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnBuscarVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(tfdIdPrestador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(18, 18, 18)
-                                .addComponent(tfdValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel10)))
+                            .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(tfdPrestador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)
+                                .addComponent(tfdPrestador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfdIdSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnBuscarVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfdValor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(jPanelSaidaDeVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel9)
                         .addComponent(tfdTempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -520,6 +538,11 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/Save.png"))); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/delete2.png"))); // NOI18N
         btnExcluir.setText("Excluir");
@@ -527,12 +550,24 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/edit.png"))); // NOI18N
         btnEditar.setText("Editar");
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExcluir)
                 .addGap(18, 18, 18)
                 .addComponent(btnEditar)
@@ -551,7 +586,8 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                     .addComponent(btnFechar)
                     .addComponent(btnSalvar)
                     .addComponent(btnExcluir)
-                    .addComponent(btnEditar))
+                    .addComponent(btnEditar)
+                    .addComponent(jButton1))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -560,7 +596,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
 
     private boolean camposObrigatorios() {
         if (tfdDescricao.getText().length() > 0 && removerFormatacao(tfdHoraIni.getText()).trim().length() > 0 && removerFormatacao(tfdHoraFim.getText()).trim().length() > 0 && tfdIdCliente.getText().length() > 0
-                && tfdIdPrestador.getText().length() > 0) {
+                && tfdIdSP.getText().length() > 0) {
             return true;
         } else {
             return false;
@@ -649,6 +685,93 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Agendas agenda = new Agendas();
+        if (tfdIdAgenda.getText().length() >= 1) {
+            agenda.setId(Integer.parseInt(tfdIdAgenda.getText()));
+        }
+        agenda.setDescricao(tfdDescricao.getText());
+        // FABRICANDO O DATE INICIO
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dt_ini = dateFormat.format(JxDataIni.getDate());
+        String h_ini = tfdHoraIni.getText();
+        String inicio_estimado = dt_ini + " " + h_ini;
+        System.out.println("String completa: " + inicio_estimado);
+        int ano = Integer.parseInt(inicio_estimado.substring(0, 3));
+        int mes = Integer.parseInt(inicio_estimado.substring(5, 6));
+        int dia = Integer.parseInt(inicio_estimado.substring(8, 9));
+        int hora = Integer.parseInt(inicio_estimado.substring(11, 12));
+        int min = Integer.parseInt(inicio_estimado.substring(14, 15));
+        Date d = new Date(ano, mes, dia, hora, min, 0);
+        agenda.setInicioEstimado(d);
+        // FABRICANDO O DATE FIM
+        String dt_fim = dateFormat.format(JxDataFim.getDate());
+        String h_fim = tfdHoraFim.getText();
+        String fim_estimado = dt_fim + " " + h_fim;
+        System.out.println("String completa: " + fim_estimado);
+        int anoF = Integer.parseInt(fim_estimado.substring(0, 3));
+        int mesF = Integer.parseInt(fim_estimado.substring(5, 6));
+        int diaF = Integer.parseInt(fim_estimado.substring(8, 9));
+        int horaF = Integer.parseInt(fim_estimado.substring(11, 12));
+        int minF = Integer.parseInt(fim_estimado.substring(14, 15));
+        Date dF = new Date(anoF, mesF, diaF, horaF, minF, 0);
+        agenda.setFimEstimado(dF);
+        
+        agenda.setRefClientes((Clientes) new ClientesDAO().consultarId(Integer.parseInt(tfdIdCliente.getText())));
+        agenda.setRefServicosHasPrestadores((ServicosHasPrestadores) new ServicosHasPrestadoresDAO().consultarId(Integer.parseInt(tfdIdSP.getText())));
+        
+        agenda.setTempoRealizado(BigInteger.ZERO);
+        agenda.setValor(BigInteger.ZERO);
+        
+//        if (agendasDAO.registroUnico(agenda)) {
+//            if (tfdId.getText().trim().isEmpty()) { //SALVAR
+//                if (servicosDAO.salvar(servico)) {
+//                    JOptionPane.showMessageDialog(this, "Serviço salvo com Sucesso!");
+//                    btnSalvar.setEnabled(false);
+//                    LimparCamposCadastro();
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Erro ao salvar novo Serviço!");
+//                }
+//
+//            } else {  // ATUALIZAR
+//                servico.setId(Integer.parseInt(tfdId.getText()));
+//                if (servicosDAO.atualizar(servico)) {
+//                    JOptionPane.showMessageDialog(this, "Serviço atualizado com Sucesso!");
+//                    btnSalvar.setEnabled(false);
+//                    LimparCamposCadastro();
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Erro ao atualizar Serviço!\n");
+//                }
+//            }
+//            servicosDAO.popularTabela(tblServicos, tfdConsulta.getText());
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Serviço já cadastrado!");
+//            tfdDescricao.requestFocus();
+//            tfdDescricao.setText(null);
+//        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void JxDataIniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JxDataIniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JxDataIniActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dt_ini = dateFormat.format(JxDataIni.getDate()).toString();
+        System.out.println("string ini: " + dt_ini);
+        String h_ini = tfdHoraIni.getText();
+        
+        String inicio_estimado = dt_ini + " " + h_ini;
+        System.out.println("String completa: " + inicio_estimado);
+        int ano = Integer.parseInt(inicio_estimado.substring(0, 3));
+        int mes = Integer.parseInt(inicio_estimado.substring(5, 6));
+        int dia = Integer.parseInt(inicio_estimado.substring(8, 9));
+        int hora = Integer.parseInt(inicio_estimado.substring(11, 12));
+        int min = Integer.parseInt(inicio_estimado.substring(14, 15));
+        Date d = new Date(ano, mes, dia, hora, min, 0);
+        System.out.println("String transformada em Date: " + d);
+    }//GEN-LAST:event_jButton1ActionPerformed
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanelSaidaDeVeiculos);
         tfdDescricao.requestFocus();
@@ -672,6 +795,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnProcurar;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -706,15 +830,16 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField tfdDescricao;
     private javax.swing.JFormattedTextField tfdHoraFim;
     private javax.swing.JFormattedTextField tfdHoraIni;
+    private javax.swing.JTextField tfdIdAgenda;
     private javax.swing.JTextField tfdIdCliente;
-    private javax.swing.JTextField tfdIdPrestador;
-    private javax.swing.JTextField tfdIdReserva;
+    private javax.swing.JTextField tfdIdSP;
     private javax.swing.JTextField tfdMotorista;
     private javax.swing.JTextField tfdObsCliente;
     private javax.swing.JTextField tfdObsPrestador;
+    private javax.swing.JTextField tfdPrestador;
+    private javax.swing.JTextField tfdPrestador1;
     private javax.swing.JFormattedTextField tfdTempo;
     private javax.swing.JTextField tfdValor;
     private javax.swing.JTextField tfdValor1;
-    private javax.swing.JTextField tfdVeiculo;
     // End of variables declaration//GEN-END:variables
 }
