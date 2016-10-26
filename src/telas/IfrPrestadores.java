@@ -11,6 +11,7 @@ import static Apoio.Validacao.validarCPF;
 import Apoio.limpaCampos;
 import daos.PrestadoresDAO;
 import daos.SelecionarCidadesDAO;
+import daos.ServicosPrestadoresDAO;
 import entidades.Cidades;
 import entidades.Prestadores;
 import entidades.Servicos;
@@ -23,6 +24,7 @@ import javax.swing.JOptionPane;
 public class IfrPrestadores extends javax.swing.JInternalFrame {
 
     PrestadoresDAO prestadoresDAO;
+    ServicosPrestadoresDAO servicosPrestadoresDAO;
     SelecionarCidadesDAO scDAO;
     char operacao = 'i';
     int idCid = 0;
@@ -34,6 +36,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     public IfrPrestadores() {
         initComponents();
         prestadoresDAO = new PrestadoresDAO();
+        servicosPrestadoresDAO = new ServicosPrestadoresDAO();
         scDAO = new SelecionarCidadesDAO();
         btnExcluir.setEnabled(false);
         btnEditar.setEnabled(false);
@@ -44,6 +47,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         tfdEndereco.setDocument(new LimiteDigitos(60));
         tfdEmail.setDocument(new LimiteDigitos(45));
         prestadoresDAO.popularTabela(tblPrestadores, tfdConsulta.getText());
+        servicosPrestadoresDAO.popularTabela(tblServicos, "1");
     }
 
     /**
