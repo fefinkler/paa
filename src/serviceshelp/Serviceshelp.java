@@ -24,3 +24,4 @@ public class Serviceshelp {
 
 //ERROS PARA EXCLUIR REGISTROS, SÓ USUÁRIOS FUNCIONA
 //NÃO TEM MENSAGEM AO GERAR BKP, SUCESSO OU ERRO
+//add mais parâmetros de filtro no Popular Tabela Agendas

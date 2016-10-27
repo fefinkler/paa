@@ -215,7 +215,7 @@ public class ClientesDAO implements IDAO {
                 lin++;
             }
         } catch (Exception e) {
-            System.out.println("problemas para popular tabela Usuários...");
+            System.out.println("problemas para popular tabela Clientes...");
             System.out.println(e);
         }
 
