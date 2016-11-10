@@ -496,8 +496,8 @@ public class IfrUsuarios extends javax.swing.JInternalFrame {
                 usuariosDAO.popularTabela(tblUsuarios, tfdConsulta.getText());
             } else {
                 JOptionPane.showMessageDialog(this, "Usuário já existe!");
-                tfdNome.requestFocus();
-                tfdNome.setText(null);
+                tfdLogin.requestFocus();
+                tfdLogin.setText(null);
             }
     }//GEN-LAST:event_btnSalvarActionPerformed
 

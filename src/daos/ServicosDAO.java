@@ -5,6 +5,7 @@
  */
 package daos;
 
+import Apoio.Email;
 import config.HibernateUtil;
 import entidades.Servicos;
 import interfaces.IDAO;
@@ -12,11 +13,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import org.apache.commons.mail.EmailException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -39,6 +43,7 @@ public class ServicosDAO implements IDAO {
             sessao.save(up);
             t.commit();
             deucerto = true;
+
 
         } catch (HibernateException he) {
             he.printStackTrace();

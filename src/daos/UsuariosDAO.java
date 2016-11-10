@@ -152,11 +152,11 @@ public class UsuariosDAO implements IDAO {
 
             // busca por item cadastrado
             if (u.getId() != null) {
-                q = sessao.createQuery("FROM Usuarios WHERE nome ilike '" + u.getNome() + "' "
+                q = sessao.createQuery("FROM Usuarios WHERE login ilike '" + u.getLogin() + "' "
                         + "AND id != " + u.getId() + " "
                         + "AND delete is null");
             } else {
-                q = sessao.createQuery("FROM Usuarios WHERE nome ilike '" + u.getNome() + "' "
+                q = sessao.createQuery("FROM Usuarios WHERE login ilike '" + u.getLogin() + "' "
                         + "AND delete is null");
             }
             System.out.println("sql: " + q);
