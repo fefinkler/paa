@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class IfrLogin extends javax.swing.JFrame {
 
+    public static Usuarios userAtivo;
     UsuariosDAO usuariosDAO;
 
     /**
@@ -26,6 +27,7 @@ public class IfrLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         usuariosDAO = new UsuariosDAO();
+        userAtivo = new Usuarios();
     }
 
     /**
@@ -170,7 +172,9 @@ public class IfrLogin extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
 
         try {
-            if (usuariosDAO.validarLogin(tfdUsuario.getText(), String.valueOf(tfdSenha.getPassword()))) {
+            int id = usuariosDAO.validarLogin(tfdUsuario.getText(), String.valueOf(tfdSenha.getPassword()));
+            if ( id != 0) {
+                userAtivo = usuariosDAO.consultarId(id);
                 new FrmPrincipal().setVisible(true);
                 FrmPrincipal.getWindows();
                 this.dispose();
@@ -189,6 +193,10 @@ public class IfrLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
+    public Usuarios getUserAtivo (){
+        return userAtivo;
+    }
+    
     private void btnFechar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechar1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnFechar1ActionPerformed

@@ -24,6 +24,7 @@ import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -866,30 +867,30 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void JxDataIniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JxDataIniActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_JxDataIniActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // CLASSE TESTE DATAS
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dt_ini = dateFormat.format(JxDataIni.getDate()).toString();
-        System.out.println("string ini: " + dt_ini);
-        String h_ini = tfdHoraIni.getText();
-        
-        String inicio_estimado = dt_ini + " " + h_ini;
-        System.out.println("String completa: " + inicio_estimado);
-        int ano = Integer.parseInt(inicio_estimado.substring(0, 4));
-        System.out.println("ano: " + ano);
-        int mes = Integer.parseInt(inicio_estimado.substring(5, 7));
-        System.out.println("mÊs: " + mes);
-        int dia = Integer.parseInt(inicio_estimado.substring(8, 10));
-        System.out.println("dia: " + dia);
-        int hora = Integer.parseInt(inicio_estimado.substring(11, 13));
-        System.out.println("hora: " + hora);
-        int min = Integer.parseInt(inicio_estimado.substring(14, 16));
-        System.out.println("min: " + min);
-        Date d = new Date(ano, mes, dia, hora, min, 0);
-        System.out.println("String transformada em Date: " + d);
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        String dt_ini = dateFormat.format(JxDataIni.getDate()).toString();
+//        System.out.println("string ini: " + dt_ini);
+//        String h_ini = tfdHoraIni.getText();
+//        
+//        String inicio_estimado = dt_ini + " " + h_ini;
+//        System.out.println("String completa: " + inicio_estimado);
+//        int ano = Integer.parseInt(inicio_estimado.substring(0, 4));
+//        System.out.println("ano: " + ano);
+//        int mes = Integer.parseInt(inicio_estimado.substring(5, 7));
+//        System.out.println("mÊs: " + mes);
+//        int dia = Integer.parseInt(inicio_estimado.substring(8, 10));
+//        System.out.println("dia: " + dia);
+//        int hora = Integer.parseInt(inicio_estimado.substring(11, 13));
+//        System.out.println("hora: " + hora);
+//        int min = Integer.parseInt(inicio_estimado.substring(14, 16));
+//        System.out.println("min: " + min);
+//        Date d = new Date(ano, mes, dia, hora, min, 0);
+//        System.out.println("String transformada em Date: " + d);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnLimpar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpar1ActionPerformed

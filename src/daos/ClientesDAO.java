@@ -8,8 +8,11 @@ package daos;
 import config.HibernateUtil;
 import entidades.Cidades;
 import entidades.Clientes;
+import entidades.LogErros;
 import interfaces.IDAO;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -19,13 +22,14 @@ import javax.swing.table.TableColumn;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import telas.IfrLogin;
 
 /**
  *
  * @author Fernanda Finkler
  */
 public class ClientesDAO implements IDAO {
-
+    
     @Override
     public boolean salvar(Object o) {
         boolean deucerto = false;
@@ -40,6 +44,21 @@ public class ClientesDAO implements IDAO {
             deucerto = true;
 
         } catch (HibernateException he) {
+            LogErros logErro = new LogErros();
+            logErro.setDescricao(he.toString());
+            logErro.setDataHora(new Date());
+            logErro.setUsuariosId(IfrLogin.userAtivo);
+            System.out.println("DataHora: " + logErro.getDataHora()
+                    + "Usuário: " + logErro.getUsuariosId()
+                    + "Descrição: " + logErro.getDescricao()
+            );
+            
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            Transaction t = sessao.beginTransaction();
+
+            sessao.save(logErro);
+            t.commit();
+            
             he.printStackTrace();
         } finally {
             sessao.close();

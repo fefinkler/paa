@@ -8,6 +8,7 @@ package Apoio;
  *
  * @author adriano
  */
+import entidades.Usuarios;
 import java.sql.*;
 import java.io.*;
 import java.util.*;
