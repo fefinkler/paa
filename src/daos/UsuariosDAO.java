@@ -172,8 +172,8 @@ public class UsuariosDAO implements IDAO {
         return ok;
     }
 
-    public boolean validarLogin(String login, String senha) {
-        boolean ok = false;
+    public int validarLogin(String login, String senha) {
+        int idUser = 0;
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         sessao.beginTransaction();
         try {
@@ -181,9 +181,9 @@ public class UsuariosDAO implements IDAO {
             // busca por código
             org.hibernate.Query q = sessao.createQuery("FROM Usuarios WHERE login = '" + login + "' AND senha = '" + senha + "' AND delete is null ");
             if (!q.list().isEmpty()) {
-                if (q.list().get(0) != null) {
-                    ok = true;
-                }
+                Usuarios u = (Usuarios) q.uniqueResult();
+                idUser = u.getId();
+                return idUser;
             }
 
         } catch (HibernateException he) {
@@ -191,7 +191,7 @@ public class UsuariosDAO implements IDAO {
         } finally {
             sessao.close();
         }
-        return ok;
+        return idUser;
     }
 
     public void popularTabela(JTable tabela, String criterio) {

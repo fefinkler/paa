@@ -174,7 +174,7 @@ public class IfrLogin extends javax.swing.JFrame {
         try {
             int id = usuariosDAO.validarLogin(tfdUsuario.getText(), String.valueOf(tfdSenha.getPassword()));
             if ( id != 0) {
-                userAtivo = usuariosDAO.consultarId(id);
+                userAtivo = (Usuarios) usuariosDAO.consultarId(id);
                 new FrmPrincipal().setVisible(true);
                 FrmPrincipal.getWindows();
                 this.dispose();
