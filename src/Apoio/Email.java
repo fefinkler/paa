@@ -5,6 +5,7 @@
  */
 package Apoio;
 
+import entidades.LogErros;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
@@ -15,7 +16,7 @@ import org.apache.commons.mail.SimpleEmail;
  */
 public class Email {
 
-    public static void sendEmail() throws EmailException {
+    public static void sendEmail(String he) throws EmailException {
 
         SimpleEmail email = new SimpleEmail();
         email.setHostName("smtp.gmail.com");
@@ -23,8 +24,8 @@ public class Email {
         email.setAuthenticator(new DefaultAuthenticator("serviceshelplog@gmail.com", "services123!@"));
         email.setSSLOnConnect(true);
         email.setFrom("serviceshelplog@gmail.com");
-        email.setSubject("Log de Erro ServicesHelp");
-        email.setMsg("Incluir Log de erro");
+        email.setSubject("Log de Erro ServicesHelp ");
+        email.setMsg(he);
         email.addTo("saimon@universo.univates.br");
         email.send();
 

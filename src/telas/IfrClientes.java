@@ -552,7 +552,7 @@ public class IfrClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private boolean camposObrigatorios() {
-        if (tfdNome.getText().length() > 0 && jbtJuridica.isSelected() && removerFormatacao(tfdCNPJ.getText()).trim().length() == 14 && tfdIdCidade.getText().length() > 0 || tfdNome.getText().length() > 0 && jbtFisica.isSelected() && removerFormatacao(tfdCPF.getText()).trim().length() == 11 ) {
+        if (tfdNome.getText().length() > 0 && jbtJuridica.isSelected() && removerFormatacao(tfdCNPJ.getText()).trim().length() == 14 /* && tfdIdCidade.getText().length() > 0 || tfdNome.getText().length() > 0 && jbtFisica.isSelected() && removerFormatacao(tfdCPF.getText()).trim().length() == 11*/ ) {
             return true;
         } else {
             return false;

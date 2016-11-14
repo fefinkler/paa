@@ -5,6 +5,7 @@
  */
 package daos;
 
+import Apoio.Email;
 import config.HibernateUtil;
 import entidades.Cidades;
 import entidades.Clientes;
@@ -14,11 +15,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import org.apache.commons.mail.EmailException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -29,7 +33,7 @@ import telas.IfrLogin;
  * @author Fernanda Finkler
  */
 public class ClientesDAO implements IDAO {
-    
+
     @Override
     public boolean salvar(Object o) {
         boolean deucerto = false;
@@ -46,19 +50,23 @@ public class ClientesDAO implements IDAO {
         } catch (HibernateException he) {
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
+            try {
+                Email.sendEmail(he.toString());
+            } catch (EmailException ex) {
+                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
             System.out.println("DataHora: " + logErro.getDataHora()
                     + "Usuário: " + logErro.getUsuariosId()
                     + "Descrição: " + logErro.getDescricao()
             );
-            
+
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-
             sessao.save(logErro);
             t.commit();
-            
+
             he.printStackTrace();
         } finally {
             sessao.close();
