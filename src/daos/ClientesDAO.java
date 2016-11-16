@@ -48,20 +48,17 @@ public class ClientesDAO implements IDAO {
             deucerto = true;
 
         } catch (HibernateException he) {
-            LogErros logErro = new LogErros();
-            logErro.setDescricao(he.toString());
             try {
                 Email.sendEmail(he.toString());
             } catch (EmailException ex) {
                 Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            LogErros logErro = new LogErros();
+            logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            System.out.println("DataHora: " + logErro.getDataHora()
-                    + "Usuário: " + logErro.getUsuariosId()
-                    + "Descrição: " + logErro.getDescricao()
-            );
-
+            
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
             sessao.save(logErro);
@@ -90,21 +87,21 @@ public class ClientesDAO implements IDAO {
             deucerto = true;
 
         } catch (HibernateException he) {
+            try {
+                Email.sendEmail(he.toString());
+            } catch (EmailException ex) {
+                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            System.out.println("DataHora: " + logErro.getDataHora()
-                    + "Usuário: " + logErro.getUsuariosId()
-                    + "Descrição: " + logErro.getDescricao()
-            );
-            
+
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-
             sessao.save(logErro);
             t.commit();
-            
+
             he.printStackTrace();
         } finally {
             sessao.close();
@@ -128,21 +125,21 @@ public class ClientesDAO implements IDAO {
             deucerto = true;
 
         } catch (HibernateException he) {
+            try {
+                Email.sendEmail(he.toString());
+            } catch (EmailException ex) {
+                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            System.out.println("DataHora: " + logErro.getDataHora()
-                    + "Usuário: " + logErro.getUsuariosId()
-                    + "Descrição: " + logErro.getDescricao()
-            );
-            
+
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-
             sessao.save(logErro);
             t.commit();
-            
+
             he.printStackTrace();
         } finally {
             sessao.close();
@@ -169,21 +166,22 @@ public class ClientesDAO implements IDAO {
             }
 
         } catch (HibernateException he) {
+            try {
+                Email.sendEmail(he.toString());
+            } catch (EmailException ex) {
+                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            System.out.println("DataHora: " + logErro.getDataHora()
-                    + "Usuário: " + logErro.getUsuariosId()
-                    + "Descrição: " + logErro.getDescricao()
-            );
             
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-
             sessao.save(logErro);
             t.commit();
-            
+
             he.printStackTrace();
         } finally {
             sessao.close();
@@ -204,21 +202,22 @@ public class ClientesDAO implements IDAO {
             return q.list().get(0);
 
         } catch (HibernateException he) {
+            try {
+                Email.sendEmail(he.toString());
+            } catch (EmailException ex) {
+                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            System.out.println("DataHora: " + logErro.getDataHora()
-                    + "Usuário: " + logErro.getUsuariosId()
-                    + "Descrição: " + logErro.getDescricao()
-            );
             
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-
             sessao.save(logErro);
             t.commit();
-            
+
             he.printStackTrace();
         } finally {
             sessao.close();
@@ -251,21 +250,22 @@ public class ClientesDAO implements IDAO {
             }
 
         } catch (HibernateException he) {
+            try {
+                Email.sendEmail(he.toString());
+            } catch (EmailException ex) {
+                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            System.out.println("DataHora: " + logErro.getDataHora()
-                    + "Usuário: " + logErro.getUsuariosId()
-                    + "Descrição: " + logErro.getDescricao()
-            );
             
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-
             sessao.save(logErro);
             t.commit();
-            
+
             he.printStackTrace();
         } finally {
             sessao.close();
@@ -284,30 +284,30 @@ public class ClientesDAO implements IDAO {
         cabecalho[2] = "CPF/CNPJ";
         cabecalho[3] = "Cidade";
 
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
+            
         // cria matriz de acordo com nº de registros da tabela
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
             org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Clientes WHERE retira_acentuacao(nome) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null");
             int count = Integer.parseInt(String.valueOf(q.uniqueResult()));
 
             dadosTabela = new Object[count][4];
 
         } catch (Exception e) {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
+            try {
+                Email.sendEmail(e.toString());
+            } catch (EmailException ex) {
+                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             LogErros logErro = new LogErros();
             logErro.setDescricao(e.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            System.out.println("DataHora: " + logErro.getDataHora()
-                    + "Usuário: " + logErro.getUsuariosId()
-                    + "Descrição: " + logErro.getDescricao()
-            );
             
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-
             sessao.save(logErro);
             t.commit();
             
@@ -318,9 +318,6 @@ public class ClientesDAO implements IDAO {
 
         // efetua consulta na tabela
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
-
             org.hibernate.Query q = sessao.createQuery("FROM Clientes WHERE retira_acentuacao(nome) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null ORDER BY nome");
             List resultado = q.list();
 
@@ -334,22 +331,22 @@ public class ClientesDAO implements IDAO {
                 lin++;
             }
         } catch (Exception e) {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
+            try {
+                Email.sendEmail(e.toString());
+            } catch (EmailException ex) {
+                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             LogErros logErro = new LogErros();
             logErro.setDescricao(e.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            System.out.println("DataHora: " + logErro.getDataHora()
-                    + "Usuário: " + logErro.getUsuariosId()
-                    + "Descrição: " + logErro.getDescricao()
-            );
             
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-
             sessao.save(logErro);
             t.commit();
+
             System.out.println("problemas para popular tabela Clientes...");
             System.out.println(e);
         }
