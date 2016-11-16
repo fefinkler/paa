@@ -5,17 +5,30 @@
  */
 package telas;
 
+import Apoio.Email;
 import static Apoio.Formatacao.removerFormatacao;
 import Apoio.LimiteDigitos;
 import static Apoio.Validacao.validarCPF;
 import Apoio.limpaCampos;
+import config.HibernateUtil;
+import daos.ClientesDAO;
 import daos.PrestadoresDAO;
 import daos.SelecionarCidadesDAO;
 import daos.ServicosPrestadoresDAO;
 import entidades.Cidades;
+import entidades.Clientes;
+import entidades.LogErros;
 import entidades.Prestadores;
 import entidades.Servicos;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import org.apache.commons.mail.EmailException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -256,14 +269,6 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tblServicos);
 
         tfdServico.setEditable(false);
-        tfdServico.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfdServicoKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tfdServicoKeyTyped(evt);
-            }
-        });
 
         tfdIdServico.setEditable(false);
         tfdIdServico.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -623,7 +628,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         tfdIdServico.setText(String.valueOf(ser.getId()));
         tfdServico.setText(ser.getDescricao());
     }
-
+    
     private void tfdCidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdCidadeKeyReleased
 
     }//GEN-LAST:event_tfdCidadeKeyReleased
@@ -789,14 +794,6 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     private void tblServicosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServicosMouseReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_tblServicosMouseReleased
-
-    private void tfdServicoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdServicoKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfdServicoKeyReleased
-
-    private void tfdServicoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdServicoKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfdServicoKeyTyped
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         DlgSelecionarServico dlgSelecServico = new DlgSelecionarServico(null, true, this);
