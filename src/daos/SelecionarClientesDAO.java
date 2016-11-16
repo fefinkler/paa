@@ -70,7 +70,7 @@ public class SelecionarClientesDAO {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
 
-            org.hibernate.Query q = sessao.createQuery("FROM Cliengtes WHERE retira_acentuacao(nome) ILIKE retira_acentuacao('%" + criterio + "%') ORDER BY nome");
+            org.hibernate.Query q = sessao.createQuery("FROM Clientes WHERE retira_acentuacao(nome) ILIKE retira_acentuacao('%" + criterio + "%') ORDER BY nome");
             List resultado = q.list();
 
             for (Object o : resultado) {
