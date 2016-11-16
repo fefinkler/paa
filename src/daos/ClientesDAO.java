@@ -90,6 +90,21 @@ public class ClientesDAO implements IDAO {
             deucerto = true;
 
         } catch (HibernateException he) {
+            LogErros logErro = new LogErros();
+            logErro.setDescricao(he.toString());
+            logErro.setDataHora(new Date());
+            logErro.setUsuariosId(IfrLogin.userAtivo);
+            System.out.println("DataHora: " + logErro.getDataHora()
+                    + "Usuário: " + logErro.getUsuariosId()
+                    + "Descrição: " + logErro.getDescricao()
+            );
+            
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            Transaction t = sessao.beginTransaction();
+
+            sessao.save(logErro);
+            t.commit();
+            
             he.printStackTrace();
         } finally {
             sessao.close();
@@ -113,6 +128,21 @@ public class ClientesDAO implements IDAO {
             deucerto = true;
 
         } catch (HibernateException he) {
+            LogErros logErro = new LogErros();
+            logErro.setDescricao(he.toString());
+            logErro.setDataHora(new Date());
+            logErro.setUsuariosId(IfrLogin.userAtivo);
+            System.out.println("DataHora: " + logErro.getDataHora()
+                    + "Usuário: " + logErro.getUsuariosId()
+                    + "Descrição: " + logErro.getDescricao()
+            );
+            
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            Transaction t = sessao.beginTransaction();
+
+            sessao.save(logErro);
+            t.commit();
+            
             he.printStackTrace();
         } finally {
             sessao.close();
@@ -139,6 +169,21 @@ public class ClientesDAO implements IDAO {
             }
 
         } catch (HibernateException he) {
+            LogErros logErro = new LogErros();
+            logErro.setDescricao(he.toString());
+            logErro.setDataHora(new Date());
+            logErro.setUsuariosId(IfrLogin.userAtivo);
+            System.out.println("DataHora: " + logErro.getDataHora()
+                    + "Usuário: " + logErro.getUsuariosId()
+                    + "Descrição: " + logErro.getDescricao()
+            );
+            
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            Transaction t = sessao.beginTransaction();
+
+            sessao.save(logErro);
+            t.commit();
+            
             he.printStackTrace();
         } finally {
             sessao.close();
@@ -159,6 +204,21 @@ public class ClientesDAO implements IDAO {
             return q.list().get(0);
 
         } catch (HibernateException he) {
+            LogErros logErro = new LogErros();
+            logErro.setDescricao(he.toString());
+            logErro.setDataHora(new Date());
+            logErro.setUsuariosId(IfrLogin.userAtivo);
+            System.out.println("DataHora: " + logErro.getDataHora()
+                    + "Usuário: " + logErro.getUsuariosId()
+                    + "Descrição: " + logErro.getDescricao()
+            );
+            
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            Transaction t = sessao.beginTransaction();
+
+            sessao.save(logErro);
+            t.commit();
+            
             he.printStackTrace();
         } finally {
             sessao.close();
@@ -191,6 +251,21 @@ public class ClientesDAO implements IDAO {
             }
 
         } catch (HibernateException he) {
+            LogErros logErro = new LogErros();
+            logErro.setDescricao(he.toString());
+            logErro.setDataHora(new Date());
+            logErro.setUsuariosId(IfrLogin.userAtivo);
+            System.out.println("DataHora: " + logErro.getDataHora()
+                    + "Usuário: " + logErro.getUsuariosId()
+                    + "Descrição: " + logErro.getDescricao()
+            );
+            
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            Transaction t = sessao.beginTransaction();
+
+            sessao.save(logErro);
+            t.commit();
+            
             he.printStackTrace();
         } finally {
             sessao.close();
@@ -219,6 +294,23 @@ public class ClientesDAO implements IDAO {
             dadosTabela = new Object[count][4];
 
         } catch (Exception e) {
+            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            LogErros logErro = new LogErros();
+            logErro.setDescricao(e.toString());
+            logErro.setDataHora(new Date());
+            logErro.setUsuariosId(IfrLogin.userAtivo);
+            System.out.println("DataHora: " + logErro.getDataHora()
+                    + "Usuário: " + logErro.getUsuariosId()
+                    + "Descrição: " + logErro.getDescricao()
+            );
+            
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            Transaction t = sessao.beginTransaction();
+
+            sessao.save(logErro);
+            t.commit();
+            
             System.out.println("Erro ao consultar: " + e);
         }
 
@@ -242,6 +334,22 @@ public class ClientesDAO implements IDAO {
                 lin++;
             }
         } catch (Exception e) {
+            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            LogErros logErro = new LogErros();
+            logErro.setDescricao(e.toString());
+            logErro.setDataHora(new Date());
+            logErro.setUsuariosId(IfrLogin.userAtivo);
+            System.out.println("DataHora: " + logErro.getDataHora()
+                    + "Usuário: " + logErro.getUsuariosId()
+                    + "Descrição: " + logErro.getDescricao()
+            );
+            
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            Transaction t = sessao.beginTransaction();
+
+            sessao.save(logErro);
+            t.commit();
             System.out.println("problemas para popular tabela Clientes...");
             System.out.println(e);
         }
