@@ -19,21 +19,20 @@ public class DlgSelecionarPrestador extends javax.swing.JDialog {
      * Creates new form DlgCidade
      */
     IfrAgendamentos ifrAgenClasse;
-
     PrestadoresDAO prestadoresDAO;
 
     public DlgSelecionarPrestador(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         prestadoresDAO = new PrestadoresDAO();
-        prestadoresDAO.popularTabela(tblPrestadores, "");
+        prestadoresDAO.popularTabela(tblPrestadores, "", "");
     }
 
     public DlgSelecionarPrestador(java.awt.Frame parent, boolean modal, IfrAgendamentos ifrAgen) {
         super(parent, modal);
         initComponents();
         prestadoresDAO = new PrestadoresDAO();
-        prestadoresDAO.popularTabela(tblPrestadores, "");
+        prestadoresDAO.popularTabela(tblPrestadores, "", "");
         ifrAgenClasse = ifrAgen;
     }
 
@@ -47,17 +46,19 @@ public class DlgSelecionarPrestador extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
-        tfdConsulta = new javax.swing.JTextField();
+        tfdServico = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPrestadores = new javax.swing.JTable();
         btnProcurar = new javax.swing.JButton();
         btnFechar = new javax.swing.JButton();
         btnSelecionar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        tfdNome = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel3.setText("Nome");
+        jLabel3.setText("Serviço");
 
         tblPrestadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -104,30 +105,40 @@ public class DlgSelecionarPrestador extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Consulta de Prestadores");
 
+        jLabel4.setText("Nome");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfdConsulta)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnProcurar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSelecionar)
-                        .addGap(14, 14, 14)
-                        .addComponent(btnFechar)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGap(126, 126, 126)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(btnSelecionar)
+                                        .addGap(14, 14, 14)
+                                        .addComponent(btnFechar))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(tfdNome, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfdServico)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnProcurar)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,9 +148,13 @@ public class DlgSelecionarPrestador extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(tfdConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfdServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnProcurar))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(tfdNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -156,8 +171,8 @@ public class DlgSelecionarPrestador extends javax.swing.JDialog {
     }//GEN-LAST:event_tblPrestadoresMouseReleased
 
     private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
-        prestadoresDAO.popularTabela(tblPrestadores, tfdConsulta.getText());
-        tfdConsulta.requestFocus();
+        prestadoresDAO.popularTabela(tblPrestadores, tfdServico.getText(), tfdNome.getText() );
+        tfdServico.requestFocus();
     }//GEN-LAST:event_btnProcurarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
@@ -218,8 +233,10 @@ public class DlgSelecionarPrestador extends javax.swing.JDialog {
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblPrestadores;
-    private javax.swing.JTextField tfdConsulta;
+    private javax.swing.JTextField tfdNome;
+    private javax.swing.JTextField tfdServico;
     // End of variables declaration//GEN-END:variables
 }

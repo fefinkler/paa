@@ -38,26 +38,33 @@ public class SelecionarPrestadorDAO {
         return null;
     }
 
-    public void popularTabela(JTable tabela, String criterio) {
+    public void popularTabela(JTable tabela, String servico, String nome ) {
         // dados da tabela
+        
         Object[][] dadosTabela = null;
 
         // cabecalho da tabela
-        Object[] cabecalho = new Object[3];
-        cabecalho[0] = "Código";
-        cabecalho[1] = "Nome";
-        cabecalho[2] = "CPF";
+        Object[] cabecalho = new Object[4];
+        cabecalho[0] = "Cód Prestador";
+        cabecalho[1] = "Prestador";
+        cabecalho[2] = "Cód Serviço";
+        cabecalho[3] = "Serviço";
 
         // cria matriz de acordo com nº de registros da tabela
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             // busca por código
-            org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM prestadores WHERE retira_acentuacao(nome) ILIKE retira_acentuacao('%" + criterio + "%') ");
+            org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Prestadores P, Servicos S, servicos_has_prestadores SP \n" +
+"WHERE SP.ref_prestadores = P.id\n" +
+"AND SP.ref_servicos = S.id\n" +
+"AND retira_acentuacao(p.nome) ILIKE retira_acentuacao('%" + nome + "%') \n" +
+"AND retira_acentuacao(S.descricao) ILIKE retira_acentuacao('%" + servico + "%') \n" +
+"ORDER BY P.nome ");
             int c = Integer.parseInt(String.valueOf(q.uniqueResult()));
             System.out.println("resultado count = " + c);
 
-            dadosTabela = new Object[c][3];
+            dadosTabela = new Object[c][4];
 
         } catch (Exception e) {
             System.out.println("Erro ao consultar count Prestadores: " + e);
@@ -70,7 +77,12 @@ public class SelecionarPrestadorDAO {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
 
-            org.hibernate.Query q = sessao.createQuery("FROM Prestadores WHERE retira_acentuacao(nome) ILIKE retira_acentuacao('%" + criterio + "%') ORDER BY nome");
+            org.hibernate.Query q = sessao.createQuery("select P.id, P.nome, S.id, S.descricao as servico FROM Prestadores P, Servicos S, servicos_has_prestadores SP \n" +
+"WHERE SP.ref_prestadores = P.id\n" +
+"AND SP.ref_servicos = S.id\n" +
+"AND retira_acentuacao(p.nome) ILIKE retira_acentuacao('%" + nome + "%') \n" +
+"AND retira_acentuacao(S.descricao) ILIKE retira_acentuacao('%" + servico + "%') \n" +
+"ORDER BY P.nome ");
             List resultado = q.list();
 
             for (Object o : resultado) {
