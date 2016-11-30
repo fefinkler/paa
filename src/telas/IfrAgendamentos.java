@@ -364,6 +364,11 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         tfdPrestador.setEditable(false);
 
         btnBuscarPrestServ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/fin2.png"))); // NOI18N
+        btnBuscarPrestServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPrestServActionPerformed(evt);
+            }
+        });
 
         tfdIdCliente.setEditable(false);
         tfdIdCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -876,8 +881,13 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_JxDataIniActionPerformed
 
+    private void enviarAlerta(int id) {                                          
+            FrmPrincipal.servidor.definirMensagem(String.valueOf(id));
+            FrmPrincipal.servidor.definirEnvio(true);
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        enviarAlerta(1);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnLimpar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpar1ActionPerformed
@@ -895,6 +905,10 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
             btnSalvar.setEnabled(false);
         }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void btnBuscarPrestServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPrestServActionPerformed
+        
+    }//GEN-LAST:event_btnBuscarPrestServActionPerformed
     
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanelInclusao);

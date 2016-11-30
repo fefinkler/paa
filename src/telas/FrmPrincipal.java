@@ -5,7 +5,10 @@
  */
 package telas;
 
+import Apoio.Cliente;
+import Apoio.Servidor;
 import entidades.Usuarios;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,9 @@ import javax.swing.JOptionPane;
  */
 public class FrmPrincipal extends javax.swing.JFrame {
 
+    public static Servidor servidor;
+    Cliente cliente;
+    public static ArrayList<Integer> idsAgendamentos;
     /**
      * Creates new form FrmPrincipal
      */
@@ -28,6 +34,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         Usuarios u = IfrLogin.userAtivo;
         tfdUsuarioLogado.setText("Bem Vindo " + u.getNome());
+        idsAgendamentos = new ArrayList<>();
+        lblIcon.setVisible(false);
+        cliente = new Cliente("239.0.0.1", 60000, null, lblIcon);
+        cliente.start();
+        servidor = new Servidor("239.0.0.1", 60000, null);
+        servidor.start();
     }
 
     /**
@@ -45,6 +57,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tfdUsuarioLogado = new javax.swing.JLabel();
+        lblIcon = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -82,9 +95,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
         tfdUsuarioLogado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tfdUsuarioLogado.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
+        lblIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/aalerta.jpg"))); // NOI18N
+        lblIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconMouseClicked(evt);
+            }
+        });
+
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(tfdUsuarioLogado, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(lblIcon, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -99,14 +120,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(359, 359, 359))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(tfdUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(101, 101, 101))))
+                        .addComponent(tfdUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(96, 96, 96))))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addComponent(tfdUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfdUsuarioLogado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -380,6 +405,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         IfrUtilCep.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void lblIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblIconMouseClicked
+
     
       
     
@@ -447,6 +476,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuUsuariosSistema;
     private javax.swing.JMenu jMenuUtilitarios;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblIcon;
     private javax.swing.JLabel tfdUsuarioLogado;
     // End of variables declaration//GEN-END:variables
 }
