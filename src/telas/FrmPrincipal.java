@@ -7,6 +7,7 @@ package telas;
 
 import entidades.Usuarios;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,6 +63,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuUtilitarios = new javax.swing.JMenu();
         jMenuGerarBackup = new javax.swing.JMenuItem();
         jMenuStatusLogs = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -250,6 +252,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenuUtilitarios.add(jMenuStatusLogs);
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/finder.png"))); // NOI18N
+        jMenuItem2.setText("Util CEP");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenuUtilitarios.add(jMenuItem2);
+
         jMenuBar1.add(jMenuUtilitarios);
 
         setJMenuBar(jMenuBar1);
@@ -363,6 +374,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
         IfrPrestadores.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        IfrUtilCep IfrUtilCep = new IfrUtilCep();
+        jDesktopPane1.add(IfrUtilCep);
+        IfrUtilCep.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    
+      
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -418,6 +439,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuGerarBackup;
     private javax.swing.JMenuItem jMenuIncluirReserva;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuPrestadores;
     private javax.swing.JMenu jMenuRelatorios;
     private javax.swing.JMenuItem jMenuServicos;
