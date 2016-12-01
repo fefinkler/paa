@@ -298,7 +298,7 @@ public class ServicosHasPrestadoresDAO implements IDAO{
                 ServicosHasPrestadores s = (ServicosHasPrestadores) resultado.get(lin);
                 dadosTabela[lin][0] = s.getId();
                 dadosTabela[lin][1] = s.getRefServicos().toString();
-                dadosTabela[lin][1] = s.getValorHora();
+                dadosTabela[lin][2] = s.getValorHora();
                 lin++;
             }
         } catch (Exception e) {

@@ -857,7 +857,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
             ServicosHasPrestadores sp = new ServicosHasPrestadores();
             sp.setRefPrestadores(prestador);
             sp.setRefServicos((Servicos) servicosDAO.consultarId(Integer.parseInt(String.valueOf(tblServicos1.getValueAt(tblServicos1.getSelectedRow(), 0)))));
-            //sp.setValorHora(tfdValorHora.getText());
+            sp.setValorHora(new BigInteger((tfdValorHora.getText())));
             if (servicosHasPrestadoresDAO.salvar(sp) == false) {
                 JOptionPane.showMessageDialog(this, "Serviço já adicionado!");
             }
