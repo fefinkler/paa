@@ -858,10 +858,10 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
             sp.setRefPrestadores(prestador);
             sp.setRefServicos((Servicos) servicosDAO.consultarId(Integer.parseInt(String.valueOf(tblServicos1.getValueAt(tblServicos1.getSelectedRow(), 0)))));
             //sp.setValorHora(tfdValorHora.getText());
-//            if (servicosHasPrestadoresDAO.salvar(sp) == false) {
-//                JOptionPane.showMessageDialog(this, "Atleta já adicionado à equipe.");
-//            }
-//            competicaoDAO.popularTabelaEquipe(tblEquipe, competicao);
+            if (servicosHasPrestadoresDAO.salvar(sp) == false) {
+                JOptionPane.showMessageDialog(this, "Serviço já adicionado!");
+            }
+            servicosHasPrestadoresDAO.popularTabelaPorPrestador(tblServicosSelecionados, prestador.getId());
         } else {
             JOptionPane.showMessageDialog(this, "Necessário selecionar um Serviço e preencher o Valor Hora!");
         }

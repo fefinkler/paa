@@ -116,7 +116,7 @@ public class Servicos implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Servicos[ id=" + id + " ]";
+        return descricao;
     }
     
 }

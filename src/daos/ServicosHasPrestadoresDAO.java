@@ -267,22 +267,17 @@ public class ServicosHasPrestadoresDAO implements IDAO{
             sessao.beginTransaction();
             // busca por código
 //            org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM ServicosHasPrestadores WHERE ref_prestadores ILIKE ('%" + criterio + "%')");
-//            System.out.println("SQL: " + q);
-
-            String sql = "SELECT count(*) FROM Servicos_Has_Prestadores";// WHERE ref_prestadores ILIKE ('%" + criterio + "%')";
+            String sql = "SELECT count(*) FROM Servicos_Has_Prestadores WHERE ref_prestadores = " + prestador;
+            System.out.println("SQL: " + sql);
             SQLQuery query = sessao.createSQLQuery(sql);
-            query.addEntity(ServicosHasPrestadores.class);
-            List results = query.list();
-
-            System.out.println("antes: " +results.get(0).toString());
-            int c = Integer.parseInt(String.valueOf(results.get(0)));
-            System.out.println("LINHASSSSSSSSSSS: " + c);
-
-//            int c = Integer.parseInt(String.valueOf(q.uniqueResult()));
-            dadosTabela = new Object[c][3];
+            //query.addEntity(ServicosHasPrestadores.class);
+            //List results = query.list();
+            int countLinhas = Integer.parseInt(String.valueOf(query.uniqueResult()));
+            System.out.println("Linhas: " + countLinhas);
+            dadosTabela = new Object[countLinhas][3];
 
         } catch (Exception e) {
-            System.out.println("Erro ao contar/consultar: " + e);
+            System.out.println("Erro ao contar/consultar Servicos por Prestador: " + e);
         }
 
         int lin = 0;
@@ -294,7 +289,7 @@ public class ServicosHasPrestadoresDAO implements IDAO{
 
 //            org.hibernate.Query q = sessao.createQuery("FROM ServicosHasPrestadores WHERE ref_prestadores ILIKE ('%" + criterio + "%') AND delete is null");
 //            List resultado = q.list();
-            String sql = "select * FROM Servicos_Has_Prestadores WHERE ref_prestadores ILIKE ('%" + prestador + "%')";
+            String sql = "select * FROM Servicos_Has_Prestadores WHERE ref_prestadores = " + prestador;
             SQLQuery query = sessao.createSQLQuery(sql);
             query.addEntity(ServicosHasPrestadores.class);
             List resultado = query.list();
@@ -302,12 +297,12 @@ public class ServicosHasPrestadoresDAO implements IDAO{
             for (Object o : resultado) {
                 ServicosHasPrestadores s = (ServicosHasPrestadores) resultado.get(lin);
                 dadosTabela[lin][0] = s.getId();
-                dadosTabela[lin][1] = s.getRefServicos();
+                dadosTabela[lin][1] = s.getRefServicos().toString();
                 dadosTabela[lin][1] = s.getValorHora();
                 lin++;
             }
         } catch (Exception e) {
-            System.out.println("problemas para popular tabela Serviços...");
+            System.out.println("problemas para popular tabela Serviços do Prestador...");
             System.out.println(e);
         }
 
