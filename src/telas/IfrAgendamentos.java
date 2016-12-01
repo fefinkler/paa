@@ -37,6 +37,8 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
 
     AgendasDAO agendasDAO;
     int idCli = 0;
+    int idSerPres = 0;
+
     /**
      * Creates new form IfrCategoria
      */
@@ -55,7 +57,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         tfdHoraFim.setDocument(new LimiteDigitos(5));
         tfdTempo.setDocument(new LimiteDigitos(5));
         tfdNota.setDocument(new LimiteDigitos(2));
-        
+
     }
 
     public Date formDataStrgToJava(String data) {
@@ -790,7 +792,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
 
     private void tfdNotaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdNotaKeyReleased
         int nota = Integer.parseInt(tfdNota.getText());
-        if (nota > 10){
+        if (nota > 10) {
             JOptionPane.showMessageDialog(this, "A nota do serviço não pode ser maior que 10!");
             tfdNota.requestFocus();
         }
@@ -831,13 +833,13 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         int minF = Integer.parseInt(fim_estimado.substring(14, 16));
         Date dF = new Date(anoF, mesF, diaF, horaF, minF, 0);
         agenda.setFimEstimado(dF);
-        
+
         agenda.setRefClientes((Clientes) new ClientesDAO().consultarId(Integer.parseInt(tfdIdCliente.getText())));
         agenda.setRefServicosHasPrestadores((ServicosHasPrestadores) new ServicosHasPrestadoresDAO().consultarId(Integer.parseInt(tfdIdPS.getText())));
         char situacao;
-        if (rdbProgramado.isSelected()){
+        if (rdbProgramado.isSelected()) {
             situacao = 'p';
-        } else if (rdbRealizado.isSelected()){
+        } else if (rdbRealizado.isSelected()) {
             situacao = 'r';
         } else {
             situacao = 's';
@@ -848,7 +850,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         agenda.setObsCliente(tfdObsCliente.getText());
         agenda.setObsPrestador(tfdObsPrestador.getText());
         agenda.setNota(Integer.parseInt(tfdNota.getText()));
-        
+
         if (agendasDAO.registroUnico(agenda)) {
             if (tfdIdAgenda.getText().trim().isEmpty()) { //SALVAR
                 if (agendasDAO.salvar(agenda)) {
@@ -878,14 +880,14 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void JxDataIniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JxDataIniActionPerformed
-        
+
     }//GEN-LAST:event_JxDataIniActionPerformed
 
-    private void enviarAlerta(int id) {                                          
-            FrmPrincipal.servidor.definirMensagem(String.valueOf(id));
-            FrmPrincipal.servidor.definirEnvio(true);
+    private void enviarAlerta(int id) {
+        FrmPrincipal.servidor.definirMensagem(String.valueOf(id));
+        FrmPrincipal.servidor.definirEnvio(true);
     }
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         enviarAlerta(1);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -907,9 +909,17 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void btnBuscarPrestServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPrestServActionPerformed
-        
+        DlgSelecionarServicoPrestador dlgSelecionarServicoPrestador = new DlgSelecionarServicoPrestador(null, true, this);
+        dlgSelecionarServicoPrestador.setLocationRelativeTo(null);
+        dlgSelecionarServicoPrestador.setModal(true);
+        dlgSelecionarServicoPrestador.setVisible(true);
+        if (camposObrigatorios() == true) {
+            btnSalvar.setEnabled(true);
+        } else {
+            btnSalvar.setEnabled(false);
+        }
     }//GEN-LAST:event_btnBuscarPrestServActionPerformed
-    
+
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanelInclusao);
         tfdDescricao.requestFocus();
@@ -921,7 +931,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         tfdConsultaDataSaidaAte.setDate(null);
         tfdConsultaDesc.requestFocus();
     }
-    
+
     public void pegaValorCliente(Object c) {
         Clientes cli = (Clientes) c;
         System.out.println("id: " + cli.getId());
@@ -929,6 +939,16 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         idCli = cli.getId();
         tfdIdCliente.setText(String.valueOf(cli.getId()));
         tfdCliente.setText(cli.getNome());
+    }
+
+    public void pegaValorServicosHasPrestadores(Object c) {
+        ServicosHasPrestadores sp = (ServicosHasPrestadores) c;
+        System.out.println("id: " + sp.getId());
+        System.out.println("serviço: " + sp.getRefServicos().getDescricao());
+        System.out.println("Prestador: " + sp.getRefPrestadores().getNome());
+        idSerPres = sp.getId();
+        tfdPrestador.setText(String.valueOf(sp.getRefPrestadores().getNome()));
+        tfdServico.setText(String.valueOf(sp.getRefServicos().getDescricao()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
