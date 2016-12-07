@@ -749,26 +749,28 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     public void editar() {
+        jTabbedPane1.remove(pnlServicos);
         if (tblPrestadores.getSelectedRow() > -1) {
             int id = Integer.parseInt(String.valueOf(tblPrestadores.getValueAt(tblPrestadores.getSelectedRow(), 0)));
-            Prestadores pres = (Prestadores) prestadoresDAO.consultarId(id);
+            prestador = (Prestadores) prestadoresDAO.consultarId(id);
 
-            tfdId.setText(String.valueOf(pres.getId()));
-            tfdNome.setText(pres.getNome());
-            tfdCPF.setText(pres.getCpf());
-            tfdRG.setText(pres.getRg());
-            tfdTelefone.setText(pres.getTelefone());
-            tfdCelular.setText(pres.getCelular());
-            tfdEmail.setText(pres.getEmail());
-            tfdEndereco.setText(pres.getEndereco());
-            tfdCEP.setText(pres.getCep());
-            tfdIdCidade.setText(String.valueOf(pres.getRefCidades().getId()));
+            tfdId.setText(String.valueOf(prestador.getId()));
+            tfdNome.setText(prestador.getNome());
+            tfdCPF.setText(prestador.getCpf());
+            tfdRG.setText(prestador.getRg());
+            tfdTelefone.setText(prestador.getTelefone());
+            tfdCelular.setText(prestador.getCelular());
+            tfdEmail.setText(prestador.getEmail());
+            tfdEndereco.setText(prestador.getEndereco());
+            tfdCEP.setText(prestador.getCep());
+            tfdIdCidade.setText(String.valueOf(prestador.getRefCidades().getId()));
             Cidades cid = (Cidades) scDAO.consultarId(Integer.parseInt(tfdIdCidade.getText()));
             idCid = cid.getId();
             tfdCidade.setText(cid.getCidade());
             tfdSiglaEstado.setText(cid.getEstado());
             tblPrestadores.clearSelection();
-            jTabbedPane1.setSelectedIndex(0);
+            atualizaAbas(prestador);
+            jTabbedPane1.setSelectedIndex(1);
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um registro!");
         }
@@ -872,6 +874,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
             if (servicosHasPrestadoresDAO.salvar(sp) == false) {
                 JOptionPane.showMessageDialog(this, "Serviço já adicionado!");
             }
+            tfdValorHora.setText("");
             servicosHasPrestadoresDAO.popularTabelaPorPrestador(tblServicosSelecionados, prestador.getId());
         } else {
             JOptionPane.showMessageDialog(this, "Necessário selecionar um Serviço e preencher o Valor Hora!");
@@ -907,12 +910,12 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
         if (tblServicosSelecionados.getSelectedRow() > -1) {
             ServicosHasPrestadores sp = (ServicosHasPrestadores) servicosHasPrestadoresDAO.consultarId(Integer.parseInt(String.valueOf(tblServicosSelecionados.getValueAt(tblServicosSelecionados.getSelectedRow(), 0))));
-//            if (servicosHasPrestadoresDAO.salvar(sp) == false) {
-//                JOptionPane.showMessageDialog(this, "Serviço já adicionado!");
-//            }
-//            servicosHasPrestadoresDAO.popularTabelaPorPrestador(tblServicosSelecionados, prestador.getId());
+            if (servicosHasPrestadoresDAO.excluir(sp) == false) {
+                JOptionPane.showMessageDialog(this, "Problemas ao remover serviço do Prestador!");
+            }
+            servicosHasPrestadoresDAO.popularTabelaPorPrestador(tblServicosSelecionados, prestador.getId());
         } else {
-            JOptionPane.showMessageDialog(this, "Necessário selecionar um Serviço e preencher o Valor Hora!");
+            JOptionPane.showMessageDialog(this, "Necessário selecionar um Serviço para remover!");
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
