@@ -252,7 +252,8 @@ public class ServicosHasPrestadoresDAO implements IDAO{
     }
     
     public void popularTabelaPorPrestador(JTable tabela, int prestador) {
-        // dados da tabela
+// utilizado em IfrPrestadores para popular tabela de serviços que o prestador em edição realiza        
+// dados da tabela
         Object[][] dadosTabela = null;
 
         // cabecalho da tabela
@@ -349,7 +350,8 @@ public class ServicosHasPrestadoresDAO implements IDAO{
     }
     
     public void popularTabela(JTable tabela, String criterio) {
-        // dados da tabela
+// utilizado na DlgSelecionarServicoPrestador para escolher a opção para o Agendamento        
+// dados da tabela
         Object[][] dadosTabela = null;
 
         // cabecalho da tabela

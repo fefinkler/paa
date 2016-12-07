@@ -448,6 +448,11 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         });
 
         btnBuscaServ.setText("Buscar");
+        btnBuscaServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscaServActionPerformed(evt);
+            }
+        });
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/fin2.png"))); // NOI18N
         btnAdicionar.setText("<< Adicionar");
@@ -459,6 +464,11 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
 
         btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/delete.png"))); // NOI18N
         btnRemover.setText("Remover >>");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         tblServicos1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -785,6 +795,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this, "Prestador salvo com Sucesso! Adicione seus serviços.");
                     prestador = p;
                     atualizaAbas(p);
+                    jTabbedPane1.setSelectedIndex(2);
                     btnSalvar.setEnabled(false);
                 } else {
                     JOptionPane.showMessageDialog(this, "Erro ao salvar novo Prestador!\n");
@@ -888,6 +899,22 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         LimparCamposCadastro();
         jTabbedPane1.setSelectedIndex(1);
     }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnBuscaServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaServActionPerformed
+        servicosDAO.popularTabela(tblServicos1, tfdBuscaServ.getText());
+    }//GEN-LAST:event_btnBuscaServActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        if (tblServicosSelecionados.getSelectedRow() > -1) {
+            ServicosHasPrestadores sp = (ServicosHasPrestadores) servicosHasPrestadoresDAO.consultarId(Integer.parseInt(String.valueOf(tblServicosSelecionados.getValueAt(tblServicosSelecionados.getSelectedRow(), 0))));
+//            if (servicosHasPrestadoresDAO.salvar(sp) == false) {
+//                JOptionPane.showMessageDialog(this, "Serviço já adicionado!");
+//            }
+//            servicosHasPrestadoresDAO.popularTabelaPorPrestador(tblServicosSelecionados, prestador.getId());
+        } else {
+            JOptionPane.showMessageDialog(this, "Necessário selecionar um Serviço e preencher o Valor Hora!");
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void LimparCamposCadastro() {
         prestador = null;
