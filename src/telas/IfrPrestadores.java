@@ -134,7 +134,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         btnEditar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnFechar = new javax.swing.JButton();
-        btnFechar1 = new javax.swing.JButton();
+        btnNovoRegistro = new javax.swing.JButton();
 
         setTitle("Cadastro de Prestadores");
 
@@ -583,11 +583,11 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
             }
         });
 
-        btnFechar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/new-file.png"))); // NOI18N
-        btnFechar1.setText("Novo");
-        btnFechar1.addActionListener(new java.awt.event.ActionListener() {
+        btnNovoRegistro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/new-file.png"))); // NOI18N
+        btnNovoRegistro.setText("Novo");
+        btnNovoRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFechar1ActionPerformed(evt);
+                btnNovoRegistroActionPerformed(evt);
             }
         });
 
@@ -597,7 +597,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnFechar1)
+                .addComponent(btnNovoRegistro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExcluir)
                 .addGap(18, 18, 18)
@@ -622,7 +622,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
                     .addComponent(btnSalvar)
                     .addComponent(btnEditar)
                     .addComponent(btnExcluir)
-                    .addComponent(btnFechar1))
+                    .addComponent(btnNovoRegistro))
                 .addGap(76, 76, 76))
         );
 
@@ -726,6 +726,8 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
                 if (prestadoresDAO.atualizar(p)) {
                     prestadoresDAO.popularTabela(tblPrestadores, tfdConsulta.getText());
                     JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
+                    btnExcluir.setEnabled(false);
+                    btnEditar.setEnabled(false);
                 } else {
                     JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
                 }
@@ -737,6 +739,8 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         editar();
+        btnExcluir.setEnabled(false);
+        btnEditar.setEnabled(false);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     public void editar() {
@@ -857,7 +861,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblPrestadoresMouseClicked
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        if (tblServicos1.getSelectedRow() > -1 && ! tfdValorHora.getText().isEmpty()) {
+        if (tblServicos1.getSelectedRow() > -1 && !tfdValorHora.getText().isEmpty()) {
             ServicosHasPrestadores sp = new ServicosHasPrestadores();
             sp.setRefPrestadores(prestador);
             sp.setRefServicos((Servicos) servicosDAO.consultarId(Integer.parseInt(String.valueOf(tblServicos1.getValueAt(tblServicos1.getSelectedRow(), 0)))));
@@ -889,11 +893,6 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfdValorHoraActionPerformed
 
-    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        LimparCamposCadastro();
-        jTabbedPane1.setSelectedIndex(1);
-    }//GEN-LAST:event_btnNovoActionPerformed
-
     private void btnBuscaServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaServActionPerformed
         servicosDAO.popularTabela(tblServicos1, tfdBuscaServ.getText());
     }//GEN-LAST:event_btnBuscaServActionPerformed
@@ -910,11 +909,17 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
-    private void btnFechar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechar1ActionPerformed
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechar1ActionPerformed
         LimparCamposCadastro();
         btnExcluir.setEnabled(false);
         btnEditar.setEnabled(false);
     }//GEN-LAST:event_btnFechar1ActionPerformed
+
+    private void btnNovoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoRegistroActionPerformed
+        LimparCamposCadastro();
+        btnExcluir.setEnabled(false);
+        btnEditar.setEnabled(false);
+    }//GEN-LAST:event_btnNovoRegistroActionPerformed
 
     private void LimparCamposCadastro() {
         prestador = null;
@@ -937,7 +942,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
-    private javax.swing.JButton btnFechar1;
+    private javax.swing.JButton btnNovoRegistro;
     private javax.swing.JButton btnProcurar;
     private javax.swing.JButton btnRemover;
     private javax.swing.JButton btnSalvar;

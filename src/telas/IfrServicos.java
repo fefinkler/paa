@@ -61,6 +61,7 @@ public class IfrServicos extends javax.swing.JInternalFrame {
         btnProcurar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        btnNovoRegistro = new javax.swing.JButton();
 
         setTitle("Cadastro de Serviços");
 
@@ -110,7 +111,7 @@ public class IfrServicos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 250, Short.MAX_VALUE)
+                        .addGap(0, 341, Short.MAX_VALUE)
                         .addComponent(jLabel12))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -179,7 +180,7 @@ public class IfrServicos extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -235,6 +236,14 @@ public class IfrServicos extends javax.swing.JInternalFrame {
             }
         });
 
+        btnNovoRegistro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/new-file.png"))); // NOI18N
+        btnNovoRegistro.setText("Novo");
+        btnNovoRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoRegistroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -244,6 +253,8 @@ public class IfrServicos extends javax.swing.JInternalFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnNovoRegistro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEditar)
@@ -257,12 +268,13 @@ public class IfrServicos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFechar)
                     .addComponent(btnSalvar)
                     .addComponent(btnEditar)
-                    .addComponent(btnExcluir))
+                    .addComponent(btnExcluir)
+                    .addComponent(btnNovoRegistro))
                 .addContainerGap())
         );
 
@@ -352,6 +364,8 @@ public class IfrServicos extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         editar();
+        btnExcluir.setEnabled(false);
+        btnEditar.setEnabled(false);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -366,6 +380,8 @@ public class IfrServicos extends javax.swing.JInternalFrame {
                 if (servicosDAO.atualizar(s)) {
                     servicosDAO.popularTabela(tblServicos, tfdConsulta.getText());
                     JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
+                    btnExcluir.setEnabled(false);
+                    btnEditar.setEnabled(false);
                 } else {
                     JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
                 }
@@ -374,6 +390,13 @@ public class IfrServicos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Selecione um registro!");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnNovoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoRegistroActionPerformed
+        LimparCamposCadastro();
+        btnExcluir.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnSalvar.setEnabled(false);
+    }//GEN-LAST:event_btnNovoRegistroActionPerformed
 
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanel1);
@@ -392,6 +415,7 @@ public class IfrServicos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
+    private javax.swing.JButton btnNovoRegistro;
     private javax.swing.JButton btnProcurar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;

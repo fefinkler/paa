@@ -98,7 +98,7 @@ public class IfrClientes extends javax.swing.JInternalFrame {
         btnProcurar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        btnFechar1 = new javax.swing.JButton();
+        btnNovoRegistro = new javax.swing.JButton();
 
         setTitle("Cadastro de Clientes");
 
@@ -492,11 +492,11 @@ public class IfrClientes extends javax.swing.JInternalFrame {
             }
         });
 
-        btnFechar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/new-file.png"))); // NOI18N
-        btnFechar1.setText("Novo");
-        btnFechar1.addActionListener(new java.awt.event.ActionListener() {
+        btnNovoRegistro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/new-file.png"))); // NOI18N
+        btnNovoRegistro.setText("Novo");
+        btnNovoRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFechar1ActionPerformed(evt);
+                btnNovoRegistroActionPerformed(evt);
             }
         });
 
@@ -506,7 +506,7 @@ public class IfrClientes extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnFechar1)
+                .addComponent(btnNovoRegistro)
                 .addGap(18, 18, 18)
                 .addComponent(btnExcluir)
                 .addGap(18, 18, 18)
@@ -527,7 +527,7 @@ public class IfrClientes extends javax.swing.JInternalFrame {
                     .addComponent(btnSalvar)
                     .addComponent(btnEditar)
                     .addComponent(btnExcluir)
-                    .addComponent(btnFechar1))
+                    .addComponent(btnNovoRegistro))
                 .addContainerGap())
         );
 
@@ -649,6 +649,8 @@ public class IfrClientes extends javax.swing.JInternalFrame {
                 if (clientesDAO.atualizar(c)) {
                     clientesDAO.popularTabela(tblClientes, tfdConsulta.getText());
                     JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
+                    btnExcluir.setEnabled(false);
+                    btnEditar.setEnabled(false);
                 } else {
                     JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
                 }
@@ -660,6 +662,8 @@ public class IfrClientes extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         editar();
+        btnExcluir.setEnabled(false);
+        btnEditar.setEnabled(false);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     public void editar() {
@@ -813,11 +817,11 @@ public class IfrClientes extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tblClientesMouseClicked
 
-    private void btnFechar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechar1ActionPerformed
+    private void btnNovoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoRegistroActionPerformed
         LimparCamposCadastro();
         btnExcluir.setEnabled(false);
         btnEditar.setEnabled(false);
-    }//GEN-LAST:event_btnFechar1ActionPerformed
+    }//GEN-LAST:event_btnNovoRegistroActionPerformed
 
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanel1);
@@ -830,7 +834,7 @@ public class IfrClientes extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
-    private javax.swing.JButton btnFechar1;
+    private javax.swing.JButton btnNovoRegistro;
     private javax.swing.JButton btnProcurar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup buttonGroupTipo;
