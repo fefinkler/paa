@@ -400,6 +400,9 @@ public class ServicosHasPrestadoresDAO implements IDAO{
 
         // efetua consulta na tabela
         try {
+            
+//            org.hibernate.Query q = sessao.createQuery("FROM ServicosHasPrestadores WHERE ref_prestadores ILIKE ('%" + criterio + "%') AND delete is null");
+
             org.hibernate.Query q = sessao.createQuery("FROM ServicosHasPrestadores ");
             List resultado = q.list();
 
@@ -414,11 +417,11 @@ public class ServicosHasPrestadoresDAO implements IDAO{
                 lin++;
             }
         } catch (Exception e) {
-            try {
-                Email.sendEmail(e.toString());
-            } catch (EmailException ex) {
-                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                Email.sendEmail(e.toString());
+//            } catch (EmailException ex) {
+//                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
 
             LogErros logErro = new LogErros();
             logErro.setDescricao(e.toString());

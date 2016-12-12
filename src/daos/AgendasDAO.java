@@ -194,7 +194,7 @@ public class AgendasDAO implements IDAO{
             // busca por código
             org.hibernate.Query q = sessao.createQuery("from Agendas where id = " + id);
 
-            return q.list().get(0);
+            return q.uniqueResult();
 
         } catch (HibernateException he) {
             try {

@@ -62,9 +62,9 @@ public class Cliente extends Thread {
                 // exibe dados na area de texto
                 String dados = new String(pacote.getData()).trim();
                 pkgRecebido.setVisible(true);
-                FrmPrincipal.idsAgendamentos.add(Integer.parseInt(pacote.getData().toString()));
+                FrmPrincipal.idsAgendamentos.add(Integer.parseInt(dados));
 //                pkgRecebido.append(dados + "\n");
-System.out.println("ID: " + dados + "agendas: " + Integer.parseInt(pacote.getData().toString()));
+System.out.println("ID: " + dados + "agendas: " + Integer.parseInt(dados));
 
             } catch (IOException ioe) {
                 txaErro.append(ioe + "\n");

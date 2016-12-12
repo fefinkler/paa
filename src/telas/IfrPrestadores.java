@@ -919,6 +919,7 @@ public class IfrPrestadores extends javax.swing.JInternalFrame {
         LimparCamposCadastro();
         btnExcluir.setEnabled(false);
         btnEditar.setEnabled(false);
+        jTabbedPane1.setSelectedIndex(1);
     }//GEN-LAST:event_btnNovoRegistroActionPerformed
 
     private void LimparCamposCadastro() {

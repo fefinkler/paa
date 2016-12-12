@@ -7,7 +7,13 @@ package telas;
 
 import Apoio.Cliente;
 import Apoio.Servidor;
+import daos.AgendasDAO;
+import daos.ServicosHasPrestadoresDAO;
+import entidades.Agendas;
+import entidades.Servicos;
+import entidades.ServicosHasPrestadores;
 import entidades.Usuarios;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -406,7 +412,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void lblIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconMouseClicked
-        // TODO add your handling code here:
+        String alerta = "Novo(s) serviço(s) agendado(s):";
+        for (int i = 0; i < idsAgendamentos.size(); i++) {
+            Agendas a = (Agendas) new AgendasDAO().consultarId(idsAgendamentos.get(i));
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            String data = df.format(a.getInicioEstimado());
+            String servico = a.getRefServicosHasPrestadores().getRefServicos().getDescricao();
+            String cliente = a.getRefClientes().getNome();
+            alerta += "\n " + data + ": " + servico + " para " + cliente;
+        }
+        lblIcon.setVisible(false);
+        JOptionPane.showMessageDialog(this, alerta);
     }//GEN-LAST:event_lblIconMouseClicked
 
     
