@@ -31,7 +31,7 @@ import telas.IfrLogin;
  *
  * @author Fernanda Finkler
  */
-public class AgendasDAO implements IDAO{
+public class AgendasDAO implements IDAO {
 
     @Override
     public boolean salvar(Object o) {
@@ -52,12 +52,12 @@ public class AgendasDAO implements IDAO{
             } catch (EmailException ex) {
                 Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            
+
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
             sessao.save(logErro);
@@ -91,12 +91,12 @@ public class AgendasDAO implements IDAO{
             } catch (EmailException ex) {
                 Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            
+
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
             sessao.save(logErro);
@@ -130,12 +130,12 @@ public class AgendasDAO implements IDAO{
             } catch (EmailException ex) {
                 Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            
+
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
             sessao.save(logErro);
@@ -169,12 +169,12 @@ public class AgendasDAO implements IDAO{
             } catch (EmailException ex) {
                 Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            
+
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
             sessao.save(logErro);
@@ -202,12 +202,12 @@ public class AgendasDAO implements IDAO{
             } catch (EmailException ex) {
                 Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            
+
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
             sessao.save(logErro);
@@ -222,33 +222,38 @@ public class AgendasDAO implements IDAO{
     public boolean registroUnico(Object o) {
         Agendas a = (Agendas) o;
         Prestadores p = a.getRefServicosHasPrestadores().getRefPrestadores();
-        boolean ok = false;
+        boolean ok = true;
 
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         sessao.beginTransaction();
-            
+
         try {
             org.hibernate.Query q;
 
             // busca por item cadastrado
             if (a.getId() != null) {
-                q = sessao.createQuery("FROM Agendas a, ServicosHasPrestadores sp\n" +
-                                        "WHERE a.ref_servicos_has_prestadores = sp.id \n" +
-                                        "AND a.id != " + a.getId() + "\n" +
-                                        "AND " + p.getId() + " = sp.ref_prestadores \n" +
-                                        "AND '" + a.getInicioEstimado() + "' between a.inicio_estimado AND a.fim_estimado\n" +
-                                        "OR '" + a.getFimEstimado() + "' between a.inicio_estimado AND a.fim_estimado");
+                q = sessao.createQuery("FROM Agendas a, Servicos_Has_Prestadores sp\n"
+                        + "WHERE a.ref_servicos_has_prestadores = sp.id \n"
+                        + "AND a.id != " + a.getId() + "\n"
+                        + "AND " + a.getId() + " = sp.ref_prestadores \n"
+                        + "AND a.inicio_estimado between '" + a.getInicioEstimado() + "' AND '" + a.getFimEstimado() + "'\n"
+                        + "OR a.ref_servicos_has_prestadores = sp.id \n"
+                        + "AND a.id != " + a.getId() + "\n"
+                        + "AND " + a.getId() + " = sp.ref_prestadores \n"
+                        + "AND a.fim_estimado between '" + a.getInicioEstimado() + "' AND '" + a.getFimEstimado() + "'");
             } else {
-                q = sessao.createQuery("FROM Agendas a, ServicosHasPrestadores sp\n" +
-                                        "WHERE a.ref_servicos_has_prestadores = sp.id \n" +
-                                        "AND " + p.getId() + " = sp.ref_prestadores \n" +
-                                        "AND '" + a.getInicioEstimado() + "' between a.inicio_estimado AND a.fim_estimado\n" +
-                                        "OR '" + a.getFimEstimado() + "' between a.inicio_estimado AND a.fim_estimado");
+                q = sessao.createQuery("FROM Agendas a, Servicos_Has_Prestadores sp\n"
+                        + "WHERE a.ref_servicos_has_prestadores = sp.id \n"
+                        + "AND " + p.getId() + " = sp.ref_prestadores \n"
+                        + "AND a.inicio_estimado between '" + a.getInicioEstimado() + "' AND '" + a.getFimEstimado() + "'\n"
+                        + "OR a.ref_servicos_has_prestadores = sp.id \n"
+                        + "AND " + p.getId() + " = sp.ref_prestadores \n"
+                        + "AND a.fim_estimado between '" + a.getInicioEstimado() + "' AND '" + a.getFimEstimado() + "'");
             }
             System.out.println("sql: " + q);
 
             if (q.list().isEmpty()) {
-                ok = true;
+                ok = false;
             }
 
         } catch (HibernateException he) {
@@ -257,12 +262,12 @@ public class AgendasDAO implements IDAO{
             } catch (EmailException ex) {
                 Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             LogErros logErro = new LogErros();
             logErro.setDescricao(he.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            
+
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
             sessao.save(logErro);
@@ -272,7 +277,7 @@ public class AgendasDAO implements IDAO{
         }
         return ok;
     }
-    
+
     public void popularTabela(JTable tabela, String criterio) {
         // dados da tabela
         Object[][] dadosTabela = null;
@@ -284,7 +289,7 @@ public class AgendasDAO implements IDAO{
 
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         sessao.beginTransaction();
-            
+
         // cria matriz de acordo com nº de registros da tabela
         try {
             org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Agendas WHERE retira_acentuacao(descricao) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null");
@@ -298,12 +303,12 @@ public class AgendasDAO implements IDAO{
             } catch (EmailException ex) {
                 Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             LogErros logErro = new LogErros();
             logErro.setDescricao(e.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            
+
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
             sessao.save(logErro);
@@ -334,12 +339,12 @@ public class AgendasDAO implements IDAO{
             } catch (EmailException ex) {
                 Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             LogErros logErro = new LogErros();
             logErro.setDescricao(e.toString());
             logErro.setDataHora(new Date());
             logErro.setUsuariosId(IfrLogin.userAtivo);
-            
+
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
             sessao.save(logErro);

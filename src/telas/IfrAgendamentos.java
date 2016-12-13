@@ -48,8 +48,8 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         btnExcluir.setEnabled(false);
         btnEditar.setEnabled(false);
         btnSalvar.setEnabled(false);
-        tfdIdCliente.setVisible(false);
-        tfdIdPS.setVisible(false);
+//        tfdIdCliente.setVisible(false);
+//        tfdIdPS.setVisible(false);
         tfdDescricao.setDocument(new LimiteDigitos(250));
         tfdObsCliente.setDocument(new LimiteDigitos(250));
         tfdObsPrestador.setDocument(new LimiteDigitos(250));
@@ -132,7 +132,6 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         JxDataFim = new org.jdesktop.swingx.JXDatePicker();
         tfdHoraFim = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
-        tfdTempo = new javax.swing.JFormattedTextField();
         jLabel18 = new javax.swing.JLabel();
         tfdValor = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -148,6 +147,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         rdbProgramado = new javax.swing.JRadioButton();
         rdbRealizado = new javax.swing.JRadioButton();
         rdbSuspenso = new javax.swing.JRadioButton();
+        tfdTempo = new javax.swing.JTextField();
         btnFechar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -392,6 +392,11 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         tfdHoraFim.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         tfdHoraFim.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tfdHoraFim.setText("  :  ");
+        tfdHoraFim.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfdHoraFimFocusGained(evt);
+            }
+        });
         tfdHoraFim.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tfdHoraFimKeyReleased(evt);
@@ -403,18 +408,6 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
 
         jLabel12.setForeground(new java.awt.Color(255, 0, 0));
         jLabel12.setText("h");
-
-        tfdTempo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
-        tfdTempo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tfdTempo.setText("  :  ");
-        tfdTempo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfdTempoKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tfdTempoKeyTyped(evt);
-            }
-        });
 
         jLabel18.setForeground(new java.awt.Color(255, 0, 0));
         jLabel18.setText("h");
@@ -472,6 +465,12 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         buttonGroup1.add(rdbSuspenso);
         rdbSuspenso.setText("Suspenso");
 
+        tfdTempo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfdTempoKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelInclusaoLayout = new javax.swing.GroupLayout(jPanelInclusao);
         jPanelInclusao.setLayout(jPanelInclusaoLayout);
         jPanelInclusaoLayout.setHorizontalGroup(
@@ -515,7 +514,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                                             .addComponent(tfdPrestador, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                                             .addComponent(tfdCliente)
                                             .addGroup(jPanelInclusaoLayout.createSequentialGroup()
-                                                .addComponent(tfdTempo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(tfdTempo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel18)))
                                         .addGroup(jPanelInclusaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -620,9 +619,9 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInclusaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel9)
-                        .addComponent(tfdTempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel18)))
-                .addGap(26, 26, 26)
+                        .addComponent(jLabel18)
+                        .addComponent(tfdTempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(23, 23, 23)
                 .addGroup(jPanelInclusaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(tfdObsCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -634,7 +633,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                 .addGroup(jPanelInclusaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfdNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jLabel21))
         );
 
@@ -658,9 +657,19 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/delete2.png"))); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/edit.png"))); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -727,25 +736,6 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     private void tfdObsClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdObsClienteKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_tfdObsClienteKeyReleased
-
-    private void tfdValorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdValorKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfdValorKeyReleased
-
-    private void tfdTempoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdTempoKeyTyped
-        String caracteres = "0987654321:";
-        if (!caracteres.contains(evt.getKeyChar() + "")) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_tfdTempoKeyTyped
-
-    private void tfdTempoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdTempoKeyReleased
-        if (camposObrigatorios() == true) {
-            btnSalvar.setEnabled(true);
-        } else {
-            btnSalvar.setEnabled(false);
-        }
-    }//GEN-LAST:event_tfdTempoKeyReleased
 
     private void tfdHoraFimKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdHoraFimKeyTyped
         String caracteres = "0987654321:";
@@ -845,8 +835,8 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
             situacao = 's';
         }
         agenda.setSituacao(situacao);
-        agenda.setTempoRealizado(BigInteger.ZERO);
-        agenda.setValor(BigInteger.ZERO);
+        agenda.setTempoRealizado(BigInteger.valueOf(Long.parseLong(tfdTempo.getText())));
+        agenda.setValor(BigInteger.valueOf(Long.parseLong(tfdValor.getText())));
         agenda.setObsCliente(tfdObsCliente.getText());
         agenda.setObsPrestador(tfdObsPrestador.getText());
         agenda.setNota(Integer.parseInt(tfdNota.getText()));
@@ -920,6 +910,29 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnBuscarPrestServActionPerformed
 
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void tfdValorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdValorKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfdValorKeyReleased
+
+    private void tfdTempoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdTempoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfdTempoKeyReleased
+
+    private void tfdHoraFimFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdHoraFimFocusGained
+        if (JxDataFim.getDate().before(JxDataIni.getDate())) {
+            JOptionPane.showMessageDialog(this, "Data de Fim deve ser maior que a data de Início!");
+            JxDataFim.setDate(null);
+        }
+    }//GEN-LAST:event_tfdHoraFimFocusGained
+
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanelInclusao);
         tfdDescricao.requestFocus();
@@ -947,9 +960,12 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         System.out.println("serviço: " + sp.getRefServicos().getDescricao());
         System.out.println("Prestador: " + sp.getRefPrestadores().getNome());
         idSerPres = sp.getId();
+        tfdIdPS.setText(String.valueOf(sp.getId()));
         tfdPrestador.setText(String.valueOf(sp.getRefPrestadores().getNome()));
         tfdServico.setText(String.valueOf(sp.getRefServicos().getDescricao()));
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jdesktop.swingx.JXDatePicker JxDataFim;
@@ -1020,7 +1036,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField tfdObsPrestador;
     private javax.swing.JTextField tfdPrestador;
     private javax.swing.JTextField tfdServico;
-    private javax.swing.JFormattedTextField tfdTempo;
+    private javax.swing.JTextField tfdTempo;
     private javax.swing.JTextField tfdValor;
     // End of variables declaration//GEN-END:variables
 }
