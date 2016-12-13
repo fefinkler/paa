@@ -11,6 +11,7 @@ import entidades.Agendas;
 import entidades.LogErros;
 import entidades.Prestadores;
 import interfaces.IDAO;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -283,9 +284,14 @@ public class AgendasDAO implements IDAO {
         Object[][] dadosTabela = null;
 
         // cabecalho da tabela
-        Object[] cabecalho = new Object[2];
+        Object[] cabecalho = new Object[7];
         cabecalho[0] = "Código";
-        cabecalho[1] = "Descrição";
+        cabecalho[1] = "Data Hora Início";
+        cabecalho[2] = "Data Hora Fim";
+        cabecalho[3] = "Cliente";
+        cabecalho[4] = "Serviço";
+        cabecalho[5] = "Prestador";
+        cabecalho[6] = "Nota";
 
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         sessao.beginTransaction();
@@ -295,7 +301,7 @@ public class AgendasDAO implements IDAO {
             org.hibernate.Query q = sessao.createQuery("SELECT count(*) FROM Agendas WHERE retira_acentuacao(descricao) ILIKE retira_acentuacao('%" + criterio + "%') AND delete is null");
             int count = Integer.parseInt(String.valueOf(q.uniqueResult()));
 
-            dadosTabela = new Object[count][2];
+            dadosTabela = new Object[count][7];
 
         } catch (Exception e) {
             try {
@@ -326,11 +332,16 @@ public class AgendasDAO implements IDAO {
 
             for (Object o : resultado) {
                 Agendas a = (Agendas) resultado.get(lin);
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String dt_inicio = df.format(a.getInicioEstimado());
+                String dt_fim = df.format(a.getFimEstimado());
                 dadosTabela[lin][0] = a.getId();
-                dadosTabela[lin][1] = a.getDescricao();
-                //dadosTabela[lin][2] = cli.getCpfCnpj();
-                //Cidades c = cli.getRefCidades();
-                //dadosTabela[lin][3] = c.getCidade();
+                dadosTabela[lin][1] = dt_inicio;
+                dadosTabela[lin][2] = dt_fim;
+                dadosTabela[lin][3] = a.getRefClientes().getNome();
+                dadosTabela[lin][4] = a.getRefServicosHasPrestadores().getRefServicos().getDescricao();
+                dadosTabela[lin][5] = a.getRefServicosHasPrestadores().getRefPrestadores().getNome();
+                dadosTabela[lin][6] = a.getNota();
                 lin++;
             }
         } catch (Exception e) {
@@ -378,16 +389,25 @@ public class AgendasDAO implements IDAO {
             column = tabela.getColumnModel().getColumn(i);
             switch (i) {
                 case 0:
-                    column.setPreferredWidth(60);
+                    column.setPreferredWidth(50);
                     break;
                 case 1:
-                    column.setPreferredWidth(240);
+                    column.setPreferredWidth(115);
                     break;
                 case 2:
-                    column.setPreferredWidth(107);
+                    column.setPreferredWidth(115);
                     break;
                 case 3:
                     column.setPreferredWidth(200);
+                    break;
+                case 4:
+                    column.setPreferredWidth(120);
+                    break;
+                case 5:
+                    column.setPreferredWidth(120);
+                    break;
+                case 6:
+                    column.setPreferredWidth(30);
                     break;
             }
         }

@@ -45,6 +45,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     public IfrAgendamentos() {
         initComponents();
         agendasDAO = new AgendasDAO();
+        agendasDAO.popularTabela(tblAgendas, "");
         btnExcluir.setEnabled(false);
         btnEditar.setEnabled(false);
         btnSalvar.setEnabled(false);
@@ -858,16 +859,25 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
             situacao = 's';
         }
         agenda.setSituacao(situacao);
-        agenda.setTempoRealizado(BigInteger.valueOf(Long.parseLong(tfdTempo.getText())));
-        agenda.setValor(BigInteger.valueOf(Long.parseLong(tfdValor.getText())));
+        if (! tfdTempo.getText().isEmpty()){
+            agenda.setTempoRealizado(BigInteger.valueOf(Long.parseLong(tfdTempo.getText())));
+        }
+        if (! tfdValor.getText().isEmpty()){
+            agenda.setValor(BigInteger.valueOf(Long.parseLong(tfdValor.getText())).ZERO);
+        }
         agenda.setObsCliente(tfdObsCliente.getText());
         agenda.setObsPrestador(tfdObsPrestador.getText());
-        agenda.setNota(Integer.parseInt(tfdNota.getText()));
+        if (! tfdNota.getText().isEmpty()){
+            agenda.setNota(Integer.parseInt(tfdNota.getText()));
+        }
+        
 
         if (agendasDAO.registroUnico(agenda)) {
             if (tfdIdAgenda.getText().trim().isEmpty()) { //SALVAR
                 if (agendasDAO.salvar(agenda)) {
                     JOptionPane.showMessageDialog(this, "Agenda criada com Sucesso!");
+                    System.out.println("id agenda: " + agenda.getId());
+                    //enviarAlerta(agenda.getId());
                     btnSalvar.setEnabled(false);
                     LimparCamposCadastro();
                 } else {
