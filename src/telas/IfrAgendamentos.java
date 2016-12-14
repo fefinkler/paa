@@ -14,6 +14,7 @@ import daos.AgendasDAO;
 import daos.ClientesDAO;
 import daos.ServicosHasPrestadoresDAO;
 import entidades.Agendas;
+import entidades.Cidades;
 import entidades.Clientes;
 import entidades.ServicosHasPrestadores;
 import java.math.BigInteger;
@@ -824,10 +825,10 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
             agenda.setId(Integer.parseInt(tfdIdAgenda.getText()));
         }
         agenda.setDescricao(tfdDescricao.getText());
-        
-        agenda.setInicioEstimado( getTime( JxDataIni.getDate(), tfdHoraIni.getText() ) );
-        agenda.setFimEstimado( getTime( JxDataFim.getDate(), tfdHoraFim.getText() ) );
-        
+
+        agenda.setInicioEstimado(getTime(JxDataIni.getDate(), tfdHoraIni.getText()));
+        agenda.setFimEstimado(getTime(JxDataFim.getDate(), tfdHoraFim.getText()));
+
         agenda.setRefClientes((Clientes) new ClientesDAO().consultarId(Integer.parseInt(tfdIdCliente.getText())));
         agenda.setRefServicosHasPrestadores((ServicosHasPrestadores) new ServicosHasPrestadoresDAO().consultarId(Integer.parseInt(tfdIdPS.getText())));
         char situacao;
@@ -839,18 +840,17 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
             situacao = 's';
         }
         agenda.setSituacao(situacao);
-        if (! tfdTempo.getText().isEmpty()){
+        if (!tfdTempo.getText().isEmpty()) {
             agenda.setTempoRealizado(BigInteger.valueOf(Long.parseLong(tfdTempo.getText())));
         }
-        if (! tfdValor.getText().isEmpty()){
+        if (!tfdValor.getText().isEmpty()) {
             agenda.setValor(BigInteger.valueOf(Long.parseLong(tfdValor.getText())).ZERO);
         }
         agenda.setObsCliente(tfdObsCliente.getText());
         agenda.setObsPrestador(tfdObsPrestador.getText());
-        if (! tfdNota.getText().isEmpty()){
+        if (!tfdNota.getText().isEmpty()) {
             agenda.setNota(Integer.parseInt(tfdNota.getText()));
         }
-        
 
         if (agendasDAO.registroUnico(agenda)) {
             if (tfdIdAgenda.getText().trim().isEmpty()) { //SALVAR
@@ -881,25 +881,23 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private Calendar getTime( Date date, String hora )
-    {
-        if ( date == null )
-        {
+    private Calendar getTime(Date date, String hora) {
+        if (date == null) {
             return null;
         }
-        
+
         Calendar cal = Calendar.getInstance();
-        
-        cal.setTime( date );
-        
-        String[] time = hora.split( ":" );
-        
-        cal.add( Calendar.HOUR_OF_DAY, Integer.parseInt( time[0] ) );
-        cal.add( Calendar.MINUTE, Integer.parseInt( time[1] ) );
-        
+
+        cal.setTime(date);
+
+        String[] time = hora.split(":");
+
+        cal.add(Calendar.HOUR_OF_DAY, Integer.parseInt(time[0]));
+        cal.add(Calendar.MINUTE, Integer.parseInt(time[1]));
+
         return cal;
     }
-    
+
     private void JxDataIniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JxDataIniActionPerformed
 
     }//GEN-LAST:event_JxDataIniActionPerformed
@@ -942,12 +940,76 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarPrestServActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        if (tblAgendas.getSelectedRow() > -1) {
+            int id = Integer.parseInt(String.valueOf(tblAgendas.getValueAt(tblAgendas.getSelectedRow(), 0)));
+            int resposta = JOptionPane.showConfirmDialog(null, "Realmente excluir Agendamento?", title, JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                Agendas a = (Agendas) agendasDAO.consultarId(id);
+                a.setDelete('d');
+                if (agendasDAO.atualizar(a)) {
+                    agendasDAO.popularTabela(tblAgendas, tfdConsultaDesc.getText());
+                    JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
+                    btnExcluir.setEnabled(false);
+                    btnEditar.setEnabled(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao excluir registro!");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um registro!");
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        editar();
+        btnExcluir.setEnabled(false);
+        btnEditar.setEnabled(false);
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    public void editar() {
+        if (tblAgendas.getSelectedRow() > -1) {
+            int id = Integer.parseInt(String.valueOf(tblAgendas.getValueAt(tblAgendas.getSelectedRow(), 0)));
+            Agendas ag = (Agendas) agendasDAO.consultarId(id);
+
+            tfdIdAgenda.setText(String.valueOf(ag.getId()));
+            tfdDescricao.setText(ag.getDescricao());
+            if (ag.getSituacao().equals("P ")) {
+                rdbProgramado.setSelected(true);
+            }
+            if (ag.getSituacao().equals("R ")) {
+                rdbProgramado.setSelected(true);
+            }
+            if (ag.getSituacao().equals("S ")) {
+                rdbProgramado.setSelected(true);
+            }
+            JxDataIni.setDate(ag.getInicioEstimado());
+            SimpleDateFormat df = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
+            String dt_inicio = df.format(ag.getInicioEstimado());
+            //String hora = dt_inicio.
+            //System.out.println("Teste hora " + dt_inicio);
+            System.out.println("hora: " + ag.getInicioEstimado().getTime());
+           //tfdHoraIni.setText(ag.getInicioEstimado().getTime());
+            JxDataFim.setDate(ag.getFimEstimado());
+            tfdCliente.setText(ag.getRefClientes().getNome());
+            tfdIdCliente.setText(String.valueOf(ag.getRefClientes().getId()));
+            tfdPrestador.setText(ag.getRefServicosHasPrestadores().getRefPrestadores().getNome());
+            tfdServico.setText(ag.getRefServicosHasPrestadores().getRefServicos().getDescricao());
+            tfdIdPS.setText(String.valueOf(ag.getRefServicosHasPrestadores().getId()));
+            tfdvalorHora.setText(String.valueOf(ag.getRefServicosHasPrestadores().getValorHora()));
+            tfdTempo.setText(String.valueOf(ag.getTempoRealizado()));
+            tfdValor.setText(String.valueOf(ag.getValor()));
+            tfdObsCliente.setText(ag.getObsCliente());
+            tfdObsPrestador.setText(ag.getObsPrestador());
+            tfdNota.setText(String.valueOf(ag.getNota()));          
+            
+            tblAgendas.clearSelection();
+            jTabbedPane1.setSelectedIndex(1);
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um registro!");
+        }
+    }
+
 
     private void tfdValorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdValorKeyReleased
         // TODO add your handling code here:
@@ -976,6 +1038,8 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
 
     private void LimparCamposCadastro() {
         limpaCampos.limparCampos(jPanelInclusao);
+        JxDataIni.setDate(null);
+        JxDataFim.setDate(null);
         tfdDescricao.requestFocus();
     }
 
@@ -1006,8 +1070,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         tfdServico.setText(String.valueOf(sp.getRefServicos().getDescricao()));
         tfdvalorHora.setText(String.valueOf(sp.getValorHora()));
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jdesktop.swingx.JXDatePicker JxDataFim;
