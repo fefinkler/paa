@@ -76,7 +76,7 @@ public abstract  class Cliente extends Thread {
                 socket.receive( pacote );
 
                 System.out.println( new String( pacote.getData() ) );
-//                onRecive( Serializer.deserialize( pacote.getData() ) );
+                onRecive( new String( pacote.getData() ) );
             }
         }
 

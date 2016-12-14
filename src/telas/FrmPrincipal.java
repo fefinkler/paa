@@ -26,7 +26,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         @Override
         public void onRecive( String data ) throws Exception 
         {
-            idsAgendamentos.add( Integer.parseInt(data));
+            idsAgendamentos.add( new Integer(data.trim()) );
+            onAlgumacoisa();
         }
     };
     
@@ -49,7 +50,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         servidor = new Servidor();
         servidor.start();
     }
-
+    
+    private void onAlgumacoisa()
+    {
+        lblIcon.setVisible( true );
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
