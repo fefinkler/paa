@@ -7,6 +7,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -57,10 +58,10 @@ public class Agendas implements Serializable {
     private String descricao;
     @Column(name = "inicio_estimado")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date inicioEstimado;
+    private Calendar inicioEstimado;
     @Column(name = "fim_estimado")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fimEstimado;
+    private Calendar fimEstimado;
     @Column(name = "tempo_realizado")
     private BigInteger tempoRealizado;
     @Column(name = "valor")
@@ -112,18 +113,18 @@ public class Agendas implements Serializable {
     }
 
     public Date getInicioEstimado() {
-        return inicioEstimado;
+        return inicioEstimado != null ? inicioEstimado.getTime() : null;
     }
 
-    public void setInicioEstimado(Date inicioEstimado) {
+    public void setInicioEstimado(Calendar inicioEstimado) {
         this.inicioEstimado = inicioEstimado;
     }
 
     public Date getFimEstimado() {
-        return fimEstimado;
+        return fimEstimado != null ? fimEstimado.getTime() : null;
     }
 
-    public void setFimEstimado(Date fimEstimado) {
+    public void setFimEstimado(Calendar fimEstimado) {
         this.fimEstimado = fimEstimado;
     }
 

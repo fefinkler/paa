@@ -231,25 +231,30 @@ public class AgendasDAO implements IDAO {
         try {
             org.hibernate.Query q;
 
+            SimpleDateFormat df = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
+            String dt_inicio = df.format(a.getInicioEstimado());
+            String dt_fim= df.format(a.getFimEstimado() );
+            
             // busca por item cadastrado
             if (a.getId() != null) {
-                q = sessao.createQuery("FROM Agendas a, Servicos_Has_Prestadores sp\n"
+                q = sessao.createQuery("FROM Agendas a, entidades.Servicos_Has_Prestadores sp\n"
                         + "WHERE a.ref_servicos_has_prestadores = sp.id \n"
                         + "AND a.id != " + a.getId() + "\n"
                         + "AND " + a.getId() + " = sp.ref_prestadores \n"
-                        + "AND a.inicio_estimado between '" + a.getInicioEstimado() + "' AND '" + a.getFimEstimado() + "'\n"
+                        + "AND a.inicio_estimado between '" + dt_inicio + "' AND '" + dt_fim + "'\n"
                         + "OR a.ref_servicos_has_prestadores = sp.id \n"
                         + "AND a.id != " + a.getId() + "\n"
                         + "AND " + a.getId() + " = sp.ref_prestadores \n"
-                        + "AND a.fim_estimado between '" + a.getInicioEstimado() + "' AND '" + a.getFimEstimado() + "'");
+                        + "AND a.fim_estimado between '" + dt_inicio + "' AND '" + dt_fim + "'");
             } else {
+                
                 q = sessao.createQuery("FROM Agendas a, Servicos_Has_Prestadores sp\n"
                         + "WHERE a.ref_servicos_has_prestadores = sp.id \n"
                         + "AND " + p.getId() + " = sp.ref_prestadores \n"
-                        + "AND a.inicio_estimado between '" + a.getInicioEstimado() + "' AND '" + a.getFimEstimado() + "'\n"
+                        + "AND a.inicio_estimado between '" + dt_inicio + "' AND '" + dt_fim + "'\n"
                         + "OR a.ref_servicos_has_prestadores = sp.id \n"
                         + "AND " + p.getId() + " = sp.ref_prestadores \n"
-                        + "AND a.fim_estimado between '" + a.getInicioEstimado() + "' AND '" + a.getFimEstimado() + "'");
+                        + "AND a.fim_estimado between '" + dt_inicio + "' AND '" + dt_fim + "'");
             }
             System.out.println("sql: " + q);
 

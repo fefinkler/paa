@@ -24,6 +24,8 @@ import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -822,32 +824,10 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
             agenda.setId(Integer.parseInt(tfdIdAgenda.getText()));
         }
         agenda.setDescricao(tfdDescricao.getText());
-        // FABRICANDO O DATE INICIO
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dt_ini = dateFormat.format(JxDataIni.getDate()).toString();
-        String h_ini = tfdHoraIni.getText();
-        String inicio_estimado = dt_ini + " " + h_ini;
-        System.out.println("String completa: " + inicio_estimado);
-        int ano = Integer.parseInt(inicio_estimado.substring(0, 4));
-        int mes = Integer.parseInt(inicio_estimado.substring(5, 7));
-        int dia = Integer.parseInt(inicio_estimado.substring(8, 10));
-        int hora = Integer.parseInt(inicio_estimado.substring(11, 13));
-        int min = Integer.parseInt(inicio_estimado.substring(14, 16));
-        Date d = new Date(ano, mes, dia, hora, min, 0);
-        agenda.setInicioEstimado(d);
-        // FABRICANDO O DATE FIM
-        String dt_fim = dateFormat.format(JxDataFim.getDate());
-        String h_fim = tfdHoraFim.getText();
-        String fim_estimado = dt_fim + " " + h_fim;
-        System.out.println("String completa: " + fim_estimado);
-        int anoF = Integer.parseInt(fim_estimado.substring(0, 4));
-        int mesF = Integer.parseInt(fim_estimado.substring(5, 7));
-        int diaF = Integer.parseInt(fim_estimado.substring(8, 10));
-        int horaF = Integer.parseInt(fim_estimado.substring(11, 13));
-        int minF = Integer.parseInt(fim_estimado.substring(14, 16));
-        Date dF = new Date(anoF, mesF, diaF, horaF, minF, 0);
-        agenda.setFimEstimado(dF);
-
+        
+        agenda.setInicioEstimado( getTime( JxDataIni.getDate(), tfdHoraIni.getText() ) );
+        agenda.setFimEstimado( getTime( JxDataFim.getDate(), tfdHoraFim.getText() ) );
+        
         agenda.setRefClientes((Clientes) new ClientesDAO().consultarId(Integer.parseInt(tfdIdCliente.getText())));
         agenda.setRefServicosHasPrestadores((ServicosHasPrestadores) new ServicosHasPrestadoresDAO().consultarId(Integer.parseInt(tfdIdPS.getText())));
         char situacao;
@@ -876,8 +856,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
             if (tfdIdAgenda.getText().trim().isEmpty()) { //SALVAR
                 if (agendasDAO.salvar(agenda)) {
                     JOptionPane.showMessageDialog(this, "Agenda criada com Sucesso!");
-                    System.out.println("id agenda: " + agenda.getId());
-                    //enviarAlerta(agenda.getId());
+                    enviarAlerta(agenda.getId());
                     btnSalvar.setEnabled(false);
                     LimparCamposCadastro();
                 } else {
@@ -902,6 +881,25 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
+    private Calendar getTime( Date date, String hora )
+    {
+        if ( date == null )
+        {
+            return null;
+        }
+        
+        Calendar cal = Calendar.getInstance();
+        
+        cal.setTime( date );
+        
+        String[] time = hora.split( ":" );
+        
+        cal.add( Calendar.HOUR_OF_DAY, Integer.parseInt( time[0] ) );
+        cal.add( Calendar.MINUTE, Integer.parseInt( time[1] ) );
+        
+        return cal;
+    }
+    
     private void JxDataIniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JxDataIniActionPerformed
 
     }//GEN-LAST:event_JxDataIniActionPerformed

@@ -42,9 +42,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         tfdUsuarioLogado.setText("Bem Vindo " + u.getNome());
         idsAgendamentos = new ArrayList<>();
         lblIcon.setVisible(false);
-        cliente = new Cliente("239.0.0.1", 60000, null, lblIcon);
+        cliente = new Cliente("192.168.0.107", 60000, null, lblIcon);
         cliente.start();
-        servidor = new Servidor("239.0.0.1", 60000, null);
+        servidor = new Servidor("192.168.0.104", 60000, null);
         servidor.start();
     }
 
