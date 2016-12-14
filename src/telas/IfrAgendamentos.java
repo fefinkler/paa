@@ -111,7 +111,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         tfdConsultaDataSaidaDe1 = new org.jdesktop.swingx.JXDatePicker();
         jLabel24 = new javax.swing.JLabel();
         tfdConsultaDataSaidaAte1 = new org.jdesktop.swingx.JXDatePicker();
-        btnLimpar1 = new javax.swing.JButton();
+        btnFiltrar = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
         tfdConsultaServ1 = new javax.swing.JTextField();
         jPanelInclusao = new javax.swing.JPanel();
@@ -158,7 +158,6 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         btnSalvar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         btnNovoRegistro = new javax.swing.JButton();
 
         btnProcurar.setText("Buscar");
@@ -206,10 +205,10 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
 
         jLabel24.setText("até");
 
-        btnLimpar1.setText("Filtrar");
-        btnLimpar1.addActionListener(new java.awt.event.ActionListener() {
+        btnFiltrar.setText("Filtrar");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpar1ActionPerformed(evt);
+                btnFiltrarActionPerformed(evt);
             }
         });
 
@@ -261,7 +260,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                                         .addComponent(tfdConsultaDataSaidaDe1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(btnLimpar1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -310,7 +309,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanelConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnLimpar)
-                            .addComponent(btnLimpar1))
+                            .addComponent(btnFiltrar))
                         .addGap(14, 14, 14)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -358,7 +357,6 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         jLabel6.setForeground(new java.awt.Color(255, 51, 51));
         jLabel6.setText("Prestador/Serviço");
 
-        jLabel9.setForeground(new java.awt.Color(255, 51, 51));
         jLabel9.setText("Tempo Exec.");
 
         tfdCliente.setEditable(false);
@@ -416,13 +414,10 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         jLabel12.setForeground(new java.awt.Color(255, 0, 0));
         jLabel12.setText("h");
 
-        jLabel18.setForeground(new java.awt.Color(255, 0, 0));
         jLabel18.setText("h");
 
-        jLabel10.setForeground(new java.awt.Color(255, 51, 51));
         jLabel10.setText("Valor Trabalho");
 
-        jLabel7.setForeground(new java.awt.Color(255, 51, 51));
         jLabel7.setText("Obs. Cliente");
 
         tfdObsCliente.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -431,7 +426,6 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel8.setForeground(new java.awt.Color(255, 51, 51));
         jLabel8.setText("Obs. Prestador");
 
         tfdObsPrestador.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -440,7 +434,6 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel20.setForeground(new java.awt.Color(255, 51, 51));
         jLabel20.setText("Nota");
 
         tfdNota.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -685,13 +678,6 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         btnNovoRegistro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas.apoio/new-file.png"))); // NOI18N
         btnNovoRegistro.setText("Novo");
         btnNovoRegistro.addActionListener(new java.awt.event.ActionListener() {
@@ -705,9 +691,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNovoRegistro)
                 .addGap(46, 46, 46)
                 .addComponent(btnExcluir)
@@ -733,9 +717,8 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                     .addComponent(btnSalvar)
                     .addComponent(btnExcluir)
                     .addComponent(btnEditar)
-                    .addComponent(jButton1)
                     .addComponent(btnNovoRegistro))
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         pack();
@@ -906,13 +889,9 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
         FrmPrincipal.servidor.definirEnvio(true);
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        enviarAlerta(1);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btnLimpar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLimpar1ActionPerformed
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        agendasDAO.popularTabela(tblAgendas, tfdConsultaServ.getText());
+    }//GEN-LAST:event_btnFiltrarActionPerformed
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
         DlgSelecionarCliente dlgSelecCliente = new DlgSelecionarCliente(null, true, this);
@@ -946,7 +925,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
                 Agendas a = (Agendas) agendasDAO.consultarId(id);
                 a.setDelete('d');
                 if (agendasDAO.atualizar(a)) {
-                    agendasDAO.popularTabela(tblAgendas, tfdConsultaDesc.getText());
+                    agendasDAO.popularTabela(tblAgendas, tfdConsultaServ.getText());
                     JOptionPane.showMessageDialog(this, "Registro excluído com sucesso.");
                     btnExcluir.setEnabled(false);
                     btnEditar.setEnabled(false);
@@ -1081,13 +1060,12 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
+    private javax.swing.JButton btnFiltrar;
     private javax.swing.JButton btnLimpar;
-    private javax.swing.JButton btnLimpar1;
     private javax.swing.JButton btnNovoRegistro;
     private javax.swing.JButton btnProcurar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
