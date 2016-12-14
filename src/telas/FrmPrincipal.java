@@ -8,18 +8,10 @@ package telas;
 import Apoio.Cliente;
 import Apoio.Servidor;
 import daos.AgendasDAO;
-import daos.ServicosHasPrestadoresDAO;
 import entidades.Agendas;
-import entidades.Servicos;
-import entidades.ServicosHasPrestadores;
 import entidades.Usuarios;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,9 +20,17 @@ import javax.swing.JOptionPane;
  */
 public class FrmPrincipal extends javax.swing.JFrame {
 
-    public static Servidor servidor;
-    Cliente cliente;
-    public static ArrayList<Integer> idsAgendamentos;
+    public Servidor servidor;
+    Cliente cliente = new Cliente() 
+    {
+        @Override
+        public void onRecive( String data ) throws Exception 
+        {
+            idsAgendamentos.add( Integer.parseInt(data));
+        }
+    };
+    
+    public ArrayList<Integer> idsAgendamentos;
     /**
      * Creates new form FrmPrincipal
      */
@@ -42,9 +42,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         tfdUsuarioLogado.setText("Bem Vindo " + u.getNome());
         idsAgendamentos = new ArrayList<>();
         lblIcon.setVisible(false);
-        cliente = new Cliente("224.0.0.2", 5555, null, lblIcon);
+        
+    
         cliente.start();
-        servidor = new Servidor("224.0.0.2", 5555, null);
+        
+        servidor = new Servidor();
         servidor.start();
     }
 

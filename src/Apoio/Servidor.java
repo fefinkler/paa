@@ -5,6 +5,7 @@
  */
 package Apoio;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -14,41 +15,46 @@ import java.net.InetAddress;
  * @author fef
  */
 public class Servidor extends Thread {
-
-    String endereco;
-    int porta;
-    String mensagem;
-    boolean enviar = false;
-
-    public Servidor(String endereco, int porta, String mensagem) {
-        this.mensagem = mensagem;
-        this.endereco = endereco;
-        this.porta = porta;
+    private String source;
+    
+    public Servidor() 
+    {
+        setDaemon(true);
     }
 
-    public void definirEnvio(boolean enviar) {
-        this.enviar = enviar;
-    }
-
-    public void definirMensagem(String mensagem) {
-        this.mensagem = mensagem;
+    public void send( String source ) 
+    {
+        this.source = source;
     }
 
     @Override
-    public void run() {
-        while (true) {
-            try {
-                Thread.sleep(10);
-                if (enviar) {
-                    byte[] b = mensagem.getBytes();
-                    InetAddress addr = InetAddress.getByName(endereco);
-                    DatagramSocket ds = new DatagramSocket();
-                    DatagramPacket pkg = new DatagramPacket(b, b.length, addr, porta);
-                    ds.send(pkg);
-                    enviar = false;
+    public void run()
+    {
+        while ( true )
+        {
+            try 
+            {
+                Thread.sleep( 10 );
+                
+                if ( source != null ) 
+                {
+                    byte[] b = source.getBytes();
+                    
+                    InetAddress addr   = InetAddress.getByName( "224.0.0.2" );
+                
+                    DatagramSocket ds  = new DatagramSocket();
+                    
+                    DatagramPacket pkg = new DatagramPacket( b, b.length, addr, 5555 );
+                    
+                    ds.send( pkg );
+                    
+                    source = null;
                 }
-            } catch (Exception e) {
-                System.out.println("Nao foi possivel enviar a mensagem");
+            }
+            
+            catch ( InterruptedException | IOException e )
+            {
+                System.err.println(e );
             }
         }
     }

@@ -5,73 +5,87 @@
  */
 package Apoio;
 
-import java.awt.Label;
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import telas.FrmPrincipal;
 
 /**
  *
  * @author fef
  */
-public class Cliente extends Thread {
+public abstract  class Cliente extends Thread {
+
+    public Cliente()
+    {
+        setDaemon(true);
+    }
+
     
-    String host = null;
-    int porta = 0;
-    JTextArea txaErro;
-    JLabel pkgRecebido;
-    
-    public Cliente(String host, int porta, JTextArea txaErro, JLabel pkgRecebido) {
-        this.host = host;
-        this.porta = porta;
-        this.txaErro = txaErro;
-        this.pkgRecebido = pkgRecebido;
+    public void send( String  source ) throws Exception
+    {
+        if ( source != null ) 
+        {
+            byte[] b = source.getBytes();
+
+            InetAddress addr   = InetAddress.getByName( "224.0.0.2" );
+
+            DatagramSocket ds  = new DatagramSocket();
+
+            DatagramPacket pkg = new DatagramPacket( b, b.length, addr, 5555 );
+
+            ds.send( pkg );
+        }
     }
     
+    public abstract void onRecive( String  data ) throws Exception;
+    
     @Override
-    public void run() {
+    public void run() 
+    {
         MulticastSocket socket = null;
-        try {
+        
+        try 
+        {
             // determina endereco e porta
-            InetAddress grupo = InetAddress.getByName(host);
+            InetAddress grupo = InetAddress.getByName( "224.0.0.2" );
 
             // cria multicast socket e se une ao grupo
-            socket = new MulticastSocket(porta);
+            socket = new MulticastSocket( 5555 );
             
-            socket.joinGroup(grupo);
-        } catch (IOException ioe) {
-            txaErro.append(ioe + "\n");
+            socket.joinGroup( grupo );
         }
         
-        boolean ativo = true; // habilita laco
-        while (ativo) {
-            try {
+        catch ( IOException e )
+        {
+            System.err.println( e );
+        }
+        
+        try
+        {
+            while ( true ) 
+            {
                 // prepara buffer (vazio)
                 byte[] buf = new byte[256];
 
                 // prepara pacote para resposta
-                DatagramPacket pacote = new DatagramPacket(buf, buf.length);
+                DatagramPacket pacote = new DatagramPacket( buf, buf.length );
 
                 // recebe pacote
-                socket.receive(pacote);
+                socket.receive( pacote );
 
-                // exibe dados na area de texto
-                String dados = new String(pacote.getData()).trim();
-                pkgRecebido.setVisible(true);
-                FrmPrincipal.idsAgendamentos.add(Integer.parseInt(dados));
-//                pkgRecebido.append(dados + "\n");
-System.out.println("ID: " + dados + "agendas: " + Integer.parseInt(dados));
-
-            } catch (IOException ioe) {
-                txaErro.append(ioe + "\n");
+                System.out.println( new String( pacote.getData() ) );
+//                onRecive( Serializer.deserialize( pacote.getData() ) );
             }
         }
+
+        catch ( Exception ex )
+        {
+            System.err.println( ex );
+        }
+            
         // fecha socket
         socket.close();
     }
-    
 }
