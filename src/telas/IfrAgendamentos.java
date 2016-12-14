@@ -5,16 +5,14 @@
  */
 package telas;
 
-import Apoio.ConexaoBD;
-import Apoio.Formatacao;
 import static Apoio.Formatacao.removerFormatacao;
 import Apoio.LimiteDigitos;
+import Apoio.Servidor;
 import Apoio.limpaCampos;
 import daos.AgendasDAO;
 import daos.ClientesDAO;
 import daos.ServicosHasPrestadoresDAO;
 import entidades.Agendas;
-import entidades.Cidades;
 import entidades.Clientes;
 import entidades.ServicosHasPrestadores;
 import static java.lang.Integer.parseInt;
@@ -23,14 +21,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -39,6 +30,8 @@ import javax.swing.JOptionPane;
  */
 public class IfrAgendamentos extends javax.swing.JInternalFrame {
     
+    Servidor servidor;
+    
     AgendasDAO agendasDAO;
     int idCli = 0;
     int idSerPres = 0;
@@ -46,7 +39,10 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     /**
      * Creates new form IfrCategoria
      */
-    public IfrAgendamentos() {
+    public IfrAgendamentos( Servidor servidor ) {
+        
+        this.servidor = servidor;
+        
         initComponents();
         agendasDAO = new AgendasDAO();
         agendasDAO.popularTabela(tblAgendas, "");
@@ -885,8 +881,7 @@ public class IfrAgendamentos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JxDataIniActionPerformed
     
     private void enviarAlerta(int id) {
-        FrmPrincipal.servidor.definirMensagem(String.valueOf(id));
-        FrmPrincipal.servidor.definirEnvio(true);
+        servidor.send( String.valueOf(id));
     }
 
     private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed

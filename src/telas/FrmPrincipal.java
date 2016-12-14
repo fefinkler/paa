@@ -339,7 +339,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuUsuariosSistemaActionPerformed
 
     private void jMenuIncluirReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuIncluirReservaActionPerformed
-        IfrAgendamentos IfrAgendamentos = new IfrAgendamentos();
+        IfrAgendamentos IfrAgendamentos = new IfrAgendamentos( servidor );
         jDesktopPane1.add(IfrAgendamentos);
         IfrAgendamentos.setVisible(true);
     }//GEN-LAST:event_jMenuIncluirReservaActionPerformed
@@ -396,7 +396,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuStatusLogsActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        IfrAgendamentos IfrAgendamentos = new IfrAgendamentos();
+        IfrAgendamentos IfrAgendamentos = new IfrAgendamentos( servidor );
         jDesktopPane1.add(IfrAgendamentos);
         IfrAgendamentos.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
