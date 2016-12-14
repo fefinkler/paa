@@ -719,9 +719,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfdValor">
-              <Events>
-                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfdValorKeyReleased"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>
@@ -815,6 +812,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="tfdTempo">
               <Events>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tfdTempoFocusLost"/>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfdTempoKeyReleased"/>
               </Events>
             </Component>
